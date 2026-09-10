@@ -33,11 +33,8 @@ test "stage aliases external image and JSON form" {
 }
 
 ///|
-test "malformed JSON and unsupported heredoc rejected" {
-  for
-    source in [
-      "FROM", "RUN [1]", "RUN [\"x\"", "RUN <<EOF\nx\nEOF", "RUN echo \\",
-    ] {
+test "malformed JSON and unclosed heredoc rejected" {
+  for source in ["FROM", "RUN [1]", "RUN [\"x\"", "RUN <<EOF\nx", "RUN echo \\"] {
     assert_true(
       try {
         ignore(@dockerlint.parse(source))

@@ -3,7 +3,7 @@ pub struct Diagnostic {
   line : Int
   code : String
   message : String
-} derive(Debug, Eq)
+} derive(Debug, Eq, ToJson)
 
 ///|
 pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
@@ -14,6 +14,8 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
   let stages : Map[String, Int] = Map([])
   let mut stage = -1
   let mut pipefail = false
+  let stage_shells : Map[String, Bool] = Map([])
+  let mut stage_alias : String? = None
   let counts : Map[String, Int] = Map([])
   let known = [
     "FROM", "RUN", "CMD", "LABEL", "MAINTAINER", "EXPOSE", "ENV", "ADD", "COPY",
@@ -27,6 +29,10 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
       continue
     }
     if ins.name == "FROM" {
+      if stage_alias is Some(stage_name) {
+        stage_shells[stage_name] = pipefail
+      }
+      stage_alias = None
       stage += 1
       pipefail = false
       counts.clear()
@@ -42,6 +48,7 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
       }
       let base = args[offset]
       let base_stage = stages.contains(base.to_lower())
+      pipefail = stage_shells.get(base.to_lower()).unwrap_or(false)
       if !base_stage &&
         base != "scratch" &&
         !base.contains("$") &&
@@ -55,6 +62,7 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
       }
       if args.length() == offset + 3 {
         let name = args[offset + 2].to_lower()
+        stage_alias = Some(name)
         if stages.contains(name) {
           report(ins.line, "DL3024", "Duplicate build stage name")
         }
@@ -64,6 +72,21 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
     }
     if stage < 0 && ins.name != "ARG" {
       report(ins.line, "ML1003", "Instruction before first FROM")
+    }
+    if ["COPY", "ADD"].contains(ins.name) {
+      let parsed = Some(ins.split_arguments()) catch { _ => None }
+      if parsed is Some(a) {
+        if a.values.length() < 2 {
+          report(ins.line, "ML1007", "COPY/ADD require source and destination")
+        } else if a.values.length() > 2 &&
+          !a.values[a.values.length() - 1].has_suffix("/") {
+          report(
+            ins.line,
+            "DL3021",
+            "Multiple sources require a destination ending in /",
+          )
+        }
+      }
     }
     match ins.name {
       "USER" =>
@@ -76,24 +99,58 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
           ) {
           report(ins.line, "DL3002", "Use a non-root runtime user")
         }
-      "ADD" =>
-        report(
-          ins.line,
-          "DL3020",
-          "Prefer COPY when ADD extraction or URL semantics are not needed",
-        )
+      "ADD" => {
+        let inputs = ins.split_arguments().values catch { _ => [] }
+        let special = inputs
+          .iter()
+          .any(s => {
+            s.has_prefix("http://") ||
+            s.has_prefix("https://") ||
+            s.has_prefix("git://") ||
+            [".tar", ".tar.gz", ".tgz", ".tar.bz2", ".tar.xz", ".txz", ".tbz2"]
+            .iter()
+            .any(ext => s.has_suffix(ext))
+          })
+        if !special {
+          report(
+            ins.line,
+            "DL3020",
+            "Prefer COPY when ADD extraction or URL semantics are not needed",
+          )
+        }
+      }
       "MAINTAINER" =>
         report(ins.line, "DL4000", "MAINTAINER is deprecated; use LABEL")
       "WORKDIR" =>
         if !ins.arguments.has_prefix("/") && !ins.arguments.has_prefix("$") {
           report(ins.line, "DL3000", "Use an absolute WORKDIR")
         }
-      "SHELL" => pipefail = ins.arguments.contains("pipefail")
+      "SHELL" => {
+        let form = Some(ins.split_arguments()) catch { _ => None }
+        match form {
+          Some(a) => {
+            if !a.json_form {
+              report(ins.line, "ML1006", "SHELL requires JSON exec form")
+            }
+            pipefail = a.values.contains("pipefail")
+          }
+          None => report(ins.line, "ML1006", "SHELL requires JSON exec form")
+        }
+      }
+      "ONBUILD" =>
+        if args.length() > 0 &&
+          ["ONBUILD", "FROM", "MAINTAINER"].contains(args[0].to_upper()) {
+          report(
+            ins.line,
+            "DL3043",
+            "Instruction cannot be used as an ONBUILD trigger",
+          )
+        }
       "RUN" => {
         if ins.arguments.has_prefix("cd ") {
           report(ins.line, "DL3003", "Use WORKDIR instead of RUN cd")
         }
-        if ins.arguments.contains("|") &&
+        if shell_pipeline(ins.arguments) &&
           !pipefail &&
           !ins.arguments.contains("pipefail") &&
           !ins.arguments.has_prefix("[") {
@@ -117,7 +174,11 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
         if count > 1 {
           report(
             ins.line,
-            "ML1004",
+            if ins.name == "CMD" {
+              "DL4003"
+            } else {
+              "DL4004"
+            },
             "Earlier " + ins.name + " in this stage is overridden",
           )
         }
@@ -153,6 +214,11 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
         }
       _ => ()
     }
+  }
+  ignore(analyze_stages(instructions)) catch {
+    StageCycle(line) =>
+      report(line, "ML1010", "Build stages have a circular dependency")
+    _ => ()
   }
   if stage < 0 {
     report(1, "ML1005", "Dockerfile has no FROM stage")

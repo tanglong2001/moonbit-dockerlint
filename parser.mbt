@@ -1,6 +1,7 @@
 ///|
 pub suberror ParseError {
   Invalid(String)
+  StageCycle(Int)
 } derive(Debug)
 
 ///|
@@ -9,7 +10,8 @@ pub struct Instruction {
   end_line : Int
   name : String
   arguments : String
-} derive(Debug, Eq)
+  heredocs : Array[HereDoc]
+} derive(Debug, Eq, ToJson)
 
 ///|
 fn words(s : String) -> Array[String] {
@@ -33,7 +35,7 @@ fn words(s : String) -> Array[String] {
 
 ///|
 /// Source-preserving instruction arguments, physical line ranges, escape directives.
-/// Heredocs are explicitly rejected in this version instead of misparsed.
+/// RUN/COPY heredoc bodies are captured without interpreting their contents.
 pub fn parse(source : String) -> Array[Instruction] raise ParseError {
   if !valid_unicode(source) {
     raise Invalid("ill-formed UTF-16 input")
@@ -48,16 +50,37 @@ pub fn parse(source : String) -> Array[Instruction] raise ParseError {
   let mut escape = "\\"
   let mut directive_region = true
   let mut continuing = false
-  for raw in source.split("\n") {
-    number += 1
+  let seen_directives : Map[String, Bool] = Map([])
+  let lines = source.split("\n").collect()
+  let mut position = 0
+  while position < lines.length() {
+    let raw = lines[position]
+    position += 1
+    number = position
     let s = raw.trim_end(chars="\r").trim_start().to_owned()
     if s.has_prefix("#") {
-      if directive_region && s.to_lower().has_prefix("# escape=") {
-        let value = s[9:].trim().to_owned()
-        if value != "\\" && value != "`" {
-          raise Invalid("invalid escape directive")
+      if directive_region {
+        let pair = s[1:].trim().to_owned().split("=").collect()
+        let key = pair[0].trim().to_owned().to_lower()
+        if pair.length() >= 2 && ["syntax", "escape", "check"].contains(key) {
+          if seen_directives.contains(key) {
+            raise Invalid("duplicate parser directive " + key)
+          }
+          seen_directives[key] = true
+          if key == "escape" {
+            let value = pair[1:]
+              .map(x => x.to_owned())
+              .join("=")
+              .trim()
+              .to_owned()
+            if value != "\\" && value != "`" {
+              raise Invalid("invalid escape directive")
+            }
+            escape = value
+          }
+        } else {
+          directive_region = false
         }
-        escape = value
       }
       continue
     }
@@ -93,40 +116,57 @@ pub fn parse(source : String) -> Array[Instruction] raise ParseError {
     }
     let name = parts[0].to_upper()
     let args = logical[parts[0].length():].trim_start().to_owned()
-    if args.contains("<<") {
-      raise Invalid("heredoc not supported at line " + start.to_string())
-    }
     if args == "" {
       raise Invalid("missing arguments at line " + start.to_string())
     }
-    if args.has_prefix("[") &&
-      (
-        name == "RUN" ||
-        name == "CMD" ||
-        name == "ENTRYPOINT" ||
-        name == "SHELL" ||
-        name == "COPY" ||
-        name == "ADD"
-      ) {
-      let value = @json.parse(args) catch {
-        _ => raise Invalid("malformed JSON instruction")
-      }
-      match value {
-        Array(items) => {
-          if items.length() == 0 {
-            raise Invalid("empty JSON instruction")
-          }
-          for item in items {
-            match item {
-              String(_) => ()
-              _ => raise Invalid("JSON instruction requires strings")
-            }
-          }
-        }
-        _ => raise Invalid("JSON instruction requires array")
-      }
+    let headers = if name == "RUN" || name == "COPY" {
+      heredoc_headers(args)
+    } else {
+      []
     }
-    out.push({ line: start, end_line: number, name, arguments: args, })
+    let heredocs = []
+    for (delimiter, strip_tabs, expand) in headers {
+      let body = StringBuilder()
+      let mut closed = false
+      while position < lines.length() {
+        let line = lines[position].trim_end(chars="\r").to_owned()
+        position += 1
+        let content = if strip_tabs {
+          line.trim_start(chars="\t").to_owned()
+        } else {
+          line
+        }
+        if content == delimiter {
+          closed = true
+          break
+        }
+        body.write_string(content)
+        body.write_char('\n')
+      }
+      if !closed {
+        raise Invalid(
+          "unclosed heredoc " + delimiter + " at line " + start.to_string(),
+        )
+      }
+      heredocs.push({
+        name: delimiter,
+        content: body.to_string(),
+        strip_tabs,
+        expand,
+      })
+    }
+    number = position
+    let instruction : Instruction = {
+      line: start,
+      end_line: number,
+      name,
+      arguments: args,
+      heredocs,
+    }
+    if ["COPY", "ADD", "SHELL"].contains(name) || args.has_prefix("[") {
+      ignore(instruction.split_arguments())
+    }
+    out.push(instruction)
     logical = ""
   }
   if continuing {

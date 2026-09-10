@@ -7,5 +7,10 @@ supported_targets = "js"
 pkgtype(kind: "executable")
 
 options(
-  link: { "js": { "exports": [ "run" ], "format": "esm" } },
+  link: {
+    "js": {
+      "exports": [ "run", "diagnostics", "stage_graph" ],
+      "format": "esm",
+    },
+  },
 )

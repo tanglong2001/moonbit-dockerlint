@@ -6,30 +6,59 @@ import {
 }
 
 // Values
-pub fn check(String, ignore_codes? : Array[String]) -> Array[Diagnostic] raise ParseError
+pub fn analyze_stages(Array[Instruction]) -> Array[Stage] raise ParseError
+
+pub fn check(String, ignore_codes? : Array[String], honor_inline? : Bool) -> Array[Diagnostic] raise ParseError
 
 pub fn lint(Array[Instruction]) -> Array[Diagnostic]
 
 pub fn parse(String) -> Array[Instruction] raise ParseError
 
+pub fn report_json(String, filename? : String, honor_inline? : Bool) -> String raise ParseError
+
 // Errors
 pub suberror ParseError {
   Invalid(String)
+  StageCycle(Int)
 } derive(@debug.Debug)
 
 // Types and methods
+pub struct Arguments {
+  flags : Map[String, String]
+  values : Array[String]
+  json_form : Bool
+} derive(Eq, ToJson, @debug.Debug)
+
 pub struct Diagnostic {
   line : Int
   code : String
   message : String
-} derive(Eq, @debug.Debug)
+} derive(Eq, ToJson, @debug.Debug)
+pub fn Diagnostic::severity(Self) -> String
+
+pub struct HereDoc {
+  name : String
+  content : String
+  strip_tabs : Bool
+  expand : Bool
+} derive(Eq, ToJson, @debug.Debug)
 
 pub struct Instruction {
   line : Int
   end_line : Int
   name : String
   arguments : String
-} derive(Eq, @debug.Debug)
+  heredocs : Array[HereDoc]
+} derive(Eq, ToJson, @debug.Debug)
+pub fn Instruction::split_arguments(Self) -> Arguments raise ParseError
+
+pub struct Stage {
+  index : Int
+  line : Int
+  base : String
+  stage_name : String?
+  dependencies : Array[Int]
+} derive(Eq, ToJson, @debug.Debug)
 
 // Type aliases
 
