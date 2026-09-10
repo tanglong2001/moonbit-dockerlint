@@ -35,6 +35,9 @@ fn words(s : String) -> Array[String] {
 /// Source-preserving instruction arguments, physical line ranges, escape directives.
 /// Heredocs are explicitly rejected in this version instead of misparsed.
 pub fn parse(source : String) -> Array[Instruction] raise ParseError {
+  if !valid_unicode(source) {
+    raise Invalid("ill-formed UTF-16 input")
+  }
   if source.length() > 1000000 {
     raise Invalid("Dockerfile too large")
   }

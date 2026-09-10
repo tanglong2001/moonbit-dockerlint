@@ -6,6 +6,8 @@ import {
 }
 
 // Values
+pub fn check(String, ignore_codes? : Array[String]) -> Array[Diagnostic] raise ParseError
+
 pub fn lint(Array[Instruction]) -> Array[Diagnostic]
 
 pub fn parse(String) -> Array[Instruction] raise ParseError

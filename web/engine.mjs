@@ -462,23 +462,6 @@ function _M0TPB9ArrayViewGUsRPB4JsonEE(param0, param1, param2) {
 function _M0TPB8MutLocalGsE(param0) {
   this.val = param0;
 }
-function _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(param0) {
-  this._0 = param0;
-}
-_M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err.prototype.$tag = 0;
-function _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE2Ok(param0) {
-  this._0 = param0;
-}
-_M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE2Ok.prototype.$tag = 1;
-function _M0TPB8MutLocalGbE(param0) {
-  this.val = param0;
-}
-function _M0TP211localreview10dockerlint11Instruction(param0, param1, param2, param3) {
-  this.line = param0;
-  this.end_line = param1;
-  this.name = param2;
-  this.arguments = param3;
-}
 function _M0TP211localreview10dockerlint10Diagnostic(param0, param1, param2) {
   this.line = param0;
   this.code = param1;
@@ -488,6 +471,23 @@ function _M0TPB9ArrayViewGUsiEE(param0, param1, param2) {
   this.buf = param0;
   this.start = param1;
   this.end = param2;
+}
+function _M0TPB8MutLocalGbE(param0) {
+  this.val = param0;
+}
+function _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err.prototype.$tag = 0;
+function _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE2Ok(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE2Ok.prototype.$tag = 1;
+function _M0TP211localreview10dockerlint11Instruction(param0, param1, param2, param3) {
+  this.line = param0;
+  this.end_line = param1;
+  this.name = param2;
+  this.arguments = param3;
 }
 const _M0FP092moonbitlang_2fcore_2fbuiltin_2fStringBuilder_24as_24_40moonbitlang_2fcore_2fbuiltin_2eLogger = { method_0: _M0IPB13StringBuilderPB6Logger13write__string, method_1: _M0IP016_24default__implPB6Logger16write__substringGRPB13StringBuilderE, method_2: _M0IPB13StringBuilderPB6Logger11write__view, method_3: _M0IPB13StringBuilderPB6Logger11write__char, method_4: _M0IP016_24default__implPB6Logger28write__string__interpolationGRPB13StringBuilderE, method_5: _M0IP016_24default__implPB6Logger5writeGRPB13StringBuilderE };
 const _M0MPC16string10StringView4trimN7_2abindS6760 = "\t\n\r ";
@@ -7265,15 +7265,15 @@ function _M0FPC14json13parse_2einner(input, max_nesting_depth) {
   _M0MPC14json12ParseContext21lex__skip__whitespace(ctx);
   return ctx.offset >= ctx.end_offset ? new _M0DTPC16result6ResultGRPB4JsonRPC14json10ParseErrorE2Ok(val) : _M0MPC14json12ParseContext21invalid__char_2einnerGRPB4JsonE(ctx, 0);
 }
-function _M0IP211localreview10dockerlint10ParseErrorPC15debug5Debug8to__repr(_x_56) {
-  let _arg_57;
+function _M0IP211localreview10dockerlint10ParseErrorPC15debug5Debug8to__repr(_x_64) {
+  let _arg_65;
   _L: {
-    const _Invalid = _x_56;
-    const _$42$arg_57 = _Invalid._0;
-    _arg_57 = _$42$arg_57;
+    const _Invalid = _x_64;
+    const _$42$arg_65 = _Invalid._0;
+    _arg_65 = _$42$arg_65;
     break _L;
   }
-  return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_57) }]);
+  return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_65) }]);
 }
 function _M0FP211localreview10dockerlint5words(s) {
   const result = [];
@@ -7306,167 +7306,6 @@ function _M0FP211localreview10dockerlint5words(s) {
     _M0MPC15array5Array4pushGRP211localreview10dockerlint11InstructionE(result, word.val);
   }
   return result;
-}
-function _M0FP211localreview10dockerlint5parse(source) {
-  if (source.length > 1000000) {
-    return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("Dockerfile too large"));
-  }
-  const out = [];
-  const logical = new _M0TPB8MutLocalGsE("");
-  const start = new _M0TPB8MutLocalGiE(1);
-  const number = new _M0TPB8MutLocalGiE(0);
-  const escape = new _M0TPB8MutLocalGsE("\\");
-  const directive_region = new _M0TPB8MutLocalGbE(true);
-  const continuing = new _M0TPB8MutLocalGbE(false);
-  const _bind = "\n";
-  const _it = _M0MPC16string6String5split(source, new _M0TPC16string10StringView(_bind, 0, _bind.length));
-  while (true) {
-    let raw;
-    _L: {
-      const _bind$2 = _M0MPB4Iter4nextGRPC16string10StringViewE(_it);
-      if (_bind$2 === undefined) {
-        break;
-      } else {
-        const _Some = _bind$2;
-        const _raw = _Some;
-        raw = _raw;
-        break _L;
-      }
-    }
-    number.val = number.val + 1 | 0;
-    const _bind$2 = "\r";
-    const s = _M0MPC16string10StringView9to__owned(_M0MPC16string10StringView11trim__start(_M0MPC16string10StringView17trim__end_2einner(raw, new _M0TPC16string10StringView(_bind$2, 0, _bind$2.length)), undefined));
-    const _bind$3 = "#";
-    if (_M0MPC16string6String11has__prefix(s, new _M0TPC16string10StringView(_bind$3, 0, _bind$3.length))) {
-      let _tmp;
-      if (directive_region.val) {
-        const _tmp$2 = _M0MPC16string6String9to__lower(s);
-        const _bind$4 = "# escape=";
-        _tmp = _M0MPC16string6String11has__prefix(_tmp$2, new _M0TPC16string10StringView(_bind$4, 0, _bind$4.length));
-      } else {
-        _tmp = false;
-      }
-      if (_tmp) {
-        const value = _M0MPC16string10StringView9to__owned(_M0MPC16string10StringView4trim(_M0MPC16string6String11sub_2einner(s, 9, undefined), undefined));
-        if (_M0IP016_24default__implPB2Eq10not__equalGsE(value, "\\") && _M0IP016_24default__implPB2Eq10not__equalGsE(value, "`")) {
-          return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("invalid escape directive"));
-        }
-        escape.val = value;
-      }
-      continue;
-    }
-    if (s === "") {
-      directive_region.val = false;
-      continue;
-    }
-    directive_region.val = false;
-    if (!continuing.val) {
-      start.val = number.val;
-    }
-    const suffix = new _M0TPB8MutLocalGiE(0);
-    const clean = _M0MPC16string10StringView9to__owned(_M0MPC16string6String9trim__end(s, undefined));
-    let _tmp = clean.length - 1 | 0;
-    while (true) {
-      const i = _tmp;
-      if (i >= 0) {
-        const _tmp$2 = _M0MPC16string6String11sub_2einner(clean, i, i + 1 | 0);
-        const _bind$4 = escape.val;
-        if (_M0IPC16string10StringViewPB2Eq5equal(_tmp$2, new _M0TPC16string10StringView(_bind$4, 0, _bind$4.length))) {
-          suffix.val = suffix.val + 1 | 0;
-        } else {
-          break;
-        }
-        _tmp = i - 1 | 0;
-        continue;
-      } else {
-        break;
-      }
-    }
-    if (2 === 0) {
-      $panic();
-    }
-    continuing.val = (suffix.val % 2 | 0) === 1;
-    logical.val = `${logical.val}${continuing.val ? _M0MPC16string10StringView9to__owned(_M0MPC16string6String11sub_2einner(clean, 0, clean.length - 1 | 0)) : clean}`;
-    if (continuing.val) {
-      continue;
-    }
-    const parts = _M0FP211localreview10dockerlint5words(logical.val);
-    if (_M0MPC15array5Array9is__emptyGsE(parts)) {
-      continue;
-    }
-    const name = _M0MPC16string6String9to__upper(_M0MPC15array5Array2atGsE(parts, 0));
-    const args = _M0MPC16string10StringView9to__owned(_M0MPC16string10StringView11trim__start(_M0MPC16string6String11sub_2einner(logical.val, _M0MPC15array5Array2atGsE(parts, 0).length, undefined), undefined));
-    const _bind$4 = "<<";
-    if (_M0MPC16string6String8contains(args, new _M0TPC16string10StringView(_bind$4, 0, _bind$4.length))) {
-      return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid(`heredoc not supported at line ${_M0MPC13int3Int18to__string_2einner(start.val, 10)}`));
-    }
-    if (args === "") {
-      return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid(`missing arguments at line ${_M0MPC13int3Int18to__string_2einner(start.val, 10)}`));
-    }
-    let _tmp$2;
-    const _bind$5 = "[";
-    if (_M0MPC16string6String11has__prefix(args, new _M0TPC16string10StringView(_bind$5, 0, _bind$5.length))) {
-      _tmp$2 = name === "RUN" || (name === "CMD" || (name === "ENTRYPOINT" || (name === "SHELL" || (name === "COPY" || name === "ADD"))));
-    } else {
-      _tmp$2 = false;
-    }
-    if (_tmp$2) {
-      let value;
-      let _try_err;
-      _L$2: {
-        _L$3: {
-          const _bind$6 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(args, 0, args.length), 1024);
-          if (_bind$6.$tag === 1) {
-            const _ok = _bind$6;
-            value = _ok._0;
-          } else {
-            const _err = _bind$6;
-            _try_err = _err._0;
-            break _L$3;
-          }
-          break _L$2;
-        }
-        return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("malformed JSON instruction"));
-      }
-      let items;
-      _L$3: {
-        if (value.$tag === 5) {
-          const _Array = value;
-          const _items = _Array._0;
-          items = _items;
-          break _L$3;
-        } else {
-          return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("JSON instruction requires array"));
-        }
-      }
-      if (items.length === 0) {
-        return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("empty JSON instruction"));
-      }
-      const _bind$6 = items.length;
-      let _tmp$3 = 0;
-      while (true) {
-        const _ = _tmp$3;
-        if (_ < _bind$6) {
-          const item = items[_];
-          if (item.$tag === 4) {
-          } else {
-            return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("JSON instruction requires strings"));
-          }
-          _tmp$3 = _ + 1 | 0;
-          continue;
-        } else {
-          break;
-        }
-      }
-    }
-    _M0MPC15array5Array4pushGRP211localreview10dockerlint11InstructionE(out, new _M0TP211localreview10dockerlint11Instruction(start.val, number.val, name, args));
-    logical.val = "";
-    continue;
-  }
-  if (continuing.val) {
-    return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("dangling line continuation"));
-  }
-  return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE2Ok(out);
 }
 function _M0FP211localreview10dockerlint4lint(instructions) {
   const out = [];
@@ -7760,6 +7599,199 @@ function _M0FP211localreview10dockerlint4lint(instructions) {
     report(1, "ML1005", "Dockerfile has no FROM stage");
   }
   return out;
+}
+function _M0FP211localreview10dockerlint14valid__unicode(text) {
+  const i = new _M0TPB8MutLocalGiE(0);
+  while (true) {
+    if (i.val < text.length) {
+      const _tmp = i.val;
+      const u = _tmp >>> 0 < text.length ? text.charCodeAt(_tmp) : $oob();
+      if (u >= 55296 && u <= 56319) {
+        if ((i.val + 1 | 0) >= text.length) {
+          return false;
+        }
+        const _tmp$2 = i.val + 1 | 0;
+        const next = _tmp$2 >>> 0 < text.length ? text.charCodeAt(_tmp$2) : $oob();
+        if (next < 56320 || next > 57343) {
+          return false;
+        }
+        i.val = i.val + 2 | 0;
+      } else {
+        if (u >= 56320 && u <= 57343) {
+          return false;
+        }
+        i.val = i.val + 1 | 0;
+      }
+      continue;
+    } else {
+      break;
+    }
+  }
+  return true;
+}
+function _M0FP211localreview10dockerlint5parse(source) {
+  if (!_M0FP211localreview10dockerlint14valid__unicode(source)) {
+    return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("ill-formed UTF-16 input"));
+  }
+  if (source.length > 1000000) {
+    return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("Dockerfile too large"));
+  }
+  const out = [];
+  const logical = new _M0TPB8MutLocalGsE("");
+  const start = new _M0TPB8MutLocalGiE(1);
+  const number = new _M0TPB8MutLocalGiE(0);
+  const escape = new _M0TPB8MutLocalGsE("\\");
+  const directive_region = new _M0TPB8MutLocalGbE(true);
+  const continuing = new _M0TPB8MutLocalGbE(false);
+  const _bind = "\n";
+  const _it = _M0MPC16string6String5split(source, new _M0TPC16string10StringView(_bind, 0, _bind.length));
+  while (true) {
+    let raw;
+    _L: {
+      const _bind$2 = _M0MPB4Iter4nextGRPC16string10StringViewE(_it);
+      if (_bind$2 === undefined) {
+        break;
+      } else {
+        const _Some = _bind$2;
+        const _raw = _Some;
+        raw = _raw;
+        break _L;
+      }
+    }
+    number.val = number.val + 1 | 0;
+    const _bind$2 = "\r";
+    const s = _M0MPC16string10StringView9to__owned(_M0MPC16string10StringView11trim__start(_M0MPC16string10StringView17trim__end_2einner(raw, new _M0TPC16string10StringView(_bind$2, 0, _bind$2.length)), undefined));
+    const _bind$3 = "#";
+    if (_M0MPC16string6String11has__prefix(s, new _M0TPC16string10StringView(_bind$3, 0, _bind$3.length))) {
+      let _tmp;
+      if (directive_region.val) {
+        const _tmp$2 = _M0MPC16string6String9to__lower(s);
+        const _bind$4 = "# escape=";
+        _tmp = _M0MPC16string6String11has__prefix(_tmp$2, new _M0TPC16string10StringView(_bind$4, 0, _bind$4.length));
+      } else {
+        _tmp = false;
+      }
+      if (_tmp) {
+        const value = _M0MPC16string10StringView9to__owned(_M0MPC16string10StringView4trim(_M0MPC16string6String11sub_2einner(s, 9, undefined), undefined));
+        if (_M0IP016_24default__implPB2Eq10not__equalGsE(value, "\\") && _M0IP016_24default__implPB2Eq10not__equalGsE(value, "`")) {
+          return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("invalid escape directive"));
+        }
+        escape.val = value;
+      }
+      continue;
+    }
+    if (s === "") {
+      directive_region.val = false;
+      continue;
+    }
+    directive_region.val = false;
+    if (!continuing.val) {
+      start.val = number.val;
+    }
+    const suffix = new _M0TPB8MutLocalGiE(0);
+    const clean = _M0MPC16string10StringView9to__owned(_M0MPC16string6String9trim__end(s, undefined));
+    let _tmp = clean.length - 1 | 0;
+    while (true) {
+      const i = _tmp;
+      if (i >= 0) {
+        const _tmp$2 = _M0MPC16string6String11sub_2einner(clean, i, i + 1 | 0);
+        const _bind$4 = escape.val;
+        if (_M0IPC16string10StringViewPB2Eq5equal(_tmp$2, new _M0TPC16string10StringView(_bind$4, 0, _bind$4.length))) {
+          suffix.val = suffix.val + 1 | 0;
+        } else {
+          break;
+        }
+        _tmp = i - 1 | 0;
+        continue;
+      } else {
+        break;
+      }
+    }
+    if (2 === 0) {
+      $panic();
+    }
+    continuing.val = (suffix.val % 2 | 0) === 1;
+    logical.val = `${logical.val}${continuing.val ? _M0MPC16string10StringView9to__owned(_M0MPC16string6String11sub_2einner(clean, 0, clean.length - 1 | 0)) : clean}`;
+    if (continuing.val) {
+      continue;
+    }
+    const parts = _M0FP211localreview10dockerlint5words(logical.val);
+    if (_M0MPC15array5Array9is__emptyGsE(parts)) {
+      continue;
+    }
+    const name = _M0MPC16string6String9to__upper(_M0MPC15array5Array2atGsE(parts, 0));
+    const args = _M0MPC16string10StringView9to__owned(_M0MPC16string10StringView11trim__start(_M0MPC16string6String11sub_2einner(logical.val, _M0MPC15array5Array2atGsE(parts, 0).length, undefined), undefined));
+    const _bind$4 = "<<";
+    if (_M0MPC16string6String8contains(args, new _M0TPC16string10StringView(_bind$4, 0, _bind$4.length))) {
+      return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid(`heredoc not supported at line ${_M0MPC13int3Int18to__string_2einner(start.val, 10)}`));
+    }
+    if (args === "") {
+      return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid(`missing arguments at line ${_M0MPC13int3Int18to__string_2einner(start.val, 10)}`));
+    }
+    let _tmp$2;
+    const _bind$5 = "[";
+    if (_M0MPC16string6String11has__prefix(args, new _M0TPC16string10StringView(_bind$5, 0, _bind$5.length))) {
+      _tmp$2 = name === "RUN" || (name === "CMD" || (name === "ENTRYPOINT" || (name === "SHELL" || (name === "COPY" || name === "ADD"))));
+    } else {
+      _tmp$2 = false;
+    }
+    if (_tmp$2) {
+      let value;
+      let _try_err;
+      _L$2: {
+        _L$3: {
+          const _bind$6 = _M0FPC14json13parse_2einner(new _M0TPC16string10StringView(args, 0, args.length), 1024);
+          if (_bind$6.$tag === 1) {
+            const _ok = _bind$6;
+            value = _ok._0;
+          } else {
+            const _err = _bind$6;
+            _try_err = _err._0;
+            break _L$3;
+          }
+          break _L$2;
+        }
+        return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("malformed JSON instruction"));
+      }
+      let items;
+      _L$3: {
+        if (value.$tag === 5) {
+          const _Array = value;
+          const _items = _Array._0;
+          items = _items;
+          break _L$3;
+        } else {
+          return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("JSON instruction requires array"));
+        }
+      }
+      if (items.length === 0) {
+        return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("empty JSON instruction"));
+      }
+      const _bind$6 = items.length;
+      let _tmp$3 = 0;
+      while (true) {
+        const _ = _tmp$3;
+        if (_ < _bind$6) {
+          const item = items[_];
+          if (item.$tag === 4) {
+          } else {
+            return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("JSON instruction requires strings"));
+          }
+          _tmp$3 = _ + 1 | 0;
+          continue;
+        } else {
+          break;
+        }
+      }
+    }
+    _M0MPC15array5Array4pushGRP211localreview10dockerlint11InstructionE(out, new _M0TP211localreview10dockerlint11Instruction(start.val, number.val, name, args));
+    logical.val = "";
+    continue;
+  }
+  if (continuing.val) {
+    return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error47localreview_2fdockerlint_2eParseError_2eInvalid("dangling line continuation"));
+  }
+  return new _M0DTPC16result6ResultGRPB5ArrayGRP211localreview10dockerlint11InstructionERP211localreview10dockerlint10ParseErrorE2Ok(out);
 }
 function _M0FP411localreview10dockerlint3cmd3web3run(input) {
   let _try_err;
