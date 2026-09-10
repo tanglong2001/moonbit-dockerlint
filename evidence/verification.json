@@ -1,0 +1,49 @@
+{
+  "project": "dockerlint",
+  "checks": [
+    {
+      "command": "moon fmt",
+      "exit_code": 0,
+      "output": "Finished. moon: ran 9 tasks, now up to date\n",
+      "utc": "2026-09-09T18:52:45.240939+00:00"
+    },
+    {
+      "command": "moon info",
+      "exit_code": 0,
+      "output": "Finished. moon: ran 2 tasks, now up to date\n",
+      "utc": "2026-09-09T18:52:45.414980+00:00"
+    },
+    {
+      "command": "moon check --deny-warn",
+      "exit_code": 0,
+      "output": "Finished. moon: ran 2 tasks, now up to date\n",
+      "utc": "2026-09-09T18:52:45.759839+00:00"
+    },
+    {
+      "command": "moon test --deny-warn",
+      "exit_code": 0,
+      "output": "Total tests: 5, passed: 5, failed: 0.\n",
+      "utc": "2026-09-09T18:52:46.098133+00:00"
+    },
+    {
+      "command": "moon test --target js --deny-warn",
+      "exit_code": 0,
+      "output": "Total tests: 5, passed: 5, failed: 0.\n",
+      "utc": "2026-09-09T18:52:46.293120+00:00"
+    },
+    {
+      "command": "moon build --target js --deny-warn",
+      "exit_code": 0,
+      "output": "Finished. moon: no work to do\n",
+      "utc": "2026-09-09T18:52:46.596870+00:00"
+    },
+    {
+      "command": "moon run cmd/main",
+      "exit_code": 0,
+      "output": "line 1: DL3007 — Avoid the latest image tag\nline 2: DL3002 — Use a non-root runtime user\nline 3: DL4006 — Shell pipeline may hide command failures; consider pipefail\nline 4: DL3025 — Prefer JSON exec form for signal forwarding\n",
+      "utc": "2026-09-09T18:52:46.760095+00:00"
+    }
+  ],
+  "demo": "line 1: DL3007 — Avoid the latest image tag\nline 2: DL3002 — Use a non-root runtime user\nline 3: DL4006 — Shell pipeline may hide command failures; consider pipefail\nline 4: DL3025 — Prefer JSON exec form for signal forwarding",
+  "source_lines": 318
+}

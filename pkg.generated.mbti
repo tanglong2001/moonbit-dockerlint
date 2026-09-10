@@ -1,0 +1,34 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "localreview/dockerlint"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn lint(Array[Instruction]) -> Array[Diagnostic]
+
+pub fn parse(String) -> Array[Instruction] raise ParseError
+
+// Errors
+pub suberror ParseError {
+  Invalid(String)
+} derive(@debug.Debug)
+
+// Types and methods
+pub struct Diagnostic {
+  line : Int
+  code : String
+  message : String
+} derive(Eq, @debug.Debug)
+
+pub struct Instruction {
+  line : Int
+  end_line : Int
+  name : String
+  arguments : String
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,5 @@
+import {
+  "localreview/dockerlint" @lib,
+}
+
+pkgtype(kind: "executable")
