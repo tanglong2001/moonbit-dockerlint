@@ -1,0 +1,2947 @@
+{
+  "version": "Haskell Dockerfile Linter 2.15.1",
+  "binarySHA256": "c7187db94eeeeca956519a6af171adc31453941a1e777961f6e680f697c8c507",
+  "cases": [
+    {
+      "name": "command-0",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-1",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install -y curl=1.2 --no-install-recommends && rm -rf /var/lib/apt/lists/*",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-2",
+      "source": "FROM ubuntu:24.04\nRUN apt-get update",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3009",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Delete the apt lists (/var/lib/apt/lists) after installing something"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-3",
+      "source": "FROM ubuntu:24.04\nRUN rm -rf /var/lib/apt/lists/* && apt-get update",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-4",
+      "source": "FROM ubuntu:24.04\nRUN apt-get update && rm -rf /var/lib/apt/lists/*",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-5",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install -qq curl=1",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-6",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install --assume-yes --no-install-recommends curl=1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-7",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install -y -o A=B curl=1",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-8",
+      "source": "FROM ubuntu:24.04\nRUN apt install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3027",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Do not use apt as it is meant to be an end-user tool, use apt-get or apt-cache instead"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-9",
+      "source": "FROM ubuntu:24.04\nRUN apk add curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3018",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`"
+        },
+        {
+          "code": "DL3019",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-10",
+      "source": "FROM ubuntu:24.04\nRUN apk add --no-cache curl=1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-11",
+      "source": "FROM ubuntu:24.04\nRUN apk --no-cache add curl=1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-12",
+      "source": "FROM ubuntu:24.04\nRUN apk add --no-cache --virtual .build-deps gcc=1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-13",
+      "source": "FROM ubuntu:24.04\nRUN apk add --no-cache curl~1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-14",
+      "source": "FROM ubuntu:24.04\nRUN pip install requests",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        },
+        {
+          "code": "DL3042",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Avoid use of cache directory with pip. Use `pip install --no-cache-dir <package>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-15",
+      "source": "FROM ubuntu:24.04\nRUN pip3 install --no-cache-dir requests==2.0",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-16",
+      "source": "FROM ubuntu:24.04\nRUN python3 -m pip install requests",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        },
+        {
+          "code": "DL3042",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Avoid use of cache directory with pip. Use `pip install --no-cache-dir <package>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-17",
+      "source": "FROM ubuntu:24.04\nRUN pip install -r requirements.txt --no-cache-dir",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-18",
+      "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir --user requests",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-19",
+      "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir ./local",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-20",
+      "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir -e .",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-21",
+      "source": "FROM ubuntu:24.04\nRUN pip install --index-url https://example.test/simple requests==2 --no-cache-dir",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-22",
+      "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir https://example.test/a.whl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-23",
+      "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir requests~=2",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-24",
+      "source": "FROM ubuntu:24.04\nRUN npm install lodash",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3016",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-25",
+      "source": "FROM ubuntu:24.04\nRUN npm install lodash@1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-26",
+      "source": "FROM ubuntu:24.04\nRUN npm install @scope/pkg",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3016",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-27",
+      "source": "FROM ubuntu:24.04\nRUN npm install @scope/pkg@1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-28",
+      "source": "FROM ubuntu:24.04\nRUN npm ci",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-29",
+      "source": "FROM ubuntu:24.04\nRUN npm install",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-30",
+      "source": "FROM ubuntu:24.04\nRUN npm install ./local",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-31",
+      "source": "FROM ubuntu:24.04\nRUN npm install git+https://example.test/repo#abc",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-32",
+      "source": "FROM ubuntu:24.04\nRUN gem install rake",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3028",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in gem install. Instead of `gem install <gem>` use `gem install <gem>:<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-33",
+      "source": "FROM ubuntu:24.04\nRUN gem install rake -v 1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-34",
+      "source": "FROM ubuntu:24.04\nRUN gem install rake:1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-35",
+      "source": "FROM ubuntu:24.04\nRUN yum install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3030",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `yum install -y <package>`"
+        },
+        {
+          "code": "DL3032",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`yum clean all` missing after yum command."
+        },
+        {
+          "code": "DL3033",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `yum install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-36",
+      "source": "FROM ubuntu:24.04\nRUN yum install -y curl-1.2 && yum clean all",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-37",
+      "source": "FROM ubuntu:24.04\nRUN yum install -y curl2",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3032",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`yum clean all` missing after yum command."
+        },
+        {
+          "code": "DL3033",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `yum install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-38",
+      "source": "FROM ubuntu:24.04\nRUN dnf install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3038",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `dnf install -y <package>`"
+        },
+        {
+          "code": "DL3040",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`dnf clean all` missing after dnf command."
+        },
+        {
+          "code": "DL3041",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `dnf install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-39",
+      "source": "FROM ubuntu:24.04\nRUN dnf -y install curl-1.2 && dnf clean all",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-40",
+      "source": "FROM ubuntu:24.04\nRUN zypper install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Non-interactive switch missing from `zypper` command: `zypper install -y`"
+        },
+        {
+          "code": "DL3036",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`zypper clean` missing after zypper use."
+        },
+        {
+          "code": "DL3037",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `zypper install -y <package>=<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-41",
+      "source": "FROM ubuntu:24.04\nRUN zypper --non-interactive install curl=1 && zypper clean",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-42",
+      "source": "FROM ubuntu:24.04\nRUN zypper dist-upgrade",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3035",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Do not use `zypper dist-upgrade`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-43",
+      "source": "FROM ubuntu:24.04\nRUN go install example.test/tool",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3062",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in go. Instead of `go install <package>` use `go install <package>@<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-44",
+      "source": "FROM ubuntu:24.04\nRUN go install example.test/tool@v1",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-45",
+      "source": "FROM ubuntu:24.04\nRUN go install ./cmd/tool",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-46",
+      "source": "FROM ubuntu:24.04\nRUN wget https://example.test/a",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3047",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid use of wget without progress bar. Use `wget --progress=dot:giga <url>`. Or consider using `-q` or `-nv` (shorthands for `--quiet` or `--no-verbose`)."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-47",
+      "source": "FROM ubuntu:24.04\nRUN wget -q https://example.test/a",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-48",
+      "source": "FROM ubuntu:24.04\nRUN wget --progress=dot:giga https://example.test/a",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-49",
+      "source": "FROM ubuntu:24.04\nRUN cd /app && echo ok",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3003",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use WORKDIR to switch to a directory"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-50",
+      "source": "FROM ubuntu:24.04\nRUN echo ok && cd /app",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3003",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use WORKDIR to switch to a directory"
+        },
+        {
+          "code": "SC2164",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use 'cd ... || exit' or 'cd ... || return' in case cd fails."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-51",
+      "source": "FROM ubuntu:24.04\nRUN sudo apt-get update",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3004",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-52",
+      "source": "FROM ubuntu:24.04\nRUN service foo start",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3001",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-53",
+      "source": "FROM ubuntu:24.04\nRUN ln -s /bin/bash /bin/sh",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL4005",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use SHELL to change the default shell"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-54",
+      "source": "FROM ubuntu:24.04\nRUN a | b",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL4006",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Set the SHELL option -o pipefail before RUN with a pipe in it. If you are using /bin/sh in an alpine image or if your shell is symlinked to busybox then consider explicitly setting your SHELL to /bin/ash, or disable this check"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-55",
+      "source": "FROM ubuntu:24.04\nRUN set -o pipefail && a | b",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL4006",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Set the SHELL option -o pipefail before RUN with a pipe in it. If you are using /bin/sh in an alpine image or if your shell is symlinked to busybox then consider explicitly setting your SHELL to /bin/ash, or disable this check"
+        },
+        {
+          "code": "SC3040",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "In POSIX sh, set option pipefail is undefined."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-56",
+      "source": "FROM ubuntu:24.04\nRUN echo pipefail && a | b",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL4006",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Set the SHELL option -o pipefail before RUN with a pipe in it. If you are using /bin/sh in an alpine image or if your shell is symlinked to busybox then consider explicitly setting your SHELL to /bin/ash, or disable this check"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-57",
+      "source": "FROM ubuntu:24.04\nRUN echo 'apt-get install curl | wget'",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-58",
+      "source": "FROM ubuntu:24.04\nRUN echo apt-get install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-59",
+      "source": "FROM ubuntu:24.04\nRUN echo $(apt-get install curl)",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "SC2005",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Useless echo? Instead of 'echo $(cmd)', just use 'cmd'."
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-60",
+      "source": "FROM ubuntu:24.04\nRUN env DEBIAN_FRONTEND=noninteractive apt-get install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-61",
+      "source": "FROM ubuntu:24.04\nRUN /usr/bin/apt-get install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-62",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install curl > /tmp/log",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-63",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install curl 2>/tmp/log",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-64",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install 'curl=1'",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-65",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install \"$PACKAGES\"",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-66",
+      "source": "FROM ubuntu:24.04\nRUN echo \"$(apt-get install curl)\"",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "SC2005",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Useless echo? Instead of 'echo $(cmd)', just use 'cmd'."
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-67",
+      "source": "FROM ubuntu:24.04\nRUN echo '$(apt-get install curl)'",
+      "config": {},
+      "reference": [
+        {
+          "code": "SC2016",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Expressions don't expand in single quotes, use double quotes for that."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-68",
+      "source": "FROM ubuntu:24.04\nRUN echo `pip install requests`",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        },
+        {
+          "code": "DL3042",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Avoid use of cache directory with pip. Use `pip install --no-cache-dir <package>`"
+        },
+        {
+          "code": "SC2006",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Use $(...) notation instead of legacy backticks `...`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-69",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install -y --no-install-recommends curl=1 2>/tmp/log",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-70",
+      "source": "FROM ubuntu:24.04\nRUN echo $(echo $(apk add curl))",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3018",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`"
+        },
+        {
+          "code": "DL3019",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages"
+        },
+        {
+          "code": "SC2005",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Useless echo? Instead of 'echo $(cmd)', just use 'cmd'."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "command-71",
+      "source": "FROM ubuntu:24.04\nRUN echo $((1<<2))",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-72",
+      "source": "FROM ubuntu:24.04\nRUN echo ok # apt-get install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-73",
+      "source": "FROM ubuntu:24.04\nRUN echo \"a|b\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "command-74",
+      "source": "FROM ubuntu:24.04\nRUN a || b",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-apt-get-",
+      "source": "FROM ubuntu:24.04\nRUN apt-get install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-apt-get-command ",
+      "source": "FROM ubuntu:24.04\nRUN command apt-get install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-apt-get-exec ",
+      "source": "FROM ubuntu:24.04\nRUN exec apt-get install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-apt-get-if true; then ",
+      "source": "FROM ubuntu:24.04\nRUN if true; then apt-get install curl; fi",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-apt-get-env X=1 ",
+      "source": "FROM ubuntu:24.04\nRUN env X=1 apt-get install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-apt-get-",
+      "source": "FROM ubuntu:24.04\nRUN echo \"apt-get install curl\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-apt-get- && echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"apt-get install curl\" && echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-apt-get- ; echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"apt-get install curl\" ; echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-apt-get- || true",
+      "source": "FROM ubuntu:24.04\nRUN echo \"apt-get install curl\" || true",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-apk-",
+      "source": "FROM ubuntu:24.04\nRUN apk add curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3018",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`"
+        },
+        {
+          "code": "DL3019",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-apk-command ",
+      "source": "FROM ubuntu:24.04\nRUN command apk add curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3018",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`"
+        },
+        {
+          "code": "DL3019",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-apk-exec ",
+      "source": "FROM ubuntu:24.04\nRUN exec apk add curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3018",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`"
+        },
+        {
+          "code": "DL3019",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-apk-if true; then ",
+      "source": "FROM ubuntu:24.04\nRUN if true; then apk add curl; fi",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3018",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`"
+        },
+        {
+          "code": "DL3019",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-apk-env X=1 ",
+      "source": "FROM ubuntu:24.04\nRUN env X=1 apk add curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-apk-",
+      "source": "FROM ubuntu:24.04\nRUN echo \"apk add curl\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-apk- && echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"apk add curl\" && echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-apk- ; echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"apk add curl\" ; echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-apk- || true",
+      "source": "FROM ubuntu:24.04\nRUN echo \"apk add curl\" || true",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-pip-",
+      "source": "FROM ubuntu:24.04\nRUN pip install requests",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        },
+        {
+          "code": "DL3042",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Avoid use of cache directory with pip. Use `pip install --no-cache-dir <package>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-pip-command ",
+      "source": "FROM ubuntu:24.04\nRUN command pip install requests",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        },
+        {
+          "code": "DL3042",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Avoid use of cache directory with pip. Use `pip install --no-cache-dir <package>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-pip-exec ",
+      "source": "FROM ubuntu:24.04\nRUN exec pip install requests",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        },
+        {
+          "code": "DL3042",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Avoid use of cache directory with pip. Use `pip install --no-cache-dir <package>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-pip-if true; then ",
+      "source": "FROM ubuntu:24.04\nRUN if true; then pip install requests; fi",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        },
+        {
+          "code": "DL3042",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Avoid use of cache directory with pip. Use `pip install --no-cache-dir <package>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-pip-env X=1 ",
+      "source": "FROM ubuntu:24.04\nRUN env X=1 pip install requests",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-pip-",
+      "source": "FROM ubuntu:24.04\nRUN echo \"pip install requests\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-pip- && echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"pip install requests\" && echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-pip- ; echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"pip install requests\" ; echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-pip- || true",
+      "source": "FROM ubuntu:24.04\nRUN echo \"pip install requests\" || true",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-npm-",
+      "source": "FROM ubuntu:24.04\nRUN npm install lodash",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3016",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-npm-command ",
+      "source": "FROM ubuntu:24.04\nRUN command npm install lodash",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-npm-exec ",
+      "source": "FROM ubuntu:24.04\nRUN exec npm install lodash",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-npm-if true; then ",
+      "source": "FROM ubuntu:24.04\nRUN if true; then npm install lodash; fi",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3016",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-npm-env X=1 ",
+      "source": "FROM ubuntu:24.04\nRUN env X=1 npm install lodash",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-npm-",
+      "source": "FROM ubuntu:24.04\nRUN echo \"npm install lodash\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-npm- && echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"npm install lodash\" && echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-npm- ; echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"npm install lodash\" ; echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-npm- || true",
+      "source": "FROM ubuntu:24.04\nRUN echo \"npm install lodash\" || true",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-gem-",
+      "source": "FROM ubuntu:24.04\nRUN gem install rake",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3028",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in gem install. Instead of `gem install <gem>` use `gem install <gem>:<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-gem-command ",
+      "source": "FROM ubuntu:24.04\nRUN command gem install rake",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3028",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in gem install. Instead of `gem install <gem>` use `gem install <gem>:<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-gem-exec ",
+      "source": "FROM ubuntu:24.04\nRUN exec gem install rake",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3028",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in gem install. Instead of `gem install <gem>` use `gem install <gem>:<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-gem-if true; then ",
+      "source": "FROM ubuntu:24.04\nRUN if true; then gem install rake; fi",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3028",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in gem install. Instead of `gem install <gem>` use `gem install <gem>:<version>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-gem-env X=1 ",
+      "source": "FROM ubuntu:24.04\nRUN env X=1 gem install rake",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-gem-",
+      "source": "FROM ubuntu:24.04\nRUN echo \"gem install rake\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-gem- && echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"gem install rake\" && echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-gem- ; echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"gem install rake\" ; echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-gem- || true",
+      "source": "FROM ubuntu:24.04\nRUN echo \"gem install rake\" || true",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-yum-",
+      "source": "FROM ubuntu:24.04\nRUN yum install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3030",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `yum install -y <package>`"
+        },
+        {
+          "code": "DL3032",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`yum clean all` missing after yum command."
+        },
+        {
+          "code": "DL3033",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `yum install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-yum-command ",
+      "source": "FROM ubuntu:24.04\nRUN command yum install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3030",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `yum install -y <package>`"
+        },
+        {
+          "code": "DL3032",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`yum clean all` missing after yum command."
+        },
+        {
+          "code": "DL3033",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `yum install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-yum-exec ",
+      "source": "FROM ubuntu:24.04\nRUN exec yum install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3030",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `yum install -y <package>`"
+        },
+        {
+          "code": "DL3032",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`yum clean all` missing after yum command."
+        },
+        {
+          "code": "DL3033",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `yum install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-yum-if true; then ",
+      "source": "FROM ubuntu:24.04\nRUN if true; then yum install curl; fi",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3030",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `yum install -y <package>`"
+        },
+        {
+          "code": "DL3032",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`yum clean all` missing after yum command."
+        },
+        {
+          "code": "DL3033",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `yum install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-yum-env X=1 ",
+      "source": "FROM ubuntu:24.04\nRUN env X=1 yum install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-yum-",
+      "source": "FROM ubuntu:24.04\nRUN echo \"yum install curl\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-yum- && echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"yum install curl\" && echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-yum- ; echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"yum install curl\" ; echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-yum- || true",
+      "source": "FROM ubuntu:24.04\nRUN echo \"yum install curl\" || true",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-dnf-",
+      "source": "FROM ubuntu:24.04\nRUN dnf install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3038",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `dnf install -y <package>`"
+        },
+        {
+          "code": "DL3040",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`dnf clean all` missing after dnf command."
+        },
+        {
+          "code": "DL3041",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `dnf install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-dnf-command ",
+      "source": "FROM ubuntu:24.04\nRUN command dnf install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3038",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `dnf install -y <package>`"
+        },
+        {
+          "code": "DL3040",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`dnf clean all` missing after dnf command."
+        },
+        {
+          "code": "DL3041",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `dnf install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-dnf-exec ",
+      "source": "FROM ubuntu:24.04\nRUN exec dnf install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3038",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `dnf install -y <package>`"
+        },
+        {
+          "code": "DL3040",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`dnf clean all` missing after dnf command."
+        },
+        {
+          "code": "DL3041",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `dnf install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-dnf-if true; then ",
+      "source": "FROM ubuntu:24.04\nRUN if true; then dnf install curl; fi",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3038",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the -y switch to avoid manual input `dnf install -y <package>`"
+        },
+        {
+          "code": "DL3040",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`dnf clean all` missing after dnf command."
+        },
+        {
+          "code": "DL3041",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `dnf install -y <package>-<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-dnf-env X=1 ",
+      "source": "FROM ubuntu:24.04\nRUN env X=1 dnf install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-dnf-",
+      "source": "FROM ubuntu:24.04\nRUN echo \"dnf install curl\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-dnf- && echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"dnf install curl\" && echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-dnf- ; echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"dnf install curl\" ; echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-dnf- || true",
+      "source": "FROM ubuntu:24.04\nRUN echo \"dnf install curl\" || true",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "wrapper-zypper-",
+      "source": "FROM ubuntu:24.04\nRUN zypper install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Non-interactive switch missing from `zypper` command: `zypper install -y`"
+        },
+        {
+          "code": "DL3036",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`zypper clean` missing after zypper use."
+        },
+        {
+          "code": "DL3037",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `zypper install -y <package>=<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-zypper-command ",
+      "source": "FROM ubuntu:24.04\nRUN command zypper install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Non-interactive switch missing from `zypper` command: `zypper install -y`"
+        },
+        {
+          "code": "DL3036",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`zypper clean` missing after zypper use."
+        },
+        {
+          "code": "DL3037",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `zypper install -y <package>=<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-zypper-exec ",
+      "source": "FROM ubuntu:24.04\nRUN exec zypper install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Non-interactive switch missing from `zypper` command: `zypper install -y`"
+        },
+        {
+          "code": "DL3036",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`zypper clean` missing after zypper use."
+        },
+        {
+          "code": "DL3037",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `zypper install -y <package>=<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-zypper-if true; then ",
+      "source": "FROM ubuntu:24.04\nRUN if true; then zypper install curl; fi",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Non-interactive switch missing from `zypper` command: `zypper install -y`"
+        },
+        {
+          "code": "DL3036",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "`zypper clean` missing after zypper use."
+        },
+        {
+          "code": "DL3037",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Specify version with `zypper install -y <package>=<version>`."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "wrapper-zypper-env X=1 ",
+      "source": "FROM ubuntu:24.04\nRUN env X=1 zypper install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-zypper-",
+      "source": "FROM ubuntu:24.04\nRUN echo \"zypper install curl\"",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-zypper- && echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"zypper install curl\" && echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-zypper- ; echo ok",
+      "source": "FROM ubuntu:24.04\nRUN echo \"zypper install curl\" ; echo ok",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "quoted-zypper- || true",
+      "source": "FROM ubuntu:24.04\nRUN echo \"zypper install curl\" || true",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-0",
+      "source": "FROM alpine",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3006",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 1,
+          "message": "Always tag the version of an image explicitly"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-1",
+      "source": "FROM alpine:latest",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3007",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 1,
+          "message": "Using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-2",
+      "source": "FROM scratch",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-3",
+      "source": "FROM ubuntu:24.04 AS base\nFROM base",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-4",
+      "source": "FROM --platform=linux/amd64 ubuntu:24.04",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3029",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 1,
+          "message": "Do not use --platform flag with FROM"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-5",
+      "source": "FROM ubuntu:24.04\nUSER root\nUSER 1000",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3066",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Non-numeric user-id may not be resolvable by host system"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-6",
+      "source": "FROM ubuntu:24.04\nUSER root",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3002",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Last USER should not be root"
+        },
+        {
+          "code": "DL3066",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Non-numeric user-id may not be resolvable by host system"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-7",
+      "source": "FROM ubuntu:24.04\nUSER root:root",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3002",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Last USER should not be root"
+        },
+        {
+          "code": "DL3066",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Non-numeric user-id may not be resolvable by host system"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-8",
+      "source": "FROM ubuntu:24.04\nUSER 0",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3002",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Last USER should not be root"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-9",
+      "source": "FROM ubuntu:24.04\nUSER 0:1000",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3002",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Last USER should not be root"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-10",
+      "source": "FROM ubuntu:24.04\nUSER 1000\nUSER root",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3002",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 3,
+          "message": "Last USER should not be root"
+        },
+        {
+          "code": "DL3066",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 3,
+          "message": "Non-numeric user-id may not be resolvable by host system"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-11",
+      "source": "FROM ubuntu:24.04\nUSER root\nUSER root",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3066",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Non-numeric user-id may not be resolvable by host system"
+        },
+        {
+          "code": "DL3002",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 3,
+          "message": "Last USER should not be root"
+        },
+        {
+          "code": "DL3066",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 3,
+          "message": "Non-numeric user-id may not be resolvable by host system"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-12",
+      "source": "FROM ubuntu:24.04\nUSER root\nFROM scratch\nUSER root",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3002",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Last USER should not be root"
+        },
+        {
+          "code": "DL3066",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Non-numeric user-id may not be resolvable by host system"
+        },
+        {
+          "code": "DL3066",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 4,
+          "message": "Non-numeric user-id may not be resolvable by host system"
+        },
+        {
+          "code": "DL3002",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 4,
+          "message": "Last USER should not be root"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-13",
+      "source": "FROM ubuntu:24.04\nEXPOSE 0 80/tcp 53/udp 65535",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-14",
+      "source": "FROM ubuntu:24.04\nEXPOSE 65536",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3011",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "Valid UNIX ports range from 0 to 65535"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-15",
+      "source": "FROM ubuntu:24.04\nEXPOSE 80-90",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-16",
+      "source": "FROM ubuntu:24.04\nEXPOSE 90-80",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-17",
+      "source": "FROM ubuntu:24.04\nEXPOSE abc",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL1000",
+          "column": 8,
+          "file": "/dev/stdin",
+          "level": "error",
+          "line": 2,
+          "message": "unexpected 'a'\nexpecting '\\', A port optionally followed by the protocol, A range of ports optionally followed by the protocol, a new line followed by the next instruction, or at least one space"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-18",
+      "source": "FROM ubuntu:24.04\nEXPOSE 80/sctp",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL1000",
+          "column": 11,
+          "file": "/dev/stdin",
+          "level": "error",
+          "line": 2,
+          "message": "invalid protocol"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-19",
+      "source": "FROM ubuntu:24.04\nEXPOSE $PORT",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-20",
+      "source": "FROM ubuntu:24.04\nENV A=x B=$A",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3044",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "Do not refer to an environment variable within the same `ENV` statement where it is defined."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-21",
+      "source": "FROM ubuntu:24.04\nENV A=x\nENV B=$A",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-22",
+      "source": "FROM ubuntu:24.04\nENV A=x B=\"$A\"",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3044",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "Do not refer to an environment variable within the same `ENV` statement where it is defined."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-23",
+      "source": "FROM ubuntu:24.04\nENV A=x B='$A'",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3044",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "Do not refer to an environment variable within the same `ENV` statement where it is defined."
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-24",
+      "source": "FROM ubuntu:24.04\nENV A=x\nENV A=y B=$A",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-25",
+      "source": "FROM ubuntu:24.04\nHEALTHCHECK CMD true\nHEALTHCHECK CMD false",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3025",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use arguments JSON notation for CMD and ENTRYPOINT arguments"
+        },
+        {
+          "code": "DL3012",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 3,
+          "message": "Multiple `HEALTHCHECK` instructions"
+        },
+        {
+          "code": "DL3025",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 3,
+          "message": "Use arguments JSON notation for CMD and ENTRYPOINT arguments"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-26",
+      "source": "FROM ubuntu:24.04\nHEALTHCHECK NONE\nHEALTHCHECK CMD true",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3012",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 3,
+          "message": "Multiple `HEALTHCHECK` instructions"
+        },
+        {
+          "code": "DL3025",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 3,
+          "message": "Use arguments JSON notation for CMD and ENTRYPOINT arguments"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-27",
+      "source": "FROM ubuntu:24.04\nSHELL [\"/bin/bash\",\"-o\",\"pipefail\",\"-c\"]\nRUN a | b",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-28",
+      "source": "FROM ubuntu:24.04\nSHELL [\"/bin/bash\",\"-c\"]\nRUN a | b",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL4006",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 3,
+          "message": "Set the SHELL option -o pipefail before RUN with a pipe in it. If you are using /bin/sh in an alpine image or if your shell is symlinked to busybox then consider explicitly setting your SHELL to /bin/ash, or disable this check"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-29",
+      "source": "FROM ubuntu:24.04\nRUN <<EOF\napt-get install curl\nEOF",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-30",
+      "source": "FROM ubuntu:24.04\nRUN cat <<EOF\napt-get install curl\nEOF",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-31",
+      "source": "FROM ubuntu:24.04\nRUN <<'EOF'\npip install requests\nEOF",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3013",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>` or `pip install --requirement <requirements file>`"
+        },
+        {
+          "code": "DL3042",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Avoid use of cache directory with pip. Use `pip install --no-cache-dir <package>`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-32",
+      "source": "FROM ubuntu:24.04\nRUN --mount=type=cache,target=/var/cache/apt apt-get install curl",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-33",
+      "source": "FROM ubuntu:24.04\nRUN [\"apt-get\",\"install\",\"curl\"]",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3008",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`"
+        },
+        {
+          "code": "DL3014",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use the `-y` switch to avoid manual input `apt-get -y install <package>`"
+        },
+        {
+          "code": "DL3015",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Avoid additional packages by specifying `--no-install-recommends`"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-34",
+      "source": "FROM ubuntu:24.04\nADD file /out/",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3020",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "Use COPY instead of ADD for files and folders"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-35",
+      "source": "FROM ubuntu:24.04\nADD archive.tar.gz /out/",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-36",
+      "source": "FROM ubuntu:24.04\nADD file /out.tar.gz",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3020",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "Use COPY instead of ADD for files and folders"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-37",
+      "source": "FROM ubuntu:24.04\nCOPY a b /out",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL3021",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "COPY with more than 2 arguments requires the last argument to end with /"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-38",
+      "source": "FROM ubuntu:24.04\nCMD [\"one\"]\nCMD [\"two\"]",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL4003",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 3,
+          "message": "Multiple `CMD` instructions found. If you list more than one `CMD` then only the last `CMD` will take effect"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-39",
+      "source": "FROM ubuntu:24.04\nENTRYPOINT [\"one\"]\nENTRYPOINT [\"two\"]",
+      "config": {},
+      "reference": [
+        {
+          "code": "DL4004",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 3,
+          "message": "Multiple `ENTRYPOINT` instructions found. If you list more than one `ENTRYPOINT` then only the last `ENTRYPOINT` will take effect"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "structure-40",
+      "source": "# hadolint ignore=DL3007\nFROM ubuntu:latest",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "structure-41",
+      "source": "# hadolint global ignore=DL3008,DL3009,DL3014,DL3015\nFROM ubuntu:24.04\nRUN apt-get install curl",
+      "config": {},
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "trusted-reject",
+      "source": "FROM ghcr.io/example/tool:1",
+      "config": {
+        "trustedRegistries": [
+          "docker.io"
+        ]
+      },
+      "reference": [
+        {
+          "code": "DL3026",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 1,
+          "message": "Use only an allowed registry in the FROM image"
+        }
+      ],
+      "referenceExit": 1
+    },
+    {
+      "name": "trusted-parent",
+      "source": "FROM ubuntu:24.04 AS base\nFROM base",
+      "config": {
+        "trustedRegistries": [
+          "docker.io"
+        ]
+      },
+      "reference": [],
+      "referenceExit": 0
+    },
+    {
+      "name": "trusted-local",
+      "source": "FROM localhost:5000/tool:1",
+      "config": {
+        "trustedRegistries": [
+          "localhost:5000"
+        ]
+      },
+      "reference": [
+        {
+          "code": "DL1000",
+          "column": 25,
+          "file": "/dev/stdin",
+          "level": "error",
+          "line": 1,
+          "message": "unexpected ':'\nexpecting '@', '\\', a new line followed by the next instruction, or the image tag"
+        }
+      ],
+      "referenceExit": 1
+    }
+  ]
+}

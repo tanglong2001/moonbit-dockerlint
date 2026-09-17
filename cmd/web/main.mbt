@@ -33,3 +33,17 @@ pub fn stage_graph(input : String) -> String {
     e => "ERROR: " + Repr(e).to_string()
   }
 }
+
+///|
+pub fn configured(input : String, config : String, filename : String) -> String {
+  @lib.configured_report(input, config, filename~) catch {
+    e => "ERROR: " + Repr(e).to_string()
+  }
+}
+
+///|
+pub fn variables(input : String, build_args : String) -> String {
+  @lib.variable_report(input, build_args_json=build_args) catch {
+    e => "ERROR: " + Repr(e).to_string()
+  }
+}

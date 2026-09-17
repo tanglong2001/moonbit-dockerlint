@@ -1,0 +1,8 @@
+{
+  "release": "v2.15.1",
+  "officialChecksum": "c7187db94eeeeca956519a6af171adc31453941a1e777961f6e680f697c8c507",
+  "bytes": 55661096,
+  "transport": "https://files.pythonhosted.org/packages/f8/4f/2d98b50d966b32e4e6f71ac429bd90bd1c2390ce4cd7dcc1056df9c233a2/hadolint_bin-2.15.1-py3-none-manylinux2014_x86_64.musllinux_1_1_x86_64.whl",
+  "wheelSHA256": "bed607e611b0f7e4ef78e4bba9bdf39504d8234d3eadfe86d702f2bff14ac2d5",
+  "officialChecksumsURL": "https://github.com/hadolint/hadolint/releases/download/v2.15.1/checksums.sha256"
+}

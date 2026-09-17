@@ -1,0 +1,974 @@
+[
+  {
+    "name": "command-0",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "command-1",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install -y curl=1.2 --no-install-recommends && rm -rf /var/lib/apt/lists/*",
+    "config": {}
+  },
+  {
+    "name": "command-2",
+    "source": "FROM ubuntu:24.04\nRUN apt-get update",
+    "config": {}
+  },
+  {
+    "name": "command-3",
+    "source": "FROM ubuntu:24.04\nRUN rm -rf /var/lib/apt/lists/* && apt-get update",
+    "config": {}
+  },
+  {
+    "name": "command-4",
+    "source": "FROM ubuntu:24.04\nRUN apt-get update && rm -rf /var/lib/apt/lists/*",
+    "config": {}
+  },
+  {
+    "name": "command-5",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install -qq curl=1",
+    "config": {}
+  },
+  {
+    "name": "command-6",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install --assume-yes --no-install-recommends curl=1",
+    "config": {}
+  },
+  {
+    "name": "command-7",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install -y -o A=B curl=1",
+    "config": {}
+  },
+  {
+    "name": "command-8",
+    "source": "FROM ubuntu:24.04\nRUN apt install curl",
+    "config": {}
+  },
+  {
+    "name": "command-9",
+    "source": "FROM ubuntu:24.04\nRUN apk add curl",
+    "config": {}
+  },
+  {
+    "name": "command-10",
+    "source": "FROM ubuntu:24.04\nRUN apk add --no-cache curl=1",
+    "config": {}
+  },
+  {
+    "name": "command-11",
+    "source": "FROM ubuntu:24.04\nRUN apk --no-cache add curl=1",
+    "config": {}
+  },
+  {
+    "name": "command-12",
+    "source": "FROM ubuntu:24.04\nRUN apk add --no-cache --virtual .build-deps gcc=1",
+    "config": {}
+  },
+  {
+    "name": "command-13",
+    "source": "FROM ubuntu:24.04\nRUN apk add --no-cache curl~1",
+    "config": {}
+  },
+  {
+    "name": "command-14",
+    "source": "FROM ubuntu:24.04\nRUN pip install requests",
+    "config": {}
+  },
+  {
+    "name": "command-15",
+    "source": "FROM ubuntu:24.04\nRUN pip3 install --no-cache-dir requests==2.0",
+    "config": {}
+  },
+  {
+    "name": "command-16",
+    "source": "FROM ubuntu:24.04\nRUN python3 -m pip install requests",
+    "config": {}
+  },
+  {
+    "name": "command-17",
+    "source": "FROM ubuntu:24.04\nRUN pip install -r requirements.txt --no-cache-dir",
+    "config": {}
+  },
+  {
+    "name": "command-18",
+    "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir --user requests",
+    "config": {}
+  },
+  {
+    "name": "command-19",
+    "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir ./local",
+    "config": {}
+  },
+  {
+    "name": "command-20",
+    "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir -e .",
+    "config": {}
+  },
+  {
+    "name": "command-21",
+    "source": "FROM ubuntu:24.04\nRUN pip install --index-url https://example.test/simple requests==2 --no-cache-dir",
+    "config": {}
+  },
+  {
+    "name": "command-22",
+    "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir https://example.test/a.whl",
+    "config": {}
+  },
+  {
+    "name": "command-23",
+    "source": "FROM ubuntu:24.04\nRUN pip install --no-cache-dir requests~=2",
+    "config": {}
+  },
+  {
+    "name": "command-24",
+    "source": "FROM ubuntu:24.04\nRUN npm install lodash",
+    "config": {}
+  },
+  {
+    "name": "command-25",
+    "source": "FROM ubuntu:24.04\nRUN npm install lodash@1",
+    "config": {}
+  },
+  {
+    "name": "command-26",
+    "source": "FROM ubuntu:24.04\nRUN npm install @scope/pkg",
+    "config": {}
+  },
+  {
+    "name": "command-27",
+    "source": "FROM ubuntu:24.04\nRUN npm install @scope/pkg@1",
+    "config": {}
+  },
+  {
+    "name": "command-28",
+    "source": "FROM ubuntu:24.04\nRUN npm ci",
+    "config": {}
+  },
+  {
+    "name": "command-29",
+    "source": "FROM ubuntu:24.04\nRUN npm install",
+    "config": {}
+  },
+  {
+    "name": "command-30",
+    "source": "FROM ubuntu:24.04\nRUN npm install ./local",
+    "config": {}
+  },
+  {
+    "name": "command-31",
+    "source": "FROM ubuntu:24.04\nRUN npm install git+https://example.test/repo#abc",
+    "config": {}
+  },
+  {
+    "name": "command-32",
+    "source": "FROM ubuntu:24.04\nRUN gem install rake",
+    "config": {}
+  },
+  {
+    "name": "command-33",
+    "source": "FROM ubuntu:24.04\nRUN gem install rake -v 1",
+    "config": {}
+  },
+  {
+    "name": "command-34",
+    "source": "FROM ubuntu:24.04\nRUN gem install rake:1",
+    "config": {}
+  },
+  {
+    "name": "command-35",
+    "source": "FROM ubuntu:24.04\nRUN yum install curl",
+    "config": {}
+  },
+  {
+    "name": "command-36",
+    "source": "FROM ubuntu:24.04\nRUN yum install -y curl-1.2 && yum clean all",
+    "config": {}
+  },
+  {
+    "name": "command-37",
+    "source": "FROM ubuntu:24.04\nRUN yum install -y curl2",
+    "config": {}
+  },
+  {
+    "name": "command-38",
+    "source": "FROM ubuntu:24.04\nRUN dnf install curl",
+    "config": {}
+  },
+  {
+    "name": "command-39",
+    "source": "FROM ubuntu:24.04\nRUN dnf -y install curl-1.2 && dnf clean all",
+    "config": {}
+  },
+  {
+    "name": "command-40",
+    "source": "FROM ubuntu:24.04\nRUN zypper install curl",
+    "config": {}
+  },
+  {
+    "name": "command-41",
+    "source": "FROM ubuntu:24.04\nRUN zypper --non-interactive install curl=1 && zypper clean",
+    "config": {}
+  },
+  {
+    "name": "command-42",
+    "source": "FROM ubuntu:24.04\nRUN zypper dist-upgrade",
+    "config": {}
+  },
+  {
+    "name": "command-43",
+    "source": "FROM ubuntu:24.04\nRUN go install example.test/tool",
+    "config": {}
+  },
+  {
+    "name": "command-44",
+    "source": "FROM ubuntu:24.04\nRUN go install example.test/tool@v1",
+    "config": {}
+  },
+  {
+    "name": "command-45",
+    "source": "FROM ubuntu:24.04\nRUN go install ./cmd/tool",
+    "config": {}
+  },
+  {
+    "name": "command-46",
+    "source": "FROM ubuntu:24.04\nRUN wget https://example.test/a",
+    "config": {}
+  },
+  {
+    "name": "command-47",
+    "source": "FROM ubuntu:24.04\nRUN wget -q https://example.test/a",
+    "config": {}
+  },
+  {
+    "name": "command-48",
+    "source": "FROM ubuntu:24.04\nRUN wget --progress=dot:giga https://example.test/a",
+    "config": {}
+  },
+  {
+    "name": "command-49",
+    "source": "FROM ubuntu:24.04\nRUN cd /app && echo ok",
+    "config": {}
+  },
+  {
+    "name": "command-50",
+    "source": "FROM ubuntu:24.04\nRUN echo ok && cd /app",
+    "config": {}
+  },
+  {
+    "name": "command-51",
+    "source": "FROM ubuntu:24.04\nRUN sudo apt-get update",
+    "config": {}
+  },
+  {
+    "name": "command-52",
+    "source": "FROM ubuntu:24.04\nRUN service foo start",
+    "config": {}
+  },
+  {
+    "name": "command-53",
+    "source": "FROM ubuntu:24.04\nRUN ln -s /bin/bash /bin/sh",
+    "config": {}
+  },
+  {
+    "name": "command-54",
+    "source": "FROM ubuntu:24.04\nRUN a | b",
+    "config": {}
+  },
+  {
+    "name": "command-55",
+    "source": "FROM ubuntu:24.04\nRUN set -o pipefail && a | b",
+    "config": {}
+  },
+  {
+    "name": "command-56",
+    "source": "FROM ubuntu:24.04\nRUN echo pipefail && a | b",
+    "config": {}
+  },
+  {
+    "name": "command-57",
+    "source": "FROM ubuntu:24.04\nRUN echo 'apt-get install curl | wget'",
+    "config": {}
+  },
+  {
+    "name": "command-58",
+    "source": "FROM ubuntu:24.04\nRUN echo apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "command-59",
+    "source": "FROM ubuntu:24.04\nRUN echo $(apt-get install curl)",
+    "config": {}
+  },
+  {
+    "name": "command-60",
+    "source": "FROM ubuntu:24.04\nRUN env DEBIAN_FRONTEND=noninteractive apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "command-61",
+    "source": "FROM ubuntu:24.04\nRUN /usr/bin/apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "command-62",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install curl > /tmp/log",
+    "config": {}
+  },
+  {
+    "name": "command-63",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install curl 2>/tmp/log",
+    "config": {}
+  },
+  {
+    "name": "command-64",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install 'curl=1'",
+    "config": {}
+  },
+  {
+    "name": "command-65",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install \"$PACKAGES\"",
+    "config": {}
+  },
+  {
+    "name": "command-66",
+    "source": "FROM ubuntu:24.04\nRUN echo \"$(apt-get install curl)\"",
+    "config": {}
+  },
+  {
+    "name": "command-67",
+    "source": "FROM ubuntu:24.04\nRUN echo '$(apt-get install curl)'",
+    "config": {}
+  },
+  {
+    "name": "command-68",
+    "source": "FROM ubuntu:24.04\nRUN echo `pip install requests`",
+    "config": {}
+  },
+  {
+    "name": "command-69",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install -y --no-install-recommends curl=1 2>/tmp/log",
+    "config": {}
+  },
+  {
+    "name": "command-70",
+    "source": "FROM ubuntu:24.04\nRUN echo $(echo $(apk add curl))",
+    "config": {}
+  },
+  {
+    "name": "command-71",
+    "source": "FROM ubuntu:24.04\nRUN echo $((1<<2))",
+    "config": {}
+  },
+  {
+    "name": "command-72",
+    "source": "FROM ubuntu:24.04\nRUN echo ok # apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "command-73",
+    "source": "FROM ubuntu:24.04\nRUN echo \"a|b\"",
+    "config": {}
+  },
+  {
+    "name": "command-74",
+    "source": "FROM ubuntu:24.04\nRUN a || b",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apt-get-",
+    "source": "FROM ubuntu:24.04\nRUN apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apt-get-command ",
+    "source": "FROM ubuntu:24.04\nRUN command apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apt-get-exec ",
+    "source": "FROM ubuntu:24.04\nRUN exec apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apt-get-if true; then ",
+    "source": "FROM ubuntu:24.04\nRUN if true; then apt-get install curl; fi",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apt-get-env X=1 ",
+    "source": "FROM ubuntu:24.04\nRUN env X=1 apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "quoted-apt-get-",
+    "source": "FROM ubuntu:24.04\nRUN echo \"apt-get install curl\"",
+    "config": {}
+  },
+  {
+    "name": "quoted-apt-get- && echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"apt-get install curl\" && echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-apt-get- ; echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"apt-get install curl\" ; echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-apt-get- || true",
+    "source": "FROM ubuntu:24.04\nRUN echo \"apt-get install curl\" || true",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apk-",
+    "source": "FROM ubuntu:24.04\nRUN apk add curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apk-command ",
+    "source": "FROM ubuntu:24.04\nRUN command apk add curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apk-exec ",
+    "source": "FROM ubuntu:24.04\nRUN exec apk add curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apk-if true; then ",
+    "source": "FROM ubuntu:24.04\nRUN if true; then apk add curl; fi",
+    "config": {}
+  },
+  {
+    "name": "wrapper-apk-env X=1 ",
+    "source": "FROM ubuntu:24.04\nRUN env X=1 apk add curl",
+    "config": {}
+  },
+  {
+    "name": "quoted-apk-",
+    "source": "FROM ubuntu:24.04\nRUN echo \"apk add curl\"",
+    "config": {}
+  },
+  {
+    "name": "quoted-apk- && echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"apk add curl\" && echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-apk- ; echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"apk add curl\" ; echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-apk- || true",
+    "source": "FROM ubuntu:24.04\nRUN echo \"apk add curl\" || true",
+    "config": {}
+  },
+  {
+    "name": "wrapper-pip-",
+    "source": "FROM ubuntu:24.04\nRUN pip install requests",
+    "config": {}
+  },
+  {
+    "name": "wrapper-pip-command ",
+    "source": "FROM ubuntu:24.04\nRUN command pip install requests",
+    "config": {}
+  },
+  {
+    "name": "wrapper-pip-exec ",
+    "source": "FROM ubuntu:24.04\nRUN exec pip install requests",
+    "config": {}
+  },
+  {
+    "name": "wrapper-pip-if true; then ",
+    "source": "FROM ubuntu:24.04\nRUN if true; then pip install requests; fi",
+    "config": {}
+  },
+  {
+    "name": "wrapper-pip-env X=1 ",
+    "source": "FROM ubuntu:24.04\nRUN env X=1 pip install requests",
+    "config": {}
+  },
+  {
+    "name": "quoted-pip-",
+    "source": "FROM ubuntu:24.04\nRUN echo \"pip install requests\"",
+    "config": {}
+  },
+  {
+    "name": "quoted-pip- && echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"pip install requests\" && echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-pip- ; echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"pip install requests\" ; echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-pip- || true",
+    "source": "FROM ubuntu:24.04\nRUN echo \"pip install requests\" || true",
+    "config": {}
+  },
+  {
+    "name": "wrapper-npm-",
+    "source": "FROM ubuntu:24.04\nRUN npm install lodash",
+    "config": {}
+  },
+  {
+    "name": "wrapper-npm-command ",
+    "source": "FROM ubuntu:24.04\nRUN command npm install lodash",
+    "config": {}
+  },
+  {
+    "name": "wrapper-npm-exec ",
+    "source": "FROM ubuntu:24.04\nRUN exec npm install lodash",
+    "config": {}
+  },
+  {
+    "name": "wrapper-npm-if true; then ",
+    "source": "FROM ubuntu:24.04\nRUN if true; then npm install lodash; fi",
+    "config": {}
+  },
+  {
+    "name": "wrapper-npm-env X=1 ",
+    "source": "FROM ubuntu:24.04\nRUN env X=1 npm install lodash",
+    "config": {}
+  },
+  {
+    "name": "quoted-npm-",
+    "source": "FROM ubuntu:24.04\nRUN echo \"npm install lodash\"",
+    "config": {}
+  },
+  {
+    "name": "quoted-npm- && echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"npm install lodash\" && echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-npm- ; echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"npm install lodash\" ; echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-npm- || true",
+    "source": "FROM ubuntu:24.04\nRUN echo \"npm install lodash\" || true",
+    "config": {}
+  },
+  {
+    "name": "wrapper-gem-",
+    "source": "FROM ubuntu:24.04\nRUN gem install rake",
+    "config": {}
+  },
+  {
+    "name": "wrapper-gem-command ",
+    "source": "FROM ubuntu:24.04\nRUN command gem install rake",
+    "config": {}
+  },
+  {
+    "name": "wrapper-gem-exec ",
+    "source": "FROM ubuntu:24.04\nRUN exec gem install rake",
+    "config": {}
+  },
+  {
+    "name": "wrapper-gem-if true; then ",
+    "source": "FROM ubuntu:24.04\nRUN if true; then gem install rake; fi",
+    "config": {}
+  },
+  {
+    "name": "wrapper-gem-env X=1 ",
+    "source": "FROM ubuntu:24.04\nRUN env X=1 gem install rake",
+    "config": {}
+  },
+  {
+    "name": "quoted-gem-",
+    "source": "FROM ubuntu:24.04\nRUN echo \"gem install rake\"",
+    "config": {}
+  },
+  {
+    "name": "quoted-gem- && echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"gem install rake\" && echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-gem- ; echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"gem install rake\" ; echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-gem- || true",
+    "source": "FROM ubuntu:24.04\nRUN echo \"gem install rake\" || true",
+    "config": {}
+  },
+  {
+    "name": "wrapper-yum-",
+    "source": "FROM ubuntu:24.04\nRUN yum install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-yum-command ",
+    "source": "FROM ubuntu:24.04\nRUN command yum install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-yum-exec ",
+    "source": "FROM ubuntu:24.04\nRUN exec yum install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-yum-if true; then ",
+    "source": "FROM ubuntu:24.04\nRUN if true; then yum install curl; fi",
+    "config": {}
+  },
+  {
+    "name": "wrapper-yum-env X=1 ",
+    "source": "FROM ubuntu:24.04\nRUN env X=1 yum install curl",
+    "config": {}
+  },
+  {
+    "name": "quoted-yum-",
+    "source": "FROM ubuntu:24.04\nRUN echo \"yum install curl\"",
+    "config": {}
+  },
+  {
+    "name": "quoted-yum- && echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"yum install curl\" && echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-yum- ; echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"yum install curl\" ; echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-yum- || true",
+    "source": "FROM ubuntu:24.04\nRUN echo \"yum install curl\" || true",
+    "config": {}
+  },
+  {
+    "name": "wrapper-dnf-",
+    "source": "FROM ubuntu:24.04\nRUN dnf install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-dnf-command ",
+    "source": "FROM ubuntu:24.04\nRUN command dnf install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-dnf-exec ",
+    "source": "FROM ubuntu:24.04\nRUN exec dnf install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-dnf-if true; then ",
+    "source": "FROM ubuntu:24.04\nRUN if true; then dnf install curl; fi",
+    "config": {}
+  },
+  {
+    "name": "wrapper-dnf-env X=1 ",
+    "source": "FROM ubuntu:24.04\nRUN env X=1 dnf install curl",
+    "config": {}
+  },
+  {
+    "name": "quoted-dnf-",
+    "source": "FROM ubuntu:24.04\nRUN echo \"dnf install curl\"",
+    "config": {}
+  },
+  {
+    "name": "quoted-dnf- && echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"dnf install curl\" && echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-dnf- ; echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"dnf install curl\" ; echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-dnf- || true",
+    "source": "FROM ubuntu:24.04\nRUN echo \"dnf install curl\" || true",
+    "config": {}
+  },
+  {
+    "name": "wrapper-zypper-",
+    "source": "FROM ubuntu:24.04\nRUN zypper install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-zypper-command ",
+    "source": "FROM ubuntu:24.04\nRUN command zypper install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-zypper-exec ",
+    "source": "FROM ubuntu:24.04\nRUN exec zypper install curl",
+    "config": {}
+  },
+  {
+    "name": "wrapper-zypper-if true; then ",
+    "source": "FROM ubuntu:24.04\nRUN if true; then zypper install curl; fi",
+    "config": {}
+  },
+  {
+    "name": "wrapper-zypper-env X=1 ",
+    "source": "FROM ubuntu:24.04\nRUN env X=1 zypper install curl",
+    "config": {}
+  },
+  {
+    "name": "quoted-zypper-",
+    "source": "FROM ubuntu:24.04\nRUN echo \"zypper install curl\"",
+    "config": {}
+  },
+  {
+    "name": "quoted-zypper- && echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"zypper install curl\" && echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-zypper- ; echo ok",
+    "source": "FROM ubuntu:24.04\nRUN echo \"zypper install curl\" ; echo ok",
+    "config": {}
+  },
+  {
+    "name": "quoted-zypper- || true",
+    "source": "FROM ubuntu:24.04\nRUN echo \"zypper install curl\" || true",
+    "config": {}
+  },
+  {
+    "name": "structure-0",
+    "source": "FROM alpine",
+    "config": {}
+  },
+  {
+    "name": "structure-1",
+    "source": "FROM alpine:latest",
+    "config": {}
+  },
+  {
+    "name": "structure-2",
+    "source": "FROM scratch",
+    "config": {}
+  },
+  {
+    "name": "structure-3",
+    "source": "FROM ubuntu:24.04 AS base\nFROM base",
+    "config": {}
+  },
+  {
+    "name": "structure-4",
+    "source": "FROM --platform=linux/amd64 ubuntu:24.04",
+    "config": {}
+  },
+  {
+    "name": "structure-5",
+    "source": "FROM ubuntu:24.04\nUSER root\nUSER 1000",
+    "config": {}
+  },
+  {
+    "name": "structure-6",
+    "source": "FROM ubuntu:24.04\nUSER root",
+    "config": {}
+  },
+  {
+    "name": "structure-7",
+    "source": "FROM ubuntu:24.04\nUSER root:root",
+    "config": {}
+  },
+  {
+    "name": "structure-8",
+    "source": "FROM ubuntu:24.04\nUSER 0",
+    "config": {}
+  },
+  {
+    "name": "structure-9",
+    "source": "FROM ubuntu:24.04\nUSER 0:1000",
+    "config": {}
+  },
+  {
+    "name": "structure-10",
+    "source": "FROM ubuntu:24.04\nUSER 1000\nUSER root",
+    "config": {}
+  },
+  {
+    "name": "structure-11",
+    "source": "FROM ubuntu:24.04\nUSER root\nUSER root",
+    "config": {}
+  },
+  {
+    "name": "structure-12",
+    "source": "FROM ubuntu:24.04\nUSER root\nFROM scratch\nUSER root",
+    "config": {}
+  },
+  {
+    "name": "structure-13",
+    "source": "FROM ubuntu:24.04\nEXPOSE 0 80/tcp 53/udp 65535",
+    "config": {}
+  },
+  {
+    "name": "structure-14",
+    "source": "FROM ubuntu:24.04\nEXPOSE 65536",
+    "config": {}
+  },
+  {
+    "name": "structure-15",
+    "source": "FROM ubuntu:24.04\nEXPOSE 80-90",
+    "config": {}
+  },
+  {
+    "name": "structure-16",
+    "source": "FROM ubuntu:24.04\nEXPOSE 90-80",
+    "config": {}
+  },
+  {
+    "name": "structure-17",
+    "source": "FROM ubuntu:24.04\nEXPOSE abc",
+    "config": {}
+  },
+  {
+    "name": "structure-18",
+    "source": "FROM ubuntu:24.04\nEXPOSE 80/sctp",
+    "config": {}
+  },
+  {
+    "name": "structure-19",
+    "source": "FROM ubuntu:24.04\nEXPOSE $PORT",
+    "config": {}
+  },
+  {
+    "name": "structure-20",
+    "source": "FROM ubuntu:24.04\nENV A=x B=$A",
+    "config": {}
+  },
+  {
+    "name": "structure-21",
+    "source": "FROM ubuntu:24.04\nENV A=x\nENV B=$A",
+    "config": {}
+  },
+  {
+    "name": "structure-22",
+    "source": "FROM ubuntu:24.04\nENV A=x B=\"$A\"",
+    "config": {}
+  },
+  {
+    "name": "structure-23",
+    "source": "FROM ubuntu:24.04\nENV A=x B='$A'",
+    "config": {}
+  },
+  {
+    "name": "structure-24",
+    "source": "FROM ubuntu:24.04\nENV A=x\nENV A=y B=$A",
+    "config": {}
+  },
+  {
+    "name": "structure-25",
+    "source": "FROM ubuntu:24.04\nHEALTHCHECK CMD true\nHEALTHCHECK CMD false",
+    "config": {}
+  },
+  {
+    "name": "structure-26",
+    "source": "FROM ubuntu:24.04\nHEALTHCHECK NONE\nHEALTHCHECK CMD true",
+    "config": {}
+  },
+  {
+    "name": "structure-27",
+    "source": "FROM ubuntu:24.04\nSHELL [\"/bin/bash\",\"-o\",\"pipefail\",\"-c\"]\nRUN a | b",
+    "config": {}
+  },
+  {
+    "name": "structure-28",
+    "source": "FROM ubuntu:24.04\nSHELL [\"/bin/bash\",\"-c\"]\nRUN a | b",
+    "config": {}
+  },
+  {
+    "name": "structure-29",
+    "source": "FROM ubuntu:24.04\nRUN <<EOF\napt-get install curl\nEOF",
+    "config": {}
+  },
+  {
+    "name": "structure-30",
+    "source": "FROM ubuntu:24.04\nRUN cat <<EOF\napt-get install curl\nEOF",
+    "config": {}
+  },
+  {
+    "name": "structure-31",
+    "source": "FROM ubuntu:24.04\nRUN <<'EOF'\npip install requests\nEOF",
+    "config": {}
+  },
+  {
+    "name": "structure-32",
+    "source": "FROM ubuntu:24.04\nRUN --mount=type=cache,target=/var/cache/apt apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "structure-33",
+    "source": "FROM ubuntu:24.04\nRUN [\"apt-get\",\"install\",\"curl\"]",
+    "config": {}
+  },
+  {
+    "name": "structure-34",
+    "source": "FROM ubuntu:24.04\nADD file /out/",
+    "config": {}
+  },
+  {
+    "name": "structure-35",
+    "source": "FROM ubuntu:24.04\nADD archive.tar.gz /out/",
+    "config": {}
+  },
+  {
+    "name": "structure-36",
+    "source": "FROM ubuntu:24.04\nADD file /out.tar.gz",
+    "config": {}
+  },
+  {
+    "name": "structure-37",
+    "source": "FROM ubuntu:24.04\nCOPY a b /out",
+    "config": {}
+  },
+  {
+    "name": "structure-38",
+    "source": "FROM ubuntu:24.04\nCMD [\"one\"]\nCMD [\"two\"]",
+    "config": {}
+  },
+  {
+    "name": "structure-39",
+    "source": "FROM ubuntu:24.04\nENTRYPOINT [\"one\"]\nENTRYPOINT [\"two\"]",
+    "config": {}
+  },
+  {
+    "name": "structure-40",
+    "source": "# hadolint ignore=DL3007\nFROM ubuntu:latest",
+    "config": {}
+  },
+  {
+    "name": "structure-41",
+    "source": "# hadolint global ignore=DL3008,DL3009,DL3014,DL3015\nFROM ubuntu:24.04\nRUN apt-get install curl",
+    "config": {}
+  },
+  {
+    "name": "trusted-reject",
+    "source": "FROM ghcr.io/example/tool:1",
+    "config": {
+      "trustedRegistries": [
+        "docker.io"
+      ]
+    }
+  },
+  {
+    "name": "trusted-parent",
+    "source": "FROM ubuntu:24.04 AS base\nFROM base",
+    "config": {
+      "trustedRegistries": [
+        "docker.io"
+      ]
+    }
+  },
+  {
+    "name": "trusted-local",
+    "source": "FROM localhost:5000/tool:1",
+    "config": {
+      "trustedRegistries": [
+        "localhost:5000"
+      ]
+    }
+  }
+]

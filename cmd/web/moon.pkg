@@ -9,7 +9,13 @@ pkgtype(kind: "executable")
 options(
   link: {
     "js": {
-      "exports": [ "run", "diagnostics", "stage_graph" ],
+      "exports": [
+        "run",
+        "diagnostics",
+        "stage_graph",
+        "configured",
+        "variables",
+      ],
       "format": "esm",
     },
   },

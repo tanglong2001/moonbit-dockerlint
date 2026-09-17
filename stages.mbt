@@ -105,9 +105,17 @@ pub fn analyze_stages(
 pub fn Diagnostic::severity(self : Diagnostic) -> String {
   if self.code.has_prefix("ML") ||
     [
-      "DL3000", "DL3020", "DL3021", "DL3023", "DL3024", "DL3043", "DL4000", "DL4004",
+      "DL3000", "DL3004", "DL3011", "DL3012", "DL3020", "DL3021", "DL3023", "DL3024",
+      "DL3026", "DL3043", "DL3044", "DL4000", "DL4004",
     ].contains(self.code) {
     "error"
+  } else if [
+      "DL3001", "DL3009", "DL3015", "DL3019", "DL3047", "DL3049", "DL3050", "DL3059",
+      "DL3060", "DL3066",
+    ].contains(self.code) {
+    "info"
+  } else if self.code == "DL3048" {
+    "style"
   } else {
     "warning"
   }

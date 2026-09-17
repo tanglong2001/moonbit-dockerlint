@@ -1,0 +1,17 @@
+{
+  "runtime": "v24.11.0",
+  "platform": "win32",
+  "groups": [
+    "multi-file JSON and configured thresholds",
+    "SARIF rule indices and locations",
+    "Checkstyle parses with independent XML parser",
+    "GNU text and parse errors remain structured",
+    "ARG ENV file and build argument path",
+    "strict UTF-8 limits and invalid configuration",
+    "inline ignores severity and trusted registry policies",
+    "large stdout drained without truncation",
+    "scope snapshot output budget"
+  ],
+  "passed": 9,
+  "largeOutputBytes": 507133
+}

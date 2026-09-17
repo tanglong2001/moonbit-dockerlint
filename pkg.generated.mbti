@@ -8,13 +8,23 @@ import {
 // Values
 pub fn analyze_stages(Array[Instruction]) -> Array[Stage] raise ParseError
 
-pub fn check(String, ignore_codes? : Array[String], honor_inline? : Bool) -> Array[Diagnostic] raise ParseError
+pub fn analyze_variables(String, build_args? : Map[String, String]) -> Array[VariableScope] raise ParseError
+
+pub fn check(String, ignore_codes? : Array[String], honor_inline? : Bool, trusted_registries? : Array[String]) -> Array[Diagnostic] raise ParseError
+
+pub fn configured_report(String, String, filename? : String) -> String raise ParseError
+
+pub fn expand_variables(String, Map[String, String]) -> Expansion raise ParseError
 
 pub fn lint(Array[Instruction]) -> Array[Diagnostic]
 
 pub fn parse(String) -> Array[Instruction] raise ParseError
 
 pub fn report_json(String, filename? : String, honor_inline? : Bool) -> String raise ParseError
+
+pub fn shell_tokens(String) -> Array[ShellToken] raise ParseError
+
+pub fn variable_report(String, build_args_json? : String) -> String raise ParseError
 
 // Errors
 pub suberror ParseError {
@@ -36,6 +46,11 @@ pub struct Diagnostic {
 } derive(Eq, ToJson, @debug.Debug)
 pub fn Diagnostic::severity(Self) -> String
 
+pub struct Expansion {
+  value : String
+  unresolved : Array[String]
+} derive(Eq, ToJson, @debug.Debug)
+
 pub struct HereDoc {
   name : String
   content : String
@@ -52,12 +67,31 @@ pub struct Instruction {
 } derive(Eq, ToJson, @debug.Debug)
 pub fn Instruction::split_arguments(Self) -> Arguments raise ParseError
 
+pub struct ShellToken {
+  kind : String
+  value : String
+  raw : String
+  line : Int
+  quoted : Bool
+  dynamic : Bool
+} derive(Eq, ToJson, @debug.Debug)
+
 pub struct Stage {
   index : Int
   line : Int
   base : String
   stage_name : String?
   dependencies : Array[Int]
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct VariableScope {
+  line : Int
+  stage : Int
+  instruction : String
+  expanded : String
+  arguments : Map[String, String]
+  environment : Map[String, String]
+  unresolved : Array[String]
 } derive(Eq, ToJson, @debug.Debug)
 
 // Type aliases

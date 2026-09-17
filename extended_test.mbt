@@ -77,8 +77,8 @@ test "extended stages dependencies inheritance and cycles" {
 ///|
 test "extended suppression scope and shell false positives" {
   let source = "# hadolint global ignore=DL3007\nFROM alpine:latest\n# hadolint ignore=DL3002 # build-time exception\nUSER root\nUSER root\nRUN <<EOF\n# hadolint global ignore=DL3002\nEOF\nUSER root"
-  assert_eq(@dockerlint.check(source).map(d => d.line), [5, 9])
-  assert_eq(@dockerlint.check(source, honor_inline=false).length(), 4)
+  assert_eq(@dockerlint.check(source).map(d => d.line), [9])
+  assert_eq(@dockerlint.check(source, honor_inline=false).length(), 2)
   assert_eq(
     @dockerlint.check(
       "FROM alpine:3\nRUN echo '|'\nRUN a || b\nRUN echo hi # | comment",

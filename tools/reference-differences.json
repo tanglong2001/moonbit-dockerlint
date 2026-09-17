@@ -1,0 +1,240 @@
+{
+  "command-3": {
+    "reason": "Require apt-list removal after update, since removal before update does not remove the newly created lists.",
+    "sourceSHA256": "ac9ede552f719ff29ec5e4614177e1fa8aebf620bf2fa501e0130ffa62d3503e",
+    "expectedActual": [
+      [
+        "DL3009",
+        2,
+        "info"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "command-60": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "a0bdab529e00b6547ece3341d931e0a62bc715da66b325239d5602b673ce4f57",
+    "expectedActual": [
+      [
+        "DL3008",
+        2,
+        "warning"
+      ],
+      [
+        "DL3014",
+        2,
+        "warning"
+      ],
+      [
+        "DL3015",
+        2,
+        "info"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "command-61": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "97fd4a621df06f31da39a5a469ac85160ac3f00178ed6a4b8b3d75d3026698e5",
+    "expectedActual": [
+      [
+        "DL3008",
+        2,
+        "warning"
+      ],
+      [
+        "DL3014",
+        2,
+        "warning"
+      ],
+      [
+        "DL3015",
+        2,
+        "info"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-apt-get-env X=1 ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "2e48a2865c2e0914caffb6263e71c334849005039905ca3cbb250e7c9f723c52",
+    "expectedActual": [
+      [
+        "DL3008",
+        2,
+        "warning"
+      ],
+      [
+        "DL3014",
+        2,
+        "warning"
+      ],
+      [
+        "DL3015",
+        2,
+        "info"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-apk-env X=1 ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "8051525757f4ef144b7f78fbe30608fee01d3ba2fb53a36dfe3d78cd6af93145",
+    "expectedActual": [
+      [
+        "DL3018",
+        2,
+        "warning"
+      ],
+      [
+        "DL3019",
+        2,
+        "info"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-pip-env X=1 ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "2a2fe860203d9e4e1b2886bd28cad80aa9eb15c5e6a26713609527491c3e6f1b",
+    "expectedActual": [
+      [
+        "DL3013",
+        2,
+        "warning"
+      ],
+      [
+        "DL3042",
+        2,
+        "warning"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-npm-command ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "7f306542ca779ed6751cca70c5216b61bc060a7e3d26a7a7395a6901ce1f022a",
+    "expectedActual": [
+      [
+        "DL3016",
+        2,
+        "warning"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-npm-exec ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "a107912a738c38f89e513ae3a78ad2cf57b701095dbfc6ccec6a332fc99d27d8",
+    "expectedActual": [
+      [
+        "DL3016",
+        2,
+        "warning"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-npm-env X=1 ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "89926a2ea3429b2b227c29ca55fcdc4e76188b3db89db3b945a81ee192eb1b6b",
+    "expectedActual": [
+      [
+        "DL3016",
+        2,
+        "warning"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-gem-env X=1 ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "a511c9f2a4a2ad4f3cfe9c14c49514f0526e9b252d61c27899791b80f34ca8c3",
+    "expectedActual": [
+      [
+        "DL3028",
+        2,
+        "warning"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-yum-env X=1 ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "05d35e1c6ddb5c91aefc73c9e43c0671228d0a0b6c05e1d74cb60c686cf483df",
+    "expectedActual": [
+      [
+        "DL3030",
+        2,
+        "warning"
+      ],
+      [
+        "DL3032",
+        2,
+        "warning"
+      ],
+      [
+        "DL3033",
+        2,
+        "warning"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-dnf-env X=1 ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "e984bea7c84bc125f20d97aaa08cb2cf772e6de2f26f1d14a4f45cc13c137028",
+    "expectedActual": [
+      [
+        "DL3038",
+        2,
+        "warning"
+      ],
+      [
+        "DL3040",
+        2,
+        "warning"
+      ],
+      [
+        "DL3041",
+        2,
+        "warning"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "wrapper-zypper-env X=1 ": {
+    "reason": "Analyze simple env/command/exec wrappers and absolute executable paths consistently; the reference misses this package command.",
+    "sourceSHA256": "7b5becdef61ad3857021b2db1389061c790463aef11cfb1832e16603f82bc67a",
+    "expectedActual": [
+      [
+        "DL3034",
+        2,
+        "warning"
+      ],
+      [
+        "DL3036",
+        2,
+        "warning"
+      ],
+      [
+        "DL3037",
+        2,
+        "warning"
+      ]
+    ],
+    "expectedReference": []
+  },
+  "structure-23": {
+    "reason": "Single-quoted ENV value is literal in this analyzer, so it does not reference the other assignment.",
+    "sourceSHA256": "38fc5d431bebd4b6f2e3a2e7126c7c7e7933bfe989df4988e06733352420d21d",
+    "expectedActual": [],
+    "expectedReference": [
+      [
+        "DL3044",
+        2,
+        "error"
+      ]
+    ]
+  }
+}

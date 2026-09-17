@@ -1,71 +1,47 @@
-# Dockerfile 解析与检查
+# MoonBit Dockerlint 0.4.0
 
-本地 MoonBit 0.3.0。解析指令、行号、RUN/COPY heredoc，提供多阶段依赖分析与一组 Dockerfile 检查规则。
-所有代码、浏览器引擎、命令行、测试和审查材料保存在本独立仓库，没有执行镜像构建。
+独立的 Dockerfile 静态检查库，提供 MoonBit API、编译后 JS 引擎、浏览器示例与实际文件/stdin CLI。分析器不会执行 Dockerfile、RUN、变量中的命令或拉取镜像。全部成果留在本地。
 
-## 本地审查
+0.4 补上带引号的 shell 词法、有限命令/重定向/命令替换分析、脚本型 heredoc、包管理器规则、ARG/ENV 作用域快照、配置与多文件报告。修正最后一条 USER、ADD 源路径和默认诊断级别。仍不是完整 Hadolint/ShellCheck 或 BuildKit 实现。
+
+## 使用
 
 ```powershell
-node tools/cli.mjs --file review.Dockerfile
-node tools/cli.mjs --file review.Dockerfile --stages
-node tools/cli.mjs --file review.Dockerfile --diagnostics --fail-on error
-node tools/cli.mjs --file review.Dockerfile --diagnostics --no-inline
+./verify.ps1 -MoonPath /absolute/path/to/moon.exe
+node tools/cli.mjs --file Dockerfile --diagnostics --fail-on warning
+node tools/cli.mjs --file Dockerfile --file Dockerfile.test --format sarif
+node tools/cli.mjs --file Dockerfile --format checkstyle --config examples/lint-config.json
+node tools/cli.mjs --file examples/variables.Dockerfile --variables --build-arg TAG=3.21
+node tools/cli.mjs --file Dockerfile --stages
+python tools/serve.py
 ```
 
-`--diagnostics` 输出带 file/line/code/level/message 的 JSON 数组；`--stages` 输出阶段和依赖。
-可用 --input 或 UTF-8 标准输入；--json 为通用 CLI 信封。--no-inline 禁用源文件内规则忽略。
---fail-on 可选 error、warning、none（默认）；退出码：0 完成、1 宿主/参数错误、2 解析/阶段错误、3 达到诊断阈值。
-网页 `./start-review.ps1` 沿用文本诊断入口，已支持本轮新语法与忽略注释。
+无输入选项时读取严格 UTF-8 stdin。`--input TEXT`、单个或多个 `--file` 可选；文本输入不能与文件混用。`--format` 支持 json、sarif、checkstyle、gnu、text；旧 `--json` 仍包装 `{ok,output}`，与 JSON 诊断数组不同。`--no-inline` 禁止文件内的 ignore 指令。`--fail-on error|warning|info|style|none` 包含指定级别及以上，默认 none。退出码 0 为完成，1 为宿主/配置错误，2 为解析错误，3 为触发诊断阈值。格式化报告中的解析错误用 ML1099 表示，仍保持合法 JSON/XML。浏览器展示默认检查结果；变量、配置及格式输出使用 API/CLI。
 
-## API 与实现范围
+配置文件为严格 JSON：
 
-- parse(source) 返回 Instruction，保留物理 line/end_line、arguments 和 heredocs。
-  HereDoc 保留分隔符、正文、是否去除制表符及是否允许展开的标记；本库不执行展开。
-- Instruction.split_arguments() 分离前导 --key=value 选项，读取 JSON 字符串数组和普通引号参数。
-  flags 映射返回重复选项的最后一个值，完整源参数仍保留全部选项。
-- analyze_stages(instructions) 输出阶段序号、来源镜像、名字和依赖边，检查循环与无效索引。
-  COPY 支持引用命名阶段、数字索引；未命中阶段名的值可以是外部镜像，不会发出网络请求。
-- lint(instructions) 返回未忽略的诊断；check(source, ignore_codes?, honor_inline?) 应用忽略规则。
-- Diagnostic.severity()、report_json(source, filename?, honor_inline?) 提供结构化审查结果。
-
-RUN/COPY 支持普通、引号、反斜线转义与 <<- 制表符 heredoc 分隔符，一条指令最多 16 个。
-正文中的注释、FROM 和空行不会变成 Dockerfile 指令；行号覆盖至结束分隔符。
-普通引号内的 <<、算术位移以及 shell 注释里的 << 不会被识别为 heredoc。
-parser directive 支持不区分大小写的键和空白，普通注释/空行后结束 directive 区域，重复指令报错。
-
-## 本轮检查增强
-
-新增/完善多个源文件目标目录约束 DL3021、非法 ONBUILD DL3043、重复 CMD/ENTRYPOINT DL4003/DL4004、
-SHELL JSON 要求 ML1006、COPY/ADD 参数数量 ML1007，以及阶段循环 ML1010。
-继承前一命名阶段的 pipefail 设置；管道扫描忽略 ||、引号、转义和注释。
-ADD 的 URL 和常见压缩包后缀不再无条件触发 DL3020；这是文件名判断，没有读取文件内容。
-已有镜像标签、root 用户、WORKDIR、COPY 自引用、MAINTAINER 等规则保留。
-ML 规则为本地结构检查；DL 规则编号对应 hadolint，但覆盖范围并不完全一致。
-
-支持以下注释，规则名用逗号分隔，允许用第二个 # 写原因：
-
-```dockerfile
-# hadolint global ignore=DL3007 # local policy
-FROM alpine:latest
-# hadolint ignore=DL3002 # applies to the next instruction
-USER root
+```json
+{"ignore":["DL3015"],"honorInline":true,"severity":{"DL3007":"error"},"trustedRegistries":["docker.io","ghcr.io"]}
 ```
 
-heredoc 正文和续行内部的注释不能修改忽略策略；全局与逐指令忽略可由 honor_inline=false 统一关闭。
-解析错误不会被规则忽略选项吞掉。重复 CMD/ENTRYPOINT 诊断由旧 ML1004 改为对应 DL 规则号。
+未知键、无效类型、规则编号及级别报错。severity 可为 error/warning/info/style/ignore。仓库按明确主机名匹配，支持 `*`；简写镜像解析到 docker.io，已知阶段名和 scratch 不检查仓库。没有自动发现配置文件、环境配置或 YAML。
 
-## 验证与剩余差距
+## API 与规则范围
 
-本轮旧功能 6 项 JS 测试通过；新增 4 组专项测试通过，最终忽略/严重程度修补又验证 1 组；
-JSON/阶段图和 5 种 CLI 阈值/错误场景通过。记录见 evidence/extended-focused-validation.json。
-运行 ./verify.ps1 可完整验证本项目；本轮没有重跑其他 19 个项目、没有启动 Docker 构建或独立 hadolint 对照。
+`parse`、`Instruction.split_arguments`、`analyze_stages`、`lint`、`check`、`report_json` 保留。新增 `shell_tokens`、`expand_variables`、`analyze_variables`、`configured_report`、`variable_report`。完整签名见 pkg.generated.mbti。JS 导出 run / diagnostics / stage_graph / configured / variables。
 
-仍缺 ShellCheck 级别的 shell AST 和大量包管理器规则、完整 heredoc shell 语法/正文检查、
-变量展开与 ARG/ENV 作用域、完整 Windows 转义、HEALTHCHECK/端口/标签规则与更多输出格式。
-当前管道检查仍是词法扫描；ADD 后缀判断不等于归档检测，不能宣称完整 Dockerfile 或 hadolint 兼容。
-源长度限 1,000,000 UTF-16 单元；阶段分析限 256 个阶段。
+- 解析逻辑行、escape/syntax/check 指令、JSON 参数、COPY/RUN heredoc 和开始/结束行；阶段依赖及环检测。未知 COPY 名称允许作为外部镜像。
+- 基础镜像版本、绝对 WORKDIR、最后 USER、ADD/COPY、CMD/ENTRYPOINT/HEALTHCHECK、ONBUILD、SHELL、EXPOSE；结构问题用 ML 编号。
+- RUN 支持引号/转义、管道/布尔连接、重定向描述符、简单 command/exec/env 包装、绝对路径、有限 `$()`/反引号内部命令及裸 heredoc 脚本。cat heredoc 内容作为数据。exec-form 参数保持字面量。
+- apt-get、apk、pip/python -m pip、npm、gem、yum、dnf、zypper、go install 的常见版本、交互或缓存检查；另有 apt、sudo、cd、部分容器不适合命令、wget、替换 /bin/sh 与 pipefail 检查。具体已对照编号见 evidence/hadolint-comparison.json 的 owned。
+- `# hadolint ignore=DLxxxx,...` 附着后续指令，global ignore 全文件生效；heredoc 正文不解释为指令。调用者忽略列表可额外传入。
 
-参照 [Dockerfile 官方文档](https://docs.docker.com/reference/dockerfile/)和
-[hadolint 规则与忽略说明](https://github.com/hadolint/hadolint)自行实现，未复制源码或测试集。
-原创代码 MIT；查重证据见 DUPLICATION.md。CI 配置不代表远端 CI 已运行。
-全部仅本地，未上传、未发布；localreview 为本地命名空间。旧 ZIP/bundle 保持历史快照，本轮未重打包。
+变量 API 输出每条指令后的参数/环境快照：全局 ARG 用于 FROM，阶段必须重声明才可引用；命名父阶段继承 ARG/ENV；ENV 覆盖 ARG，同条多赋值读取更新前的值。支持 `$NAME`、`${NAME}`、`:-`、`:+`、`-`、`+` 和有限嵌套，处理引号/反斜杠。外部镜像环境未知，因此未找到的变量保持原表达式并列入 unresolved；这与实际构建时空值/镜像环境不能混为一谈。RUN/CMD 不做 shell 求值；分析结果不自动替换回 lint。
+
+## 已有验证与差异
+
+固定校验过 SHA256 的原版 Hadolint 2.15.1，192 个原创黑盒输入：189 个可比较规则结果中 175 一致、14 个有意差异、0 未解释差异；另外 3 个参考解析错误保留原输出，不计兼容通过。比较已覆盖 DL 编号、指令行、默认级别，未声称消息文本相同。全部参考结果、ShellCheck/其他未覆盖输出都保留。173 个非配置参考黄金案例进入 JS/Wasm-GC 公共 API 测试。
+
+14 个差异逐项固定在 tools/reference-differences.json：12 个包装/绝对路径命令检测更广、1 个要求 apt update 后清理、1 个单引号 ENV 字面量不视作变量引用。参考解析错误为 EXPOSE 非数字、非 TCP/UDP 协议，以及 localhost:port 镜像；前两项本地通过 ML1012 诊断，最后一项本地接受。不能把这些差异算成兼容一致。
+
+复现、宿主检查、证据边界见 [TESTING.md](TESTING.md)，剩余差距见 [FEATURES.md](FEATURES.md)。旧 evidence 和旧 ZIP/Git bundle 为历史快照，本轮未重打包。

@@ -122,3 +122,46 @@ pub fn Instruction::split_arguments(
   }
   { flags, values, json_form, }
 }
+
+///|
+// ENV/LABEL words preserve shell punctuation as literal data.
+fn raw_arguments(source : String) -> Array[String] raise ParseError {
+  let cs = source.to_array()
+  let result : Array[String] = []
+  let mut start = 0
+  let mut quote : Char? = None
+  let mut nesting = 0
+  let mut i = 0
+  while i < cs.length() {
+    let c = cs[i]
+    if c == '\\' && quote != Some('\'') {
+      i += 2
+      continue
+    }
+    if quote is Some(q) {
+      if c == q {
+        quote = None
+      }
+    } else if c == '\'' || c == '"' {
+      quote = Some(c)
+    } else if c == '$' && i + 1 < cs.length() && cs[i + 1] == '{' {
+      nesting += 1
+      i += 1
+    } else if c == '}' && nesting > 0 {
+      nesting -= 1
+    } else if (c == ' ' || c == '\t') && nesting == 0 {
+      if start < i {
+        result.push(String::from_array(cs[start:i]))
+      }
+      start = i + 1
+    }
+    i += 1
+  }
+  if quote != None || nesting != 0 || i > cs.length() {
+    raise Invalid("invalid Docker argument quoting")
+  }
+  if start < cs.length() {
+    result.push(String::from_array(cs[start:]))
+  }
+  result
+}

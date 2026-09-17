@@ -18,6 +18,7 @@ pub fn check(
   source : String,
   ignore_codes? : Array[String] = [],
   honor_inline? : Bool = true,
+  trusted_registries? : Array[String] = [],
 ) -> Array[Diagnostic] raise ParseError {
   let instructions = parse(source)
   let global_codes = ignore_codes.copy()
@@ -52,7 +53,40 @@ pub fn check(
       }
     }
   }
-  lint(instructions).filter(d => {
+  let diagnostics = lint(instructions)
+  if !trusted_registries.is_empty() && !trusted_registries.contains("*") {
+    let aliases : Array[String] = []
+    for ins in instructions {
+      if ins.name != "FROM" {
+        continue
+      }
+      let values = ins.split_arguments().values
+      let base = values[0]
+      if !aliases.contains(base.to_lower()) &&
+        base != "scratch" &&
+        !base.contains("$") {
+        let parts = base.split("/").collect()
+        let first = parts[0].to_owned()
+        let registry = if parts.length() > 1 &&
+          (first.contains(".") || first.contains(":") || first == "localhost") {
+          first
+        } else {
+          "docker.io"
+        }
+        if !trusted_registries.contains(registry) {
+          diagnostics.push({
+            line: ins.line,
+            code: "DL3026",
+            message: "Image registry is not trusted: " + registry,
+          })
+        }
+      }
+      if values.length() == 3 && values[1].to_upper() == "AS" {
+        aliases.push(values[2].to_lower())
+      }
+    }
+  }
+  diagnostics.filter(d => {
     !global_codes.contains(d.code) &&
     !local_codes.get(d.line).unwrap_or([]).contains(d.code)
   })

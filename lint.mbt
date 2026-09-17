@@ -16,6 +16,15 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
   let mut pipefail = false
   let stage_shells : Map[String, Bool] = Map([])
   let mut stage_alias : String? = None
+  let mut last_user : Instruction? = None
+  fn report_user() -> Unit {
+    if last_user is Some(ins) {
+      let name = ins.arguments.split(":").collect()[0].trim().to_owned()
+      if name == "root" || name == "0" {
+        report(ins.line, "DL3002", "Use a non-root runtime user")
+      }
+    }
+  }
   let counts : Map[String, Int] = Map([])
   let known = [
     "FROM", "RUN", "CMD", "LABEL", "MAINTAINER", "EXPOSE", "ENV", "ADD", "COPY",
@@ -29,6 +38,8 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
       continue
     }
     if ins.name == "FROM" {
+      report_user()
+      last_user = None
       if stage_alias is Some(stage_name) {
         stage_shells[stage_name] = pipefail
       }
@@ -89,19 +100,15 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
       }
     }
     match ins.name {
-      "USER" =>
-        if args.length() > 0 &&
-          (
-            args[0] == "root" ||
-            args[0] == "0" ||
-            args[0].has_prefix("root:") ||
-            args[0].has_prefix("0:")
-          ) {
-          report(ins.line, "DL3002", "Use a non-root runtime user")
-        }
+      "USER" => last_user = Some(ins)
       "ADD" => {
         let inputs = ins.split_arguments().values catch { _ => [] }
-        let special = inputs
+        let sources = if inputs.is_empty() {
+          []
+        } else {
+          inputs[:inputs.length() - 1].to_owned()
+        }
+        let special = sources
           .iter()
           .any(s => {
             s.has_prefix("http://") ||
@@ -147,13 +154,11 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
           )
         }
       "RUN" => {
-        if ins.arguments.has_prefix("cd ") {
-          report(ins.line, "DL3003", "Use WORKDIR instead of RUN cd")
+        for diagnostic in run_rules(ins) {
+          out.push(diagnostic)
         }
-        if shell_pipeline(ins.arguments) &&
-          !pipefail &&
-          !ins.arguments.contains("pipefail") &&
-          !ins.arguments.has_prefix("[") {
+        let script = run_script(ins)
+        if shell_pipeline(script) && !pipefail && !ins.arguments.has_prefix("[") {
           report(
             ins.line,
             "DL4006",
@@ -215,6 +220,7 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
       _ => ()
     }
   }
+  report_user()
   ignore(analyze_stages(instructions)) catch {
     StageCycle(line) =>
       report(line, "ML1010", "Build stages have a circular dependency")
@@ -223,5 +229,9 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
   if stage < 0 {
     report(1, "ML1005", "Dockerfile has no FROM stage")
   }
+  for diagnostic in metadata_rules(instructions) {
+    out.push(diagnostic)
+  }
+  out.sort_by((a, b) => a.line.compare(b.line))
   out
 }
