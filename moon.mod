@@ -1,4 +1,4 @@
-name = "localreview/dockerlint"
+name = "tanglong2001/dockerlint"
 
 version = "0.4.0"
 
