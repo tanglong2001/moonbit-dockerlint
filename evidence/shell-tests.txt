@@ -1,0 +1,17 @@
+Finished. moon: ran 8 tasks, now up to date
+Finished. moon: ran 2 tasks, now up to date
+Finished. moon: ran 3 tasks, now up to date
+Total tests: 17, passed: 17, failed: 0.
+Total tests: 17, passed: 17, failed: 0.
+Finished. moon: ran 5 tasks, now up to date
+line 1: DL3007 — Avoid the latest image tag
+line 2: DL3002 — Use a non-root runtime user
+line 3: DL4006 — Shell pipeline may hide command failures; consider pipefail
+line 4: DL3025 — Prefer JSON exec form for signal forwarding
+dockerlint: standalone engine passed
+JSON diagnostics, stage graph and 5 CLI threshold/error cases passed
+{"total":192,"comparable":189,"matched":175,"intentionalDifferences":14,"unexplainedDifferences":0,"referenceParseErrors":3,"outOfScopeFindings":18}
+9 runtime/CLI groups passed
+dockerlint: CLI input/file/stdin/error/exit-status checks passed
+dockerlint: 307 bounded inputs, no uncaught runtime failure
+{"project":"dockerlint","utc":"2026-09-20T17:23:46.591Z","runtime":"v24.11.0","platform":"win32","cpu":"Intel(R) Core(TM) i7-14700HX","input_utf8_bytes":78,"samples":30,"warmup":5,"median_ms":0.15720000000000312,"p95_ms":0.3282999999999987,"max_ms":0.6550999999999974,"scope":"JS warm execution of documented example; no cross-project or upstream performance claim"}

@@ -4659,6 +4659,39 @@ function _M0MPB4Iter3allGcE(self, f) {
     }
   }
 }
+function _M0MPB4Iter3allGRPC16string10StringViewE(self, f) {
+  while (true) {
+    const _bind = _M0MPB4Iter4nextGUsRPB4JsonEE(self);
+    if (_bind === undefined) {
+      return true;
+    } else {
+      const _Some = _bind;
+      const _x = _Some;
+      if (f(_x)) {
+      } else {
+        return false;
+      }
+      continue;
+    }
+  }
+}
+function _M0MPB4Iter6filterGRPC16string10StringViewE(self, f) {
+  return _M0MPB4Iter3newGUsRPB4JsonEE(() => {
+    while (true) {
+      const _bind = _M0MPB4Iter4nextGUsRPB4JsonEE(self);
+      if (_bind === undefined) {
+        return undefined;
+      } else {
+        const _Some = _bind;
+        const _x = _Some;
+        if (f(_x)) {
+          return _x;
+        }
+        continue;
+      }
+    }
+  }, undefined);
+}
 function _M0MPB4Iter4iterGsE(self) {
   return self;
 }
@@ -9748,37 +9781,37 @@ function _M0MPC14json4Json17stringify_2einner(self, escape_slash, indent, replac
 function _M0IPC14json4JsonPB6ToJson8to__json(self) {
   return self;
 }
-function _M0IP212tanglong200110dockerlint10ParseErrorPC15debug5Debug8to__repr(_x_515) {
-  let _arg_517;
+function _M0IP212tanglong200110dockerlint10ParseErrorPC15debug5Debug8to__repr(_x_560) {
+  let _arg_562;
   _L: {
-    let _arg_516;
+    let _arg_561;
     _L$2: {
-      if (_x_515.$tag === 1) {
-        const _Invalid = _x_515;
-        const _$42$arg_516 = _Invalid._0;
-        _arg_516 = _$42$arg_516;
+      if (_x_560.$tag === 1) {
+        const _Invalid = _x_560;
+        const _$42$arg_561 = _Invalid._0;
+        _arg_561 = _$42$arg_561;
         break _L$2;
       } else {
-        const _StageCycle = _x_515;
-        const _$42$arg_517 = _StageCycle._0;
-        _arg_517 = _$42$arg_517;
+        const _StageCycle = _x_560;
+        const _$42$arg_562 = _StageCycle._0;
+        _arg_562 = _$42$arg_562;
         break _L;
       }
     }
-    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_516) }]);
+    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_561) }]);
   }
-  return _M0MPC15debug4Repr4ctor("StageCycle", [{ _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_517) }]);
+  return _M0MPC15debug4Repr4ctor("StageCycle", [{ _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_562) }]);
 }
-function _M0IP212tanglong200110dockerlint5StagePB6ToJson8to__json(_x_496) {
+function _M0IP212tanglong200110dockerlint5StagePB6ToJson8to__json(_x_541) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "index", _M0IPC13int3IntPB6ToJson8to__json(_x_496.index));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_496.line));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "base", _M0IPC16string6StringPB6ToJson8to__json(_x_496.base));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "index", _M0IPC13int3IntPB6ToJson8to__json(_x_541.index));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_541.line));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "base", _M0IPC16string6StringPB6ToJson8to__json(_x_541.base));
   let $36$inner;
   _L: {
     _L$2: {
-      const _bind$2 = _x_496.stage_name;
+      const _bind$2 = _x_541.stage_name;
       if (_bind$2 === undefined) {
       } else {
         const _Some = _bind$2;
@@ -9790,19 +9823,19 @@ function _M0IP212tanglong200110dockerlint5StagePB6ToJson8to__json(_x_496) {
     }
     _M0MPB3Map3setGsRPB4JsonE($36$map, "stage_name", _M0IPC16string6StringPB6ToJson8to__json($36$inner));
   }
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "dependencies", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_496.dependencies));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "dependencies", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_541.dependencies));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint13VariableScopePB6ToJson8to__json(_x_487) {
+function _M0IP212tanglong200110dockerlint13VariableScopePB6ToJson8to__json(_x_532) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_487.line));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "stage", _M0IPC13int3IntPB6ToJson8to__json(_x_487.stage));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "instruction", _M0IPC16string6StringPB6ToJson8to__json(_x_487.instruction));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "expanded", _M0IPC16string6StringPB6ToJson8to__json(_x_487.expanded));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "arguments", _M0IPB3MapPB6ToJson8to__jsonGssE(_x_487.arguments));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "environment", _M0IPB3MapPB6ToJson8to__jsonGssE(_x_487.environment));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "unresolved", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_487.unresolved));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_532.line));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "stage", _M0IPC13int3IntPB6ToJson8to__json(_x_532.stage));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "instruction", _M0IPC16string6StringPB6ToJson8to__json(_x_532.instruction));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "expanded", _M0IPC16string6StringPB6ToJson8to__json(_x_532.expanded));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "arguments", _M0IPB3MapPB6ToJson8to__jsonGssE(_x_532.arguments));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "environment", _M0IPB3MapPB6ToJson8to__jsonGssE(_x_532.environment));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "unresolved", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_532.unresolved));
   return _M0MPC14json4Json6object($36$map);
 }
 function _M0FP212tanglong200110dockerlint14variable__char(c, first) {
@@ -11412,6 +11445,10 @@ function _M0FP212tanglong200110dockerlint15analyze__stages(instructions) {
   }
   return new _M0DTPC16result6ResultGRPB5ArrayGRP212tanglong200110dockerlint5StageERP212tanglong200110dockerlint10ParseErrorE2Ok(stages);
 }
+function _M0FP212tanglong200110dockerlint16executable__name(path) {
+  const _bind = "/";
+  return _M0MPC16string10StringView9to__owned(_M0MPC16option6Option10unwrap__orGsE(_M0MPC15array5Array4lastGRPC16string10StringViewE(_M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(path, new _M0TPC16string10StringView(_bind, 0, _bind.length)))), new _M0TPC16string10StringView(path, 0, path.length)));
+}
 function _M0FP212tanglong200110dockerlint15metadata__rules(instructions) {
   const out = [];
   const healthchecks = new _M0TPB8MutLocalGiE(0);
@@ -11722,10 +11759,6 @@ function _M0FP212tanglong200110dockerlint15metadata__rules(instructions) {
     }
   }
   return out;
-}
-function _M0FP212tanglong200110dockerlint16executable__name(path) {
-  const _bind = "/";
-  return _M0MPC16string10StringView9to__owned(_M0MPC16option6Option10unwrap__orGsE(_M0MPC15array5Array4lastGRPC16string10StringViewE(_M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(path, new _M0TPC16string10StringView(_bind, 0, _bind.length)))), new _M0TPC16string10StringView(path, 0, path.length)));
 }
 function _M0FP212tanglong200110dockerlint13flag__present(args, names) {
   return _M0MPB4Iter3anyGsE(_M0MPC15array5Array4iterGsE(args), (arg) => _M0MPB4Iter3anyGsE(_M0MPC15array5Array4iterGsE(names), (name) => {
@@ -12593,6 +12626,298 @@ function _M0FP212tanglong200110dockerlint10run__rules(ins) {
   }
   return out;
 }
+function _M0FP212tanglong200110dockerlint19substitution__flags(raw) {
+  const cs = _M0MPC16string6String9to__array(raw);
+  const quote = new _M0TPB8MutLocalGOcE(-1);
+  const backticks = new _M0TPB8MutLocalGbE(false);
+  const unquoted = new _M0TPB8MutLocalGbE(false);
+  const double_quoted = new _M0TPB8MutLocalGbE(false);
+  const single_command = new _M0TPB8MutLocalGbE(false);
+  const i = new _M0TPB8MutLocalGiE(0);
+  while (true) {
+    if (i.val < cs.length) {
+      const c = _M0MPC15array5Array2atGcE(cs, i.val);
+      if (c === 92 && _M0IP016_24default__implPB2Eq10not__equalGOcE(quote.val, 39)) {
+        i.val = i.val + 2 | 0;
+        continue;
+      }
+      if (_M0IPC16option6OptionPB2Eq5equalGcE(quote.val, 39)) {
+        if (c === 39) {
+          quote.val = -1;
+        }
+        i.val = i.val + 1 | 0;
+        continue;
+      }
+      if (c === 39 && _M0IPC16option6OptionPB2Eq5equalGcE(quote.val, -1)) {
+        quote.val = c;
+        i.val = i.val + 1 | 0;
+        continue;
+      }
+      if (c === 34) {
+        quote.val = _M0IPC16option6OptionPB2Eq5equalGcE(quote.val, -1) ? c : -1;
+        i.val = i.val + 1 | 0;
+        continue;
+      }
+      if (c === 96 || c === 36 && ((i.val + 1 | 0) < cs.length && (_M0MPC15array5Array2atGcE(cs, i.val + 1 | 0) === 40 || _M0MPC15array5Array2atGcE(cs, i.val + 1 | 0) === 123))) {
+        const opening = c === 96 ? 96 : _M0MPC15array5Array2atGcE(cs, i.val + 1 | 0);
+        const closing = opening === 40 ? 41 : opening === 123 ? 125 : 96;
+        const command = c === 96 || opening === 40 && !((i.val + 2 | 0) < cs.length && _M0MPC15array5Array2atGcE(cs, i.val + 2 | 0) === 40);
+        const start = i.val;
+        if (command) {
+          backticks.val = backticks.val || c === 96;
+        }
+        i.val = i.val + (c === 96 ? 1 : 2) | 0;
+        const depth = new _M0TPB8MutLocalGiE(1);
+        const inner = new _M0TPB8MutLocalGOcE(-1);
+        while (true) {
+          if (i.val < cs.length && depth.val > 0) {
+            const n = _M0MPC15array5Array2atGcE(cs, i.val);
+            if (n === 92 && _M0IP016_24default__implPB2Eq10not__equalGOcE(inner.val, 39)) {
+              i.val = i.val + 2 | 0;
+              continue;
+            }
+            let q;
+            _L: {
+              _L$2: {
+                const _bind = inner.val;
+                if (_bind === -1) {
+                  if (n === 39 || n === 34) {
+                    inner.val = n;
+                  } else {
+                    if (n === closing) {
+                      depth.val = depth.val - 1 | 0;
+                    } else {
+                      if (n === opening && opening !== 96) {
+                        depth.val = depth.val + 1 | 0;
+                      }
+                    }
+                  }
+                } else {
+                  const _Some = _bind;
+                  const _q = _Some;
+                  q = _q;
+                  break _L$2;
+                }
+                break _L;
+              }
+              if (n === q) {
+                inner.val = -1;
+              }
+            }
+            i.val = i.val + 1 | 0;
+            continue;
+          } else {
+            break;
+          }
+        }
+        if (command && c !== 96) {
+          const body = _M0MPC16string10StringView9to__owned(_M0MPC16string6String4trim(_M0MPC16string6String11from__array(_M0MPC15array5Array12view_2einnerGcE(cs, start + 2 | 0, i.val - 1 | 0)), undefined));
+          const _bind = " ";
+          const parts = _M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPB4Iter6filterGRPC16string10StringViewE(_M0MPC16string6String5split(body, new _M0TPC16string10StringView(_bind, 0, _bind.length)), (s) => !_M0MPC16string10StringView9is__empty(s)));
+          let numeric_seq;
+          if (parts.length >= 2) {
+            let _tmp;
+            const _tmp$2 = _M0MPC15array5Array2atGRPC16string10StringViewE(parts, 0);
+            const _bind$2 = "seq";
+            if (_M0IPC16string10StringViewPB2Eq5equal(_tmp$2, new _M0TPC16string10StringView(_bind$2, 0, _bind$2.length))) {
+              _tmp = _M0MPB4Iter3allGRPC16string10StringViewE(_M0MPC15array9ArrayView4iterGsE(_M0MPC15array5Array12view_2einnerGRPC16string10StringViewE(parts, 1, undefined)), (s) => _M0MPB4Iter3allGcE(_M0MPC16string10StringView4iter(s), (n) => n >= 48 && n <= 57 || (n === 46 || n === 45)));
+            } else {
+              _tmp = false;
+            }
+            numeric_seq = _tmp;
+          } else {
+            numeric_seq = false;
+          }
+          unquoted.val = unquoted.val || _M0IPC16option6OptionPB2Eq5equalGcE(quote.val, -1) && !numeric_seq;
+          double_quoted.val = double_quoted.val || _M0IPC16option6OptionPB2Eq5equalGcE(quote.val, 34);
+          single_command.val = single_command.val || (start === 0 && i.val === cs.length || start === 1 && (_M0IPC16option6OptionPB2Eq5equalGcE(quote.val, 34) && ((i.val + 1 | 0) === cs.length && _M0MPC15array5Array2atGcE(cs, i.val) === 34)));
+        }
+        continue;
+      }
+      i.val = i.val + 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  return { _0: backticks.val, _1: unquoted.val, _2: double_quoted.val, _3: single_command.val };
+}
+function _M0FP212tanglong200110dockerlint18shell__diagnostics(ins) {
+  const source = _M0FP212tanglong200110dockerlint11run__script(ins);
+  if (_M0MPC16string6String9is__empty(source)) {
+    return [];
+  }
+  let tokens;
+  let _try_err;
+  _L: {
+    _L$2: {
+      const _bind = _M0FP212tanglong200110dockerlint13shell__tokens(source);
+      if (_bind.$tag === 1) {
+        const _ok = _bind;
+        tokens = _ok._0;
+      } else {
+        const _err = _bind;
+        _try_err = _err._0;
+        break _L$2;
+      }
+      break _L;
+    }
+    return [];
+  }
+  let commands;
+  let _try_err$2;
+  _L$2: {
+    _L$3: {
+      const _bind = _M0FP212tanglong200110dockerlint15shell__commands(source);
+      if (_bind.$tag === 1) {
+        const _ok = _bind;
+        commands = _ok._0;
+      } else {
+        const _err = _bind;
+        _try_err$2 = _err._0;
+        break _L$3;
+      }
+      break _L$2;
+    }
+    return [];
+  }
+  const out = [];
+  const emit = (code, message) => {
+    if (!_M0MPB4Iter3anyGsE(_M0MPC15array5Array4iterGsE(out), (d) => d.code === code)) {
+      _M0MPC15array5Array4pushGRP212tanglong200110dockerlint7HereDocE(out, new _M0TP212tanglong200110dockerlint10Diagnostic(ins.line, code, message));
+      return;
+    } else {
+      return;
+    }
+  };
+  const _bind = tokens.length;
+  let _tmp = 0;
+  while (true) {
+    const i = _tmp;
+    if (i < _bind) {
+      const token = tokens[i];
+      _L$3: {
+        if (_M0IP016_24default__implPB2Eq10not__equalGsE(token.kind, "word")) {
+          break _L$3;
+        }
+        if (_M0FP212tanglong200110dockerlint19substitution__flags(token.raw)._0) {
+          emit("SC2006", "Use $(...) instead of legacy backticks");
+        }
+        let raw;
+        const _tmp$2 = token.raw;
+        const _bind$2 = "=";
+        if (_M0MPC16string6String8contains(_tmp$2, new _M0TPC16string10StringView(_bind$2, 0, _bind$2.length))) {
+          const _tmp$3 = token.raw;
+          const _bind$3 = "=";
+          raw = _M0MPC16string10StringView9to__owned(_M0MPC16option6Option6unwrapGRPC16string10StringViewE(_M0MPC15array5Array4lastGRPC16string10StringViewE(_M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(_tmp$3, new _M0TPC16string10StringView(_bind$3, 0, _bind$3.length))))));
+        } else {
+          raw = token.raw;
+        }
+        let _tmp$3;
+        const _bind$3 = "\"~/";
+        if (_M0MPC16string6String11has__prefix(raw, new _M0TPC16string10StringView(_bind$3, 0, _bind$3.length))) {
+          _tmp$3 = true;
+        } else {
+          const _bind$4 = "'~/";
+          _tmp$3 = _M0MPC16string6String11has__prefix(raw, new _M0TPC16string10StringView(_bind$4, 0, _bind$4.length));
+        }
+        if (_tmp$3) {
+          emit("SC2088", "Tilde does not expand inside quotes; use $HOME");
+        }
+        if (i > 0 && (_M0MPC15array5Array2atGRPC16string10StringViewE(tokens, i - 1 | 0).kind === "redirect" && _M0FP212tanglong200110dockerlint19substitution__flags(token.raw)._1)) {
+          emit("SC2046", "Quote command substitution to prevent word splitting");
+        }
+        break _L$3;
+      }
+      _tmp = i + 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  const _bind$2 = commands.length;
+  let _tmp$2 = 0;
+  while (true) {
+    const _ = _tmp$2;
+    if (_ < _bind$2) {
+      const command = commands[_];
+      _L$3: {
+        const name = _M0FP212tanglong200110dockerlint16executable__name(_M0MPC15array5Array2atGRPC16string10StringViewE(command, 0).value);
+        if (_M0MPC15array5Array2atGRPC16string10StringViewE(command, 0).dynamic) {
+          break _L$3;
+        }
+        const pure_echo = name === "echo" && (command.length === 2 && _M0FP212tanglong200110dockerlint19substitution__flags(_M0MPC15array5Array2atGRPC16string10StringViewE(command, 1).raw)._3);
+        if (pure_echo) {
+          emit("SC2005", "Execute the command directly instead of echoing its output");
+        }
+        const end_options = new _M0TPB8MutLocalGbE(false);
+        const _bind$3 = 1;
+        const _bind$4 = command.length;
+        let _tmp$3 = _bind$3;
+        while (true) {
+          const i = _tmp$3;
+          if (i < _bind$4) {
+            const token = _M0MPC15array5Array2atGRPC16string10StringViewE(command, i);
+            const flags = _M0FP212tanglong200110dockerlint19substitution__flags(token.raw);
+            if (flags._0) {
+              emit("SC2006", "Use $(...) instead of legacy backticks");
+            }
+            if (!pure_echo && (!_M0MPC15array5Array8containsGsE(["case", "for", "[[", "local", "declare", "typeset"], name) && flags._1)) {
+              emit("SC2046", "Quote command substitution to prevent word splitting");
+            }
+            if (name === "trap" && (i === 1 && flags._2)) {
+              emit("SC2064", "Use single quotes to defer expansion until the trap runs");
+            }
+            if (token.value === "--") {
+              end_options.val = true;
+            }
+            let _tmp$4;
+            if (_M0MPC15array5Array8containsGsE(["rm", "cp", "mv"], name)) {
+              let _tmp$5;
+              if (!end_options.val) {
+                let _tmp$6;
+                if (!token.quoted) {
+                  let _tmp$7;
+                  const _tmp$8 = token.raw;
+                  const _bind$5 = "*";
+                  if (_M0MPC16string6String11has__prefix(_tmp$8, new _M0TPC16string10StringView(_bind$5, 0, _bind$5.length))) {
+                    _tmp$7 = true;
+                  } else {
+                    const _tmp$9 = token.raw;
+                    const _bind$6 = "?";
+                    _tmp$7 = _M0MPC16string6String11has__prefix(_tmp$9, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length));
+                  }
+                  _tmp$6 = _tmp$7;
+                } else {
+                  _tmp$6 = false;
+                }
+                _tmp$5 = _tmp$6;
+              } else {
+                _tmp$5 = false;
+              }
+              _tmp$4 = _tmp$5;
+            } else {
+              _tmp$4 = false;
+            }
+            if (_tmp$4) {
+              emit("SC2035", "Use ./* or -- to prevent glob matches from becoming options");
+            }
+            _tmp$3 = i + 1 | 0;
+            continue;
+          } else {
+            break;
+          }
+        }
+        break _L$3;
+      }
+      _tmp$2 = _ + 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  return out;
+}
 function _M0FP212tanglong200110dockerlint15shell__pipeline(source) {
   let _try_err;
   _L: {
@@ -12621,24 +12946,27 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
   const pipefail = new _M0TPB8MutLocalGbE(false);
   const _bind$2 = [];
   const stage_shells = _M0MPB3Map3MapGsbE(new _M0TPB9ArrayViewGUsbEE(_bind$2, 0, 0), undefined);
+  const _bind$3 = [];
+  const stage_posix = _M0MPB3Map3MapGsbE(new _M0TPB9ArrayViewGUsbEE(_bind$3, 0, 0), undefined);
+  const posix_shell = new _M0TPB8MutLocalGbE(true);
   const stage_alias = new _M0TPB8MutLocalGOsE(undefined);
   const last_user = new _M0TPB8MutLocalGORP212tanglong200110dockerlint11InstructionE(undefined);
   const report_user = () => {
     let ins;
     _L: {
-      const _bind$3 = last_user.val;
-      if (_bind$3 === undefined) {
+      const _bind$4 = last_user.val;
+      if (_bind$4 === undefined) {
         return;
       } else {
-        const _Some = _bind$3;
+        const _Some = _bind$4;
         const _ins = _Some;
         ins = _ins;
         break _L;
       }
     }
     const _tmp = ins.arguments;
-    const _bind$3 = ":";
-    const name = _M0MPC16string10StringView9to__owned(_M0MPC16string10StringView4trim(_M0MPC15array5Array2atGRPC16string10StringViewE(_M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(_tmp, new _M0TPC16string10StringView(_bind$3, 0, _bind$3.length))), 0), undefined));
+    const _bind$4 = ":";
+    const name = _M0MPC16string10StringView9to__owned(_M0MPC16string10StringView4trim(_M0MPC15array5Array2atGRPC16string10StringViewE(_M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(_tmp, new _M0TPC16string10StringView(_bind$4, 0, _bind$4.length))), 0), undefined));
     if (name === "root" || name === "0") {
       report(ins.line, "DL3002", "Use a non-root runtime user");
       return;
@@ -12646,14 +12974,14 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
       return;
     }
   };
-  const _bind$3 = [];
-  const counts = _M0MPB3Map3MapGsiE(new _M0TPB9ArrayViewGUsiEE(_bind$3, 0, 0), undefined);
+  const _bind$4 = [];
+  const counts = _M0MPB3Map3MapGsiE(new _M0TPB9ArrayViewGUsiEE(_bind$4, 0, 0), undefined);
   const known = ["FROM", "RUN", "CMD", "LABEL", "MAINTAINER", "EXPOSE", "ENV", "ADD", "COPY", "ENTRYPOINT", "VOLUME", "USER", "WORKDIR", "ARG", "ONBUILD", "STOPSIGNAL", "HEALTHCHECK", "SHELL"];
-  const _bind$4 = instructions.length;
+  const _bind$5 = instructions.length;
   let _tmp = 0;
   while (true) {
     const _ = _tmp;
-    if (_ < _bind$4) {
+    if (_ < _bind$5) {
       const ins = instructions[_];
       _L: {
         const args = _M0FP212tanglong200110dockerlint5words(ins.arguments);
@@ -12667,10 +12995,10 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
           let stage_name;
           _L$2: {
             _L$3: {
-              const _bind$5 = stage_alias.val;
-              if (_bind$5 === undefined) {
+              const _bind$6 = stage_alias.val;
+              if (_bind$6 === undefined) {
               } else {
-                const _Some = _bind$5;
+                const _Some = _bind$6;
                 const _stage_name = _Some;
                 stage_name = _stage_name;
                 break _L$3;
@@ -12678,6 +13006,7 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
               break _L$2;
             }
             _M0MPB3Map3setGsbE(stage_shells, stage_name, pipefail.val);
+            _M0MPB3Map3setGsbE(stage_posix, stage_name, posix_shell.val);
           }
           stage_alias.val = undefined;
           stage.val = stage.val + 1 | 0;
@@ -12687,8 +13016,8 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
           let _tmp$2;
           if (args.length > 0) {
             const _tmp$3 = _M0MPC15array5Array2atGRPC16string10StringViewE(args, 0);
-            const _bind$5 = "--platform=";
-            _tmp$2 = _M0MPC16string6String11has__prefix(_tmp$3, new _M0TPC16string10StringView(_bind$5, 0, _bind$5.length));
+            const _bind$6 = "--platform=";
+            _tmp$2 = _M0MPC16string6String11has__prefix(_tmp$3, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length));
           } else {
             _tmp$2 = false;
           }
@@ -12704,15 +13033,16 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
           const base = _M0MPC15array5Array2atGRPC16string10StringViewE(args, offset);
           const base_stage = _M0MPB3Map8containsGsiE(stages, _M0MPC16string6String9to__lower(base));
           pipefail.val = _M0MPC16option6Option10unwrap__orGbE(_M0MPB3Map3getGsbE(stage_shells, _M0MPC16string6String9to__lower(base)), false);
+          posix_shell.val = _M0MPC16option6Option10unwrap__orGbE(_M0MPB3Map3getGsbE(stage_posix, _M0MPC16string6String9to__lower(base)), true);
           let _tmp$3;
           if (!base_stage) {
             let _tmp$4;
             if (_M0IP016_24default__implPB2Eq10not__equalGsE(base, "scratch")) {
               let _tmp$5;
-              const _bind$5 = "$";
-              if (!_M0MPC16string6String8contains(base, new _M0TPC16string10StringView(_bind$5, 0, _bind$5.length))) {
-                const _bind$6 = "@";
-                _tmp$5 = !_M0MPC16string6String8contains(base, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length));
+              const _bind$6 = "$";
+              if (!_M0MPC16string6String8contains(base, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length))) {
+                const _bind$7 = "@";
+                _tmp$5 = !_M0MPC16string6String8contains(base, new _M0TPC16string10StringView(_bind$7, 0, _bind$7.length));
               } else {
                 _tmp$5 = false;
               }
@@ -12725,14 +13055,14 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
             _tmp$3 = false;
           }
           if (_tmp$3) {
-            const _bind$5 = "/";
-            const last = _M0MPC16string10StringView9to__owned(_M0MPC16option6Option6unwrapGRPC16string10StringViewE(_M0MPC15array5Array4lastGRPC16string10StringViewE(_M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(base, new _M0TPC16string10StringView(_bind$5, 0, _bind$5.length))))));
-            const _bind$6 = ":";
-            if (!_M0MPC16string6String8contains(last, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length))) {
+            const _bind$6 = "/";
+            const last = _M0MPC16string10StringView9to__owned(_M0MPC16option6Option6unwrapGRPC16string10StringViewE(_M0MPC15array5Array4lastGRPC16string10StringViewE(_M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(base, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length))))));
+            const _bind$7 = ":";
+            if (!_M0MPC16string6String8contains(last, new _M0TPC16string10StringView(_bind$7, 0, _bind$7.length))) {
               report(ins.line, "DL3006", "Pin the base image version");
             } else {
-              const _bind$7 = ":latest";
-              if (_M0MPC16string6String11has__suffix(last, new _M0TPC16string10StringView(_bind$7, 0, _bind$7.length))) {
+              const _bind$8 = ":latest";
+              if (_M0MPC16string6String11has__suffix(last, new _M0TPC16string10StringView(_bind$8, 0, _bind$8.length))) {
                 report(ins.line, "DL3007", "Avoid the latest image tag");
               }
             }
@@ -12755,12 +13085,12 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
           let _try_err;
           _L$2: {
             _L$3: {
-              const _bind$5 = _M0MP212tanglong200110dockerlint11Instruction16split__arguments(ins);
-              if (_bind$5.$tag === 1) {
-                const _ok = _bind$5;
+              const _bind$6 = _M0MP212tanglong200110dockerlint11Instruction16split__arguments(ins);
+              if (_bind$6.$tag === 1) {
+                const _ok = _bind$6;
                 parsed = _ok._0;
               } else {
-                const _err = _bind$5;
+                const _err = _bind$6;
                 _try_err = _err._0;
                 break _L$3;
               }
@@ -12786,8 +13116,8 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
               let _tmp$2;
               if (a.values.length > 2) {
                 const _tmp$3 = _M0MPC15array5Array2atGRPC16string10StringViewE(a.values, a.values.length - 1 | 0);
-                const _bind$5 = "/";
-                _tmp$2 = !_M0MPC16string6String11has__suffix(_tmp$3, new _M0TPC16string10StringView(_bind$5, 0, _bind$5.length));
+                const _bind$6 = "/";
+                _tmp$2 = !_M0MPC16string6String11has__suffix(_tmp$3, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length));
               } else {
                 _tmp$2 = false;
               }
@@ -12799,8 +13129,8 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
         }
         _L$2: {
           _L$3: {
-            const _bind$5 = ins.name;
-            switch (_bind$5) {
+            const _bind$6 = ins.name;
+            switch (_bind$6) {
               case "USER": {
                 last_user.val = ins;
                 break;
@@ -12810,13 +13140,13 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
                 let _try_err;
                 _L$4: {
                   _L$5: {
-                    const _bind$6 = _M0MP212tanglong200110dockerlint11Instruction16split__arguments(ins);
+                    const _bind$7 = _M0MP212tanglong200110dockerlint11Instruction16split__arguments(ins);
                     let _tmp$2;
-                    if (_bind$6.$tag === 1) {
-                      const _ok = _bind$6;
+                    if (_bind$7.$tag === 1) {
+                      const _ok = _bind$7;
                       _tmp$2 = _ok._0;
                     } else {
-                      const _err = _bind$6;
+                      const _err = _bind$7;
                       _try_err = _err._0;
                       break _L$5;
                     }
@@ -12827,18 +13157,18 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
                 }
                 const sources = _M0MPC15array5Array9is__emptyGsE(inputs) ? [] : _M0MPC15array9ArrayView9to__ownedGsE(_M0MPC15array5Array12view_2einnerGRPC16string10StringViewE(inputs, 0, inputs.length - 1 | 0));
                 const special = _M0MPB4Iter3anyGsE(_M0MPC15array5Array4iterGsE(sources), (s) => {
-                  const _bind$6 = "http://";
-                  if (_M0MPC16string6String11has__prefix(s, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length))) {
+                  const _bind$7 = "http://";
+                  if (_M0MPC16string6String11has__prefix(s, new _M0TPC16string10StringView(_bind$7, 0, _bind$7.length))) {
                     return true;
                   } else {
                     let _tmp$2;
-                    const _bind$7 = "https://";
-                    if (_M0MPC16string6String11has__prefix(s, new _M0TPC16string10StringView(_bind$7, 0, _bind$7.length))) {
+                    const _bind$8 = "https://";
+                    if (_M0MPC16string6String11has__prefix(s, new _M0TPC16string10StringView(_bind$8, 0, _bind$8.length))) {
                       _tmp$2 = true;
                     } else {
                       let _tmp$3;
-                      const _bind$8 = "git://";
-                      if (_M0MPC16string6String11has__prefix(s, new _M0TPC16string10StringView(_bind$8, 0, _bind$8.length))) {
+                      const _bind$9 = "git://";
+                      if (_M0MPC16string6String11has__prefix(s, new _M0TPC16string10StringView(_bind$9, 0, _bind$9.length))) {
                         _tmp$3 = true;
                       } else {
                         _tmp$3 = _M0MPB4Iter3anyGsE(_M0MPC15array5Array4iterGsE([".tar", ".tar.gz", ".tgz", ".tar.bz2", ".tar.xz", ".txz", ".tbz2"]), (ext) => _M0MPC16string6String11has__suffix(s, new _M0TPC16string10StringView(ext, 0, ext.length)));
@@ -12860,11 +13190,11 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
               case "WORKDIR": {
                 let _tmp$2;
                 const _tmp$3 = ins.arguments;
-                const _bind$6 = "/";
-                if (!_M0MPC16string6String11has__prefix(_tmp$3, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length))) {
+                const _bind$7 = "/";
+                if (!_M0MPC16string6String11has__prefix(_tmp$3, new _M0TPC16string10StringView(_bind$7, 0, _bind$7.length))) {
                   const _tmp$4 = ins.arguments;
-                  const _bind$7 = "$";
-                  _tmp$2 = !_M0MPC16string6String11has__prefix(_tmp$4, new _M0TPC16string10StringView(_bind$7, 0, _bind$7.length));
+                  const _bind$8 = "$";
+                  _tmp$2 = !_M0MPC16string6String11has__prefix(_tmp$4, new _M0TPC16string10StringView(_bind$8, 0, _bind$8.length));
                 } else {
                   _tmp$2 = false;
                 }
@@ -12878,12 +13208,12 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
                 let _try_err$2;
                 _L$5: {
                   _L$6: {
-                    const _bind$7 = _M0MP212tanglong200110dockerlint11Instruction16split__arguments(ins);
-                    if (_bind$7.$tag === 1) {
-                      const _ok = _bind$7;
+                    const _bind$8 = _M0MP212tanglong200110dockerlint11Instruction16split__arguments(ins);
+                    if (_bind$8.$tag === 1) {
+                      const _ok = _bind$8;
                       form = _ok._0;
                     } else {
-                      const _err = _bind$7;
+                      const _err = _bind$8;
                       _try_err$2 = _err._0;
                       break _L$6;
                     }
@@ -12908,6 +13238,7 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
                     report(ins.line, "ML1006", "SHELL requires JSON exec form");
                   }
                   pipefail.val = _M0MPC15array5Array8containsGsE(a.values, "pipefail");
+                  posix_shell.val = !_M0MPC15array5Array9is__emptyGsE(a.values) && _M0MPC15array5Array8containsGsE(["sh", "bash", "dash", "ash", "ksh", "zsh"], _M0FP212tanglong200110dockerlint16executable__name(_M0MPC15array5Array2atGRPC16string10StringViewE(a.values, 0)));
                 }
                 break;
               }
@@ -12918,13 +13249,29 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
                 break;
               }
               case "RUN": {
-                const _bind$7 = _M0FP212tanglong200110dockerlint10run__rules(ins);
-                const _bind$8 = _bind$7.length;
+                if (posix_shell.val) {
+                  const _bind$8 = _M0FP212tanglong200110dockerlint18shell__diagnostics(ins);
+                  const _bind$9 = _bind$8.length;
+                  let _tmp$4 = 0;
+                  while (true) {
+                    const _$2 = _tmp$4;
+                    if (_$2 < _bind$9) {
+                      const diagnostic = _bind$8[_$2];
+                      _M0MPC15array5Array4pushGRP212tanglong200110dockerlint7HereDocE(out, diagnostic);
+                      _tmp$4 = _$2 + 1 | 0;
+                      continue;
+                    } else {
+                      break;
+                    }
+                  }
+                }
+                const _bind$8 = _M0FP212tanglong200110dockerlint10run__rules(ins);
+                const _bind$9 = _bind$8.length;
                 let _tmp$4 = 0;
                 while (true) {
                   const _$2 = _tmp$4;
-                  if (_$2 < _bind$8) {
-                    const diagnostic = _bind$7[_$2];
+                  if (_$2 < _bind$9) {
+                    const diagnostic = _bind$8[_$2];
                     _M0MPC15array5Array4pushGRP212tanglong200110dockerlint7HereDocE(out, diagnostic);
                     _tmp$4 = _$2 + 1 | 0;
                     continue;
@@ -12938,8 +13285,8 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
                   let _tmp$6;
                   if (!pipefail.val) {
                     const _tmp$7 = ins.arguments;
-                    const _bind$9 = "[";
-                    _tmp$6 = !_M0MPC16string6String11has__prefix(_tmp$7, new _M0TPC16string10StringView(_bind$9, 0, _bind$9.length));
+                    const _bind$10 = "[";
+                    _tmp$6 = !_M0MPC16string6String11has__prefix(_tmp$7, new _M0TPC16string10StringView(_bind$10, 0, _bind$10.length));
                   } else {
                     _tmp$6 = false;
                   }
@@ -12959,31 +13306,31 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
                 break _L$3;
               }
               case "COPY": {
-                const _bind$9 = args.length;
+                const _bind$10 = args.length;
                 let _tmp$6 = 0;
                 while (true) {
                   const _$2 = _tmp$6;
-                  if (_$2 < _bind$9) {
+                  if (_$2 < _bind$10) {
                     const arg = args[_$2];
-                    const _bind$10 = "--from=";
-                    if (_M0MPC16string6String11has__prefix(arg, new _M0TPC16string10StringView(_bind$10, 0, _bind$10.length))) {
+                    const _bind$11 = "--from=";
+                    if (_M0MPC16string6String11has__prefix(arg, new _M0TPC16string10StringView(_bind$11, 0, _bind$11.length))) {
                       const name = _M0MPC16string6String9to__lower(_M0MPC16string10StringView9to__owned(_M0MPC16string6String11sub_2einner(arg, 7, undefined)));
                       let index;
                       _L$7: {
                         _L$8: {
-                          const _bind$11 = _M0MPB3Map3getGsiE(stages, name);
-                          if (_bind$11 === undefined) {
+                          const _bind$12 = _M0MPB3Map3getGsiE(stages, name);
+                          if (_bind$12 === undefined) {
                             const index$2 = new _M0TPB8MutLocalGiE(0);
                             const numeric = new _M0TPB8MutLocalGbE(_M0IP016_24default__implPB2Eq10not__equalGsE(name, ""));
                             const _it = _M0MPC16string6String4iter(name);
                             while (true) {
                               let c;
                               _L$9: {
-                                const _bind$12 = _M0MPB4Iter4nextGcE(_it);
-                                if (_bind$12 === -1) {
+                                const _bind$13 = _M0MPB4Iter4nextGcE(_it);
+                                if (_bind$13 === -1) {
                                   break;
                                 } else {
-                                  const _Some = _bind$12;
+                                  const _Some = _bind$13;
                                   const _c = _Some;
                                   c = _c;
                                   break _L$9;
@@ -13002,7 +13349,7 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
                               report(ins.line, "DL3022", "COPY refers to unavailable stage index");
                             }
                           } else {
-                            const _Some = _bind$11;
+                            const _Some = _bind$12;
                             const _index = _Some;
                             index = _index;
                             break _L$8;
@@ -13026,8 +13373,8 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
             break _L$2;
           }
           const _tmp$2 = ins.arguments;
-          const _bind$5 = "[";
-          if (!_M0MPC16string6String11has__prefix(_tmp$2, new _M0TPC16string10StringView(_bind$5, 0, _bind$5.length))) {
+          const _bind$6 = "[";
+          if (!_M0MPC16string6String11has__prefix(_tmp$2, new _M0TPC16string10StringView(_bind$6, 0, _bind$6.length))) {
             report(ins.line, "DL3025", "Prefer JSON exec form for signal forwarding");
           }
           const count = _M0MPC16option6Option10unwrap__orGiE(_M0MPB3Map3getGsiE(counts, ins.name), 0) + 1 | 0;
@@ -13048,12 +13395,12 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
   let _try_err;
   _L: {
     _L$2: {
-      const _bind$5 = _M0FP212tanglong200110dockerlint15analyze__stages(instructions);
-      if (_bind$5.$tag === 1) {
-        const _ok = _bind$5;
+      const _bind$6 = _M0FP212tanglong200110dockerlint15analyze__stages(instructions);
+      if (_bind$6.$tag === 1) {
+        const _ok = _bind$6;
         _ok._0;
       } else {
-        const _err = _bind$5;
+        const _err = _bind$6;
         _try_err = _err._0;
         break _L$2;
       }
@@ -13076,13 +13423,13 @@ function _M0FP212tanglong200110dockerlint4lint(instructions) {
   if (stage.val < 0) {
     report(1, "ML1005", "Dockerfile has no FROM stage");
   }
-  const _bind$5 = _M0FP212tanglong200110dockerlint15metadata__rules(instructions);
-  const _bind$6 = _bind$5.length;
+  const _bind$6 = _M0FP212tanglong200110dockerlint15metadata__rules(instructions);
+  const _bind$7 = _bind$6.length;
   let _tmp$2 = 0;
   while (true) {
     const _ = _tmp$2;
-    if (_ < _bind$6) {
-      const diagnostic = _bind$5[_];
+    if (_ < _bind$7) {
+      const diagnostic = _bind$6[_];
       _M0MPC15array5Array4pushGRP212tanglong200110dockerlint7HereDocE(out, diagnostic);
       _tmp$2 = _ + 1 | 0;
       continue;
@@ -13304,7 +13651,7 @@ function _M0MP212tanglong200110dockerlint10Diagnostic8severity(self) {
   if (_tmp) {
     return "error";
   } else {
-    return _M0MPC15array5Array8containsGsE(["DL3001", "DL3009", "DL3015", "DL3019", "DL3047", "DL3049", "DL3050", "DL3059", "DL3060", "DL3066"], self.code) ? "info" : self.code === "DL3048" ? "style" : "warning";
+    return _M0MPC15array5Array8containsGsE(["DL3001", "DL3009", "DL3015", "DL3019", "DL3047", "DL3049", "DL3050", "DL3059", "DL3060", "DL3066", "SC2035"], self.code) ? "info" : _M0MPC15array5Array8containsGsE(["DL3048", "SC2005", "SC2006"], self.code) ? "style" : "warning";
   }
 }
 function _M0FP212tanglong200110dockerlint20report__json_2einner(source, filename, honor_inline) {

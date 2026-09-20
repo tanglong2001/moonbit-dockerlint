@@ -32,6 +32,8 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'report tests failed'}
   node tools/compare-reference.mjs
   if ($LASTEXITCODE -ne 0) {throw 'reference comparison failed'}
+  node tools/compare-shell.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'shell reference comparison failed'}
   node tools/test-runtime.mjs
   if ($LASTEXITCODE -ne 0) {throw 'runtime checks failed'}
   node tools/test-cli.mjs

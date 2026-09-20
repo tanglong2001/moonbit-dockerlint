@@ -15,6 +15,8 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
   let mut stage = -1
   let mut pipefail = false
   let stage_shells : Map[String, Bool] = Map([])
+  let stage_posix : Map[String, Bool] = Map([])
+  let mut posix_shell = true
   let mut stage_alias : String? = None
   let mut last_user : Instruction? = None
   fn report_user() -> Unit {
@@ -42,6 +44,7 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
       last_user = None
       if stage_alias is Some(stage_name) {
         stage_shells[stage_name] = pipefail
+        stage_posix[stage_name] = posix_shell
       }
       stage_alias = None
       stage += 1
@@ -60,6 +63,7 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
       let base = args[offset]
       let base_stage = stages.contains(base.to_lower())
       pipefail = stage_shells.get(base.to_lower()).unwrap_or(false)
+      posix_shell = stage_posix.get(base.to_lower()).unwrap_or(true)
       if !base_stage &&
         base != "scratch" &&
         !base.contains("$") &&
@@ -140,6 +144,10 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
               report(ins.line, "ML1006", "SHELL requires JSON exec form")
             }
             pipefail = a.values.contains("pipefail")
+            posix_shell = !a.values.is_empty() &&
+              ["sh", "bash", "dash", "ash", "ksh", "zsh"].contains(
+                executable_name(a.values[0]),
+              )
           }
           None => report(ins.line, "ML1006", "SHELL requires JSON exec form")
         }
@@ -154,6 +162,11 @@ pub fn lint(instructions : Array[Instruction]) -> Array[Diagnostic] {
           )
         }
       "RUN" => {
+        if posix_shell {
+          for diagnostic in shell_diagnostics(ins) {
+            out.push(diagnostic)
+          }
+        }
         for diagnostic in run_rules(ins) {
           out.push(diagnostic)
         }

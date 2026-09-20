@@ -1,0 +1,290 @@
+[
+  {
+    "name": "backtick",
+    "source": "FROM alpine:3.22\nRUN echo `date`\n"
+  },
+  {
+    "name": "quoted-backtick",
+    "source": "FROM alpine:3.22\nRUN echo \"`date`\"\n"
+  },
+  {
+    "name": "backtick-literal",
+    "source": "FROM alpine:3.22\nRUN echo '`date`'\n"
+  },
+  {
+    "name": "dollar-sub",
+    "source": "FROM alpine:3.22\nRUN echo $(date)\n"
+  },
+  {
+    "name": "quoted-sub",
+    "source": "FROM alpine:3.22\nRUN echo \"$(date)\"\n"
+  },
+  {
+    "name": "assignment-sub",
+    "source": "FROM alpine:3.22\nRUN x=$(date); echo \"$x\"\n"
+  },
+  {
+    "name": "export-sub",
+    "source": "FROM alpine:3.22\nRUN export x=$(date)\n"
+  },
+  {
+    "name": "sub-arithmetic",
+    "source": "FROM alpine:3.22\nRUN echo $((1+2))\n"
+  },
+  {
+    "name": "sub-concat",
+    "source": "FROM alpine:3.22\nRUN echo prefix$(date)suffix\n"
+  },
+  {
+    "name": "sub-nested",
+    "source": "FROM alpine:3.22\nRUN echo \"$(echo $(date))\"\n"
+  },
+  {
+    "name": "printf-variable",
+    "source": "FROM alpine:3.22\nRUN printf \"$x\"\n"
+  },
+  {
+    "name": "printf-format",
+    "source": "FROM alpine:3.22\nRUN printf \"%s\" \"$x\"\n"
+  },
+  {
+    "name": "printf-format-variable",
+    "source": "FROM alpine:3.22\nRUN printf \"hello $x\"\n"
+  },
+  {
+    "name": "printf-literal",
+    "source": "FROM alpine:3.22\nRUN printf 'hello $x'\n"
+  },
+  {
+    "name": "printf-v",
+    "source": "FROM alpine:3.22\nRUN printf -v out \"$x\"\n"
+  },
+  {
+    "name": "read",
+    "source": "FROM alpine:3.22\nRUN read x\n"
+  },
+  {
+    "name": "read-raw",
+    "source": "FROM alpine:3.22\nRUN read -r x\n"
+  },
+  {
+    "name": "read-combined",
+    "source": "FROM alpine:3.22\nRUN read -rp prompt x\n"
+  },
+  {
+    "name": "read-ifs",
+    "source": "FROM alpine:3.22\nRUN IFS= read x\n"
+  },
+  {
+    "name": "read-pipeline",
+    "source": "FROM alpine:3.22\nRUN echo x | read x\n"
+  },
+  {
+    "name": "trap-double",
+    "source": "FROM alpine:3.22\nRUN trap \"echo $x\" EXIT\n"
+  },
+  {
+    "name": "trap-single",
+    "source": "FROM alpine:3.22\nRUN trap 'echo $x' EXIT\n"
+  },
+  {
+    "name": "trap-sub",
+    "source": "FROM alpine:3.22\nRUN trap \"echo $(date)\" EXIT\n"
+  },
+  {
+    "name": "trap-literal",
+    "source": "FROM alpine:3.22\nRUN trap \"echo ready\" EXIT\n"
+  },
+  {
+    "name": "trap-unquoted",
+    "source": "FROM alpine:3.22\nRUN trap $handler EXIT\n"
+  },
+  {
+    "name": "trap-list",
+    "source": "FROM alpine:3.22\nRUN trap -l\n"
+  },
+  {
+    "name": "tilde-double",
+    "source": "FROM alpine:3.22\nRUN echo \"~/file\"\n"
+  },
+  {
+    "name": "tilde-single",
+    "source": "FROM alpine:3.22\nRUN echo '~/file'\n"
+  },
+  {
+    "name": "tilde-ok",
+    "source": "FROM alpine:3.22\nRUN echo ~/file\n"
+  },
+  {
+    "name": "tilde-middle",
+    "source": "FROM alpine:3.22\nRUN echo \"path: ~/file\"\n"
+  },
+  {
+    "name": "tilde-user",
+    "source": "FROM alpine:3.22\nRUN echo \"~root/file\"\n"
+  },
+  {
+    "name": "tilde-assignment",
+    "source": "FROM alpine:3.22\nRUN x=\"~/file\"; echo \"$x\"\n"
+  },
+  {
+    "name": "glob-rm",
+    "source": "FROM alpine:3.22\nRUN rm *\n"
+  },
+  {
+    "name": "glob-cp",
+    "source": "FROM alpine:3.22\nRUN cp * /tmp/\n"
+  },
+  {
+    "name": "glob-mv",
+    "source": "FROM alpine:3.22\nRUN mv *.txt /tmp/\n"
+  },
+  {
+    "name": "glob-rm-safe",
+    "source": "FROM alpine:3.22\nRUN rm -- *\n"
+  },
+  {
+    "name": "glob-relative",
+    "source": "FROM alpine:3.22\nRUN rm ./*\n"
+  },
+  {
+    "name": "glob-quoted",
+    "source": "FROM alpine:3.22\nRUN rm \"*\"\n"
+  },
+  {
+    "name": "glob-echo",
+    "source": "FROM alpine:3.22\nRUN echo *\n"
+  },
+  {
+    "name": "glob-rm-opts",
+    "source": "FROM alpine:3.22\nRUN rm -f *\n"
+  },
+  {
+    "name": "glob-rm-question",
+    "source": "FROM alpine:3.22\nRUN rm ?.txt\n"
+  },
+  {
+    "name": "glob-rm-bracket",
+    "source": "FROM alpine:3.22\nRUN rm [ab].txt\n"
+  },
+  {
+    "name": "glob-find",
+    "source": "FROM alpine:3.22\nRUN find . -name \"*\"\n"
+  },
+  {
+    "name": "sub-for",
+    "source": "FROM alpine:3.22\nRUN for x in $(cat list); do echo \"$x\"; done\n"
+  },
+  {
+    "name": "sub-case",
+    "source": "FROM alpine:3.22\nRUN case $(date) in x) echo yes;; esac\n"
+  },
+  {
+    "name": "sub-test",
+    "source": "FROM alpine:3.22\nRUN test \"$(date)\" = x\n"
+  },
+  {
+    "name": "sub-redirect",
+    "source": "FROM alpine:3.22\nRUN cat >$(date)\n"
+  },
+  {
+    "name": "escaped-sub",
+    "source": "FROM alpine:3.22\nRUN echo \\$(date)\n"
+  },
+  {
+    "name": "escaped-backtick",
+    "source": "FROM alpine:3.22\nRUN echo \\`date\\`\n"
+  },
+  {
+    "name": "exec-json",
+    "source": "FROM alpine:3.22\nRUN [\"echo\", \"$(date)\", \"~/file\"]\n"
+  },
+  {
+    "name": "powershell",
+    "source": "FROM windows:1\nSHELL [\"powershell\", \"-Command\"]\nRUN echo $(date)\n"
+  },
+  {
+    "name": "bash",
+    "source": "FROM alpine:3.22\nSHELL [\"/bin/bash\", \"-c\"]\nRUN read x\n"
+  },
+  {
+    "name": "heredoc",
+    "source": "FROM alpine:3.22\nRUN <<EOF\nread x\necho $(date)\nEOF\n"
+  },
+  {
+    "name": "sub-cp",
+    "source": "FROM alpine:3.22\nRUN cp $(date) /tmp/file\n"
+  },
+  {
+    "name": "sub-backtick-cp",
+    "source": "FROM alpine:3.22\nRUN cp `date` /tmp/file\n"
+  },
+  {
+    "name": "sub-part-quoted",
+    "source": "FROM alpine:3.22\nRUN cp \"prefix\"$(date) /tmp/file\n"
+  },
+  {
+    "name": "sub-two",
+    "source": "FROM alpine:3.22\nRUN echo $(date)$(uname)\n"
+  },
+  {
+    "name": "sub-two-quoted",
+    "source": "FROM alpine:3.22\nRUN echo \"$(date)$(uname)\"\n"
+  },
+  {
+    "name": "sub-number",
+    "source": "FROM alpine:3.22\nRUN echo $(wc -l < file) suffix\n"
+  },
+  {
+    "name": "sub-seq",
+    "source": "FROM alpine:3.22\nRUN echo $(seq 1 3) suffix\n"
+  },
+  {
+    "name": "sub-escaped",
+    "source": "FROM alpine:3.22\nRUN echo \"\\$(date)\"\n"
+  },
+  {
+    "name": "sub-single",
+    "source": "FROM alpine:3.22\nRUN echo '$(date)'\n"
+  },
+  {
+    "name": "trap-backtick",
+    "source": "FROM alpine:3.22\nRUN trap \"echo `date`\" EXIT\n"
+  },
+  {
+    "name": "glob-option-after",
+    "source": "FROM alpine:3.22\nRUN rm * --\n"
+  },
+  {
+    "name": "glob-path",
+    "source": "FROM alpine:3.22\nRUN rm /tmp/*\n"
+  },
+  {
+    "name": "literal-comment",
+    "source": "FROM alpine:3.22\nRUN echo ok # `date` \"~/file\"\n"
+  },
+  {
+    "name": "literal-heredoc",
+    "source": "FROM alpine:3.22\nRUN cat <<EOF\n$(date)\nEOF\n"
+  },
+  {
+    "name": "data-heredoc",
+    "source": "FROM alpine:3.22\nRUN cat <<EOF\nrm *\nEOF\n"
+  },
+  {
+    "name": "double-assignment",
+    "source": "FROM alpine:3.22\nRUN x=$(date) y=ok; echo \"$x\"\n"
+  },
+  {
+    "name": "ignore-inline",
+    "source": "FROM alpine:3.22\n# hadolint ignore=SC2035\nRUN rm *\n"
+  },
+  {
+    "name": "powershell-stage",
+    "source": "FROM windows:1 AS base\nSHELL [\"powershell\", \"-Command\"]\nFROM base\nRUN echo $(date)\n"
+  },
+  {
+    "name": "posix-reset",
+    "source": "FROM windows:1\nSHELL [\"powershell\", \"-Command\"]\nFROM alpine:3.22\nRUN cp $(date) /tmp/\n"
+  }
+]

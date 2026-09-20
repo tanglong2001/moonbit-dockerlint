@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-17T14:18:16.782Z",
+  "date": "2026-09-20T17:23:40.203Z",
   "baselineJsTestsPassed": 6,
   "extendedGroupsPassed": 4,
   "finalSuppressionGroupPassed": 1,
@@ -7,5 +7,5 @@
   "cliCasesPassed": 5,
   "upstreamExecutableRun": false,
   "browserVisualTested": false,
-  "engineSha256": "4f1e2c80fb549e3f275dbe157a097f0db0e003b371a8a503c372e397dcd0594d"
+  "engineSha256": "8969d1ff39a95bd7bc8f2c3090caa5903d6541992d7a7c99291fb3071beb505e"
 }

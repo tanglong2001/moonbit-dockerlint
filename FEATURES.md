@@ -1,3 +1,5 @@
+> 0.5.0：新增六种常见 shell 检查，72/72 官方对照通过。当前范围与限制见 [SHELL-CHECKS.md](SHELL-CHECKS.md)；较早轮次的描述保留为历史。
+
 # 功能与兼容性边界
 
 0.4 已补：shell 词法和有限命令分析、常见包管理器/EXPOSE/HEALTHCHECK/ENV 检查；ARG/ENV 阶段作用域 API；严格 JSON 配置、忽略/级别/镜像仓库策略；多文件和 SARIF/Checkstyle/GNU/JSON CLI。

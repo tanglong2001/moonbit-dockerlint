@@ -111,10 +111,10 @@ pub fn Diagnostic::severity(self : Diagnostic) -> String {
     "error"
   } else if [
       "DL3001", "DL3009", "DL3015", "DL3019", "DL3047", "DL3049", "DL3050", "DL3059",
-      "DL3060", "DL3066",
+      "DL3060", "DL3066", "SC2035",
     ].contains(self.code) {
     "info"
-  } else if self.code == "DL3048" {
+  } else if ["DL3048", "SC2005", "SC2006"].contains(self.code) {
     "style"
   } else {
     "warning"

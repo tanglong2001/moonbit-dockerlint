@@ -1,0 +1,1232 @@
+{
+  "reference": "Haskell Dockerfile Linter 2.15.1",
+  "binarySHA256": "c7187db94eeeeca956519a6af171adc31453941a1e777961f6e680f697c8c507",
+  "owned": [
+    "SC2005",
+    "SC2006",
+    "SC2035",
+    "SC2046",
+    "SC2064",
+    "SC2088"
+  ],
+  "scope": "Instruction line, code and severity for six bounded lexical ShellCheck-compatible diagnostics. Other reference diagnostics retained but excluded.",
+  "engineSHA256": "8969d1ff39a95bd7bc8f2c3090caa5903d6541992d7a7c99291fb3071beb505e",
+  "passed": 72,
+  "failed": 0,
+  "rows": [
+    {
+      "name": "backtick",
+      "source": "FROM alpine:3.22\nRUN echo `date`\n",
+      "reference": [
+        {
+          "code": "SC2006",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Use $(...) notation instead of legacy backticks `...`."
+        }
+      ],
+      "referenceExit": 0,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2006",
+          "message": "Use $(...) instead of legacy backticks",
+          "level": "style"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "quoted-backtick",
+      "source": "FROM alpine:3.22\nRUN echo \"`date`\"\n",
+      "reference": [
+        {
+          "code": "SC2006",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Use $(...) notation instead of legacy backticks `...`."
+        }
+      ],
+      "referenceExit": 0,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2006",
+          "message": "Use $(...) instead of legacy backticks",
+          "level": "style"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "backtick-literal",
+      "source": "FROM alpine:3.22\nRUN echo '`date`'\n",
+      "reference": [
+        {
+          "code": "SC2016",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Expressions don't expand in single quotes, use double quotes for that."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "dollar-sub",
+      "source": "FROM alpine:3.22\nRUN echo $(date)\n",
+      "reference": [
+        {
+          "code": "SC2005",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Useless echo? Instead of 'echo $(cmd)', just use 'cmd'."
+        }
+      ],
+      "referenceExit": 0,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2005",
+          "message": "Execute the command directly instead of echoing its output",
+          "level": "style"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "quoted-sub",
+      "source": "FROM alpine:3.22\nRUN echo \"$(date)\"\n",
+      "reference": [
+        {
+          "code": "SC2005",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Useless echo? Instead of 'echo $(cmd)', just use 'cmd'."
+        }
+      ],
+      "referenceExit": 0,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2005",
+          "message": "Execute the command directly instead of echoing its output",
+          "level": "style"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "assignment-sub",
+      "source": "FROM alpine:3.22\nRUN x=$(date); echo \"$x\"\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "export-sub",
+      "source": "FROM alpine:3.22\nRUN export x=$(date)\n",
+      "reference": [
+        {
+          "code": "SC2046",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Quote this to prevent word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2046",
+          "message": "Quote command substitution to prevent word splitting",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sub-arithmetic",
+      "source": "FROM alpine:3.22\nRUN echo $((1+2))\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "sub-concat",
+      "source": "FROM alpine:3.22\nRUN echo prefix$(date)suffix\n",
+      "reference": [
+        {
+          "code": "SC2046",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Quote this to prevent word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2046",
+          "message": "Quote command substitution to prevent word splitting",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sub-nested",
+      "source": "FROM alpine:3.22\nRUN echo \"$(echo $(date))\"\n",
+      "reference": [
+        {
+          "code": "SC2005",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Useless echo? Instead of 'echo $(cmd)', just use 'cmd'."
+        }
+      ],
+      "referenceExit": 0,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2005",
+          "message": "Execute the command directly instead of echoing its output",
+          "level": "style"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "printf-variable",
+      "source": "FROM alpine:3.22\nRUN printf \"$x\"\n",
+      "reference": [
+        {
+          "code": "SC2154",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x is referenced but not assigned."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "printf-format",
+      "source": "FROM alpine:3.22\nRUN printf \"%s\" \"$x\"\n",
+      "reference": [
+        {
+          "code": "SC2154",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x is referenced but not assigned."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "printf-format-variable",
+      "source": "FROM alpine:3.22\nRUN printf \"hello $x\"\n",
+      "reference": [
+        {
+          "code": "SC2154",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x is referenced but not assigned."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "printf-literal",
+      "source": "FROM alpine:3.22\nRUN printf 'hello $x'\n",
+      "reference": [
+        {
+          "code": "SC2016",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Expressions don't expand in single quotes, use double quotes for that."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "printf-v",
+      "source": "FROM alpine:3.22\nRUN printf -v out \"$x\"\n",
+      "reference": [
+        {
+          "code": "SC2154",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x is referenced but not assigned."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "read",
+      "source": "FROM alpine:3.22\nRUN read x\n",
+      "reference": [
+        {
+          "code": "SC2034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x appears unused. Verify use (or export if used externally)."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "read-raw",
+      "source": "FROM alpine:3.22\nRUN read -r x\n",
+      "reference": [
+        {
+          "code": "SC2034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x appears unused. Verify use (or export if used externally)."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "read-combined",
+      "source": "FROM alpine:3.22\nRUN read -rp prompt x\n",
+      "reference": [
+        {
+          "code": "SC2034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x appears unused. Verify use (or export if used externally)."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "read-ifs",
+      "source": "FROM alpine:3.22\nRUN IFS= read x\n",
+      "reference": [
+        {
+          "code": "SC2034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x appears unused. Verify use (or export if used externally)."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "read-pipeline",
+      "source": "FROM alpine:3.22\nRUN echo x | read x\n",
+      "reference": [
+        {
+          "code": "DL4006",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Set the SHELL option -o pipefail before RUN with a pipe in it. If you are using /bin/sh in an alpine image or if your shell is symlinked to busybox then consider explicitly setting your SHELL to /bin/ash, or disable this check"
+        },
+        {
+          "code": "SC2034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x appears unused. Verify use (or export if used externally)."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "DL4006",
+          "message": "Shell pipeline may hide command failures; consider pipefail",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "trap-double",
+      "source": "FROM alpine:3.22\nRUN trap \"echo $x\" EXIT\n",
+      "reference": [
+        {
+          "code": "SC2154",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x is referenced but not assigned."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "trap-single",
+      "source": "FROM alpine:3.22\nRUN trap 'echo $x' EXIT\n",
+      "reference": [
+        {
+          "code": "SC2154",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "x is referenced but not assigned."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "trap-sub",
+      "source": "FROM alpine:3.22\nRUN trap \"echo $(date)\" EXIT\n",
+      "reference": [
+        {
+          "code": "SC2064",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Use single quotes, otherwise this expands now rather than when signalled."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2064",
+          "message": "Use single quotes to defer expansion until the trap runs",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "trap-literal",
+      "source": "FROM alpine:3.22\nRUN trap \"echo ready\" EXIT\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "trap-unquoted",
+      "source": "FROM alpine:3.22\nRUN trap $handler EXIT\n",
+      "reference": [
+        {
+          "code": "SC2086",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Double quote to prevent globbing and word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "trap-list",
+      "source": "FROM alpine:3.22\nRUN trap -l\n",
+      "reference": [
+        {
+          "code": "SC3045",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "In POSIX sh, trap -l is undefined."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "tilde-double",
+      "source": "FROM alpine:3.22\nRUN echo \"~/file\"\n",
+      "reference": [
+        {
+          "code": "SC2088",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Tilde does not expand in quotes. Use $HOME."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2088",
+          "message": "Tilde does not expand inside quotes; use $HOME",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "tilde-single",
+      "source": "FROM alpine:3.22\nRUN echo '~/file'\n",
+      "reference": [
+        {
+          "code": "SC2088",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Tilde does not expand in quotes. Use $HOME."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2088",
+          "message": "Tilde does not expand inside quotes; use $HOME",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "tilde-ok",
+      "source": "FROM alpine:3.22\nRUN echo ~/file\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "tilde-middle",
+      "source": "FROM alpine:3.22\nRUN echo \"path: ~/file\"\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "tilde-user",
+      "source": "FROM alpine:3.22\nRUN echo \"~root/file\"\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "tilde-assignment",
+      "source": "FROM alpine:3.22\nRUN x=\"~/file\"; echo \"$x\"\n",
+      "reference": [
+        {
+          "code": "SC2088",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Tilde does not expand in quotes. Use $HOME."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2088",
+          "message": "Tilde does not expand inside quotes; use $HOME",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "glob-rm",
+      "source": "FROM alpine:3.22\nRUN rm *\n",
+      "reference": [
+        {
+          "code": "SC2035",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use ./*glob* or -- *glob* so names with dashes won't become options."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2035",
+          "message": "Use ./* or -- to prevent glob matches from becoming options",
+          "level": "info"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "glob-cp",
+      "source": "FROM alpine:3.22\nRUN cp * /tmp/\n",
+      "reference": [
+        {
+          "code": "SC2035",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use ./*glob* or -- *glob* so names with dashes won't become options."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2035",
+          "message": "Use ./* or -- to prevent glob matches from becoming options",
+          "level": "info"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "glob-mv",
+      "source": "FROM alpine:3.22\nRUN mv *.txt /tmp/\n",
+      "reference": [
+        {
+          "code": "SC2035",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use ./*glob* or -- *glob* so names with dashes won't become options."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2035",
+          "message": "Use ./* or -- to prevent glob matches from becoming options",
+          "level": "info"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "glob-rm-safe",
+      "source": "FROM alpine:3.22\nRUN rm -- *\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "glob-relative",
+      "source": "FROM alpine:3.22\nRUN rm ./*\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "glob-quoted",
+      "source": "FROM alpine:3.22\nRUN rm \"*\"\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "glob-echo",
+      "source": "FROM alpine:3.22\nRUN echo *\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "glob-rm-opts",
+      "source": "FROM alpine:3.22\nRUN rm -f *\n",
+      "reference": [
+        {
+          "code": "SC2035",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use ./*glob* or -- *glob* so names with dashes won't become options."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2035",
+          "message": "Use ./* or -- to prevent glob matches from becoming options",
+          "level": "info"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "glob-rm-question",
+      "source": "FROM alpine:3.22\nRUN rm ?.txt\n",
+      "reference": [
+        {
+          "code": "SC2035",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use ./*glob* or -- *glob* so names with dashes won't become options."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2035",
+          "message": "Use ./* or -- to prevent glob matches from becoming options",
+          "level": "info"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "glob-rm-bracket",
+      "source": "FROM alpine:3.22\nRUN rm [ab].txt\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "glob-find",
+      "source": "FROM alpine:3.22\nRUN find . -name \"*\"\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "sub-for",
+      "source": "FROM alpine:3.22\nRUN for x in $(cat list); do echo \"$x\"; done\n",
+      "reference": [
+        {
+          "code": "SC2013",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "To read lines rather than words, pipe/redirect to a 'while read' loop."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "sub-case",
+      "source": "FROM alpine:3.22\nRUN case $(date) in x) echo yes;; esac\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "sub-test",
+      "source": "FROM alpine:3.22\nRUN test \"$(date)\" = x\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "sub-redirect",
+      "source": "FROM alpine:3.22\nRUN cat >$(date)\n",
+      "reference": [
+        {
+          "code": "SC2046",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Quote this to prevent word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2046",
+          "message": "Quote command substitution to prevent word splitting",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "escaped-sub",
+      "source": "FROM alpine:3.22\nRUN echo \\$(date)\n",
+      "reference": [
+        {
+          "code": "SC1088",
+          "column": 1,
+          "file": "-",
+          "level": "error",
+          "line": 2,
+          "message": "Parsing stopped here. Invalid use of parentheses?"
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "escaped-backtick",
+      "source": "FROM alpine:3.22\nRUN echo \\`date\\`\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "exec-json",
+      "source": "FROM alpine:3.22\nRUN [\"echo\", \"$(date)\", \"~/file\"]\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "powershell",
+      "source": "FROM windows:1\nSHELL [\"powershell\", \"-Command\"]\nRUN echo $(date)\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "bash",
+      "source": "FROM alpine:3.22\nSHELL [\"/bin/bash\", \"-c\"]\nRUN read x\n",
+      "reference": [
+        {
+          "code": "SC2034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 3,
+          "message": "x appears unused. Verify use (or export if used externally)."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "heredoc",
+      "source": "FROM alpine:3.22\nRUN <<EOF\nread x\necho $(date)\nEOF\n",
+      "reference": [
+        {
+          "code": "SC2005",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Useless echo? Instead of 'echo $(cmd)', just use 'cmd'."
+        }
+      ],
+      "referenceExit": 0,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2005",
+          "message": "Execute the command directly instead of echoing its output",
+          "level": "style"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sub-cp",
+      "source": "FROM alpine:3.22\nRUN cp $(date) /tmp/file\n",
+      "reference": [
+        {
+          "code": "SC2046",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Quote this to prevent word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2046",
+          "message": "Quote command substitution to prevent word splitting",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sub-backtick-cp",
+      "source": "FROM alpine:3.22\nRUN cp `date` /tmp/file\n",
+      "reference": [
+        {
+          "code": "SC2006",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Use $(...) notation instead of legacy backticks `...`."
+        }
+      ],
+      "referenceExit": 0,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2006",
+          "message": "Use $(...) instead of legacy backticks",
+          "level": "style"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sub-part-quoted",
+      "source": "FROM alpine:3.22\nRUN cp \"prefix\"$(date) /tmp/file\n",
+      "reference": [
+        {
+          "code": "SC2046",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Quote this to prevent word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2046",
+          "message": "Quote command substitution to prevent word splitting",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sub-two",
+      "source": "FROM alpine:3.22\nRUN echo $(date)$(uname)\n",
+      "reference": [
+        {
+          "code": "SC2046",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Quote this to prevent word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2046",
+          "message": "Quote command substitution to prevent word splitting",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sub-two-quoted",
+      "source": "FROM alpine:3.22\nRUN echo \"$(date)$(uname)\"\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "sub-number",
+      "source": "FROM alpine:3.22\nRUN echo $(wc -l < file) suffix\n",
+      "reference": [
+        {
+          "code": "SC2046",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "Quote this to prevent word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2046",
+          "message": "Quote command substitution to prevent word splitting",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sub-seq",
+      "source": "FROM alpine:3.22\nRUN echo $(seq 1 3) suffix\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "sub-escaped",
+      "source": "FROM alpine:3.22\nRUN echo \"\\$(date)\"\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "sub-single",
+      "source": "FROM alpine:3.22\nRUN echo '$(date)'\n",
+      "reference": [
+        {
+          "code": "SC2016",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Expressions don't expand in single quotes, use double quotes for that."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "trap-backtick",
+      "source": "FROM alpine:3.22\nRUN trap \"echo `date`\" EXIT\n",
+      "reference": [
+        {
+          "code": "SC2006",
+          "column": 1,
+          "file": "-",
+          "level": "style",
+          "line": 2,
+          "message": "Use $(...) notation instead of legacy backticks `...`."
+        }
+      ],
+      "referenceExit": 0,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2006",
+          "message": "Use $(...) instead of legacy backticks",
+          "level": "style"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "glob-option-after",
+      "source": "FROM alpine:3.22\nRUN rm * --\n",
+      "reference": [
+        {
+          "code": "SC2035",
+          "column": 1,
+          "file": "-",
+          "level": "info",
+          "line": 2,
+          "message": "Use ./*glob* or -- *glob* so names with dashes won't become options."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2035",
+          "message": "Use ./* or -- to prevent glob matches from becoming options",
+          "level": "info"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "glob-path",
+      "source": "FROM alpine:3.22\nRUN rm /tmp/*\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "literal-comment",
+      "source": "FROM alpine:3.22\nRUN echo ok # `date` \"~/file\"\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "literal-heredoc",
+      "source": "FROM alpine:3.22\nRUN cat <<EOF\n$(date)\nEOF\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "data-heredoc",
+      "source": "FROM alpine:3.22\nRUN cat <<EOF\nrm *\nEOF\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "double-assignment",
+      "source": "FROM alpine:3.22\nRUN x=$(date) y=ok; echo \"$x\"\n",
+      "reference": [
+        {
+          "code": "SC2034",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 2,
+          "message": "y appears unused. Verify use (or export if used externally)."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "ignore-inline",
+      "source": "FROM alpine:3.22\n# hadolint ignore=SC2035\nRUN rm *\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "powershell-stage",
+      "source": "FROM windows:1 AS base\nSHELL [\"powershell\", \"-Command\"]\nFROM base\nRUN echo $(date)\n",
+      "reference": [],
+      "referenceExit": 0,
+      "actual": [],
+      "passed": true
+    },
+    {
+      "name": "posix-reset",
+      "source": "FROM windows:1\nSHELL [\"powershell\", \"-Command\"]\nFROM alpine:3.22\nRUN cp $(date) /tmp/\n",
+      "reference": [
+        {
+          "code": "SC2046",
+          "column": 1,
+          "file": "-",
+          "level": "warning",
+          "line": 4,
+          "message": "Quote this to prevent word splitting."
+        }
+      ],
+      "referenceExit": 1,
+      "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 4,
+          "code": "SC2046",
+          "message": "Quote command substitution to prevent word splitting",
+          "level": "warning"
+        }
+      ],
+      "passed": true
+    }
+  ]
+}

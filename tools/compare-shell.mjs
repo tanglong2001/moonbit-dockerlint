@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {configured} from '../web/engine.mjs';
+const reference=JSON.parse(fs.readFileSync(new URL('../evidence/shell-reference.json',import.meta.url),'utf8'));
+const owned=['SC2005','SC2006','SC2035','SC2046','SC2064','SC2088'];
+const select=ds=>ds.filter(d=>owned.includes(d.code)).map(d=>`${d.code}:${d.line}:${d.level}`).sort();
+const rows=reference.cases.map(row=>{const result=configured(row.source,JSON.stringify(row.config??{}),'Dockerfile');
+ const actual=result.startsWith('ERROR:')?result:JSON.parse(result);
+ return {...row,actual,passed:Array.isArray(actual)&&JSON.stringify(select(actual))===JSON.stringify(select(row.reference))};});
+const report={reference:reference.version,binarySHA256:reference.binarySHA256,owned,scope:'Instruction line, code and severity for six bounded lexical ShellCheck-compatible diagnostics. Other reference diagnostics retained but excluded.',engineSHA256:createHash('sha256').update(fs.readFileSync(new URL('../web/engine.mjs',import.meta.url))).digest('hex'),passed:rows.filter(r=>r.passed).length,failed:rows.filter(r=>!r.passed).length,rows};
+fs.writeFileSync(new URL('../evidence/shell-comparison.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({passed:report.passed,failed:report.failed}));
+for(const row of rows.filter(r=>!r.passed))console.log(JSON.stringify({name:row.name,source:row.source,expected:select(row.reference),actual:Array.isArray(row.actual)?select(row.actual):row.actual}));
+process.exitCode=report.failed?1:0;

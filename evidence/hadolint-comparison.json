@@ -1429,6 +1429,13 @@
         {
           "file": "Dockerfile",
           "line": 2,
+          "code": "SC2005",
+          "message": "Execute the command directly instead of echoing its output",
+          "level": "style"
+        },
+        {
+          "file": "Dockerfile",
+          "line": 2,
           "code": "DL3008",
           "message": "Pin apt-get package versions with package=version",
           "level": "warning"
@@ -1789,6 +1796,13 @@
         {
           "file": "Dockerfile",
           "line": 2,
+          "code": "SC2005",
+          "message": "Execute the command directly instead of echoing its output",
+          "level": "style"
+        },
+        {
+          "file": "Dockerfile",
+          "line": 2,
           "code": "DL3008",
           "message": "Pin apt-get package versions with package=version",
           "level": "warning"
@@ -1885,6 +1899,13 @@
         {
           "file": "Dockerfile",
           "line": 2,
+          "code": "SC2006",
+          "message": "Use $(...) instead of legacy backticks",
+          "level": "style"
+        },
+        {
+          "file": "Dockerfile",
+          "line": 2,
           "code": "DL3013",
           "message": "Pin pip package versions or use a requirements file",
           "level": "warning"
@@ -1953,6 +1974,13 @@
       ],
       "referenceExit": 1,
       "actual": [
+        {
+          "file": "Dockerfile",
+          "line": 2,
+          "code": "SC2005",
+          "message": "Execute the command directly instead of echoing its output",
+          "level": "style"
+        },
         {
           "file": "Dockerfile",
           "line": 2,
