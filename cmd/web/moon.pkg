@@ -1,5 +1,5 @@
 import {
-  "localreview/dockerlint" @lib,
+  "tanglong2001/dockerlint" @lib,
 }
 
 supported_targets = "js"

@@ -1,0 +1,17 @@
+$ C:\Users\uiwcv\Documents\Codex\2026-09-10\ban\work\moon\bin\moon.exe info
+Finished. moon: ran 4 tasks, now up to date
+
+$ C:\Users\uiwcv\Documents\Codex\2026-09-10\ban\work\moon\bin\moon.exe check --deny-warn
+Finished. moon: ran 4 tasks, now up to date
+
+$ C:\Users\uiwcv\Documents\Codex\2026-09-10\ban\work\moon\bin\moon.exe build --target js --deny-warn
+Finished. moon: ran 5 tasks, now up to date
+
+$ C:\Users\uiwcv\Documents\Codex\2026-09-10\ban\work\moon\bin\moon.exe run cmd/main
+line 1: DL3007 — Avoid the latest image tag
+line 2: DL3002 — Use a non-root runtime user
+line 3: DL4006 — Shell pipeline may hide command failures; consider pipefail
+line 4: DL3025 — Prefer JSON exec form for signal forwarding
+
+$ node tools/test-demo.mjs
+dockerlint: standalone engine passed

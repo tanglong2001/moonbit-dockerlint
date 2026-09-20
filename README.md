@@ -1,5 +1,7 @@
 # MoonBit Dockerlint 0.4.0
 
+> 2026-09-21 本地构建修复：命令包 import 已同步到当前 moon.mod 模块名；moon info/check、JS 构建、MoonBit 示例和 Node 引擎示例通过。算法未改，本轮未重跑历史全部行为/性能套件。当前提交指纹见 evidence/module-import-fix.json。
+
 独立的 Dockerfile 静态检查库，提供 MoonBit API、编译后 JS 引擎、浏览器示例与实际文件/stdin CLI。分析器不会执行 Dockerfile、RUN、变量中的命令或拉取镜像。全部成果留在本地。
 
 0.4 补上带引号的 shell 词法、有限命令/重定向/命令替换分析、脚本型 heredoc、包管理器规则、ARG/ENV 作用域快照、配置与多文件报告。修正最后一条 USER、ADD 源路径和默认诊断级别。仍不是完整 Hadolint/ShellCheck 或 BuildKit 实现。
