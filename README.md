@@ -1,6 +1,14 @@
 # MoonBit Dockerlint 0.4.0
 
-独立的 Dockerfile 静态检查库，提供 MoonBit API、编译后 JS 引擎、浏览器示例与实际文件/stdin CLI。分析器不会执行 Dockerfile、RUN、变量中的命令或拉取镜像。全部成果留在本地。
+## 获取与验证入口
+
+公开源码：[github.com/tanglong2001/moonbit-dockerlint](https://github.com/tanglong2001/moonbit-dockerlint)；MoonBit 模块名为 `tanglong2001/dockerlint`。
+
+从源码运行：`git clone https://github.com/tanglong2001/moonbit-dockerlint.git` 后进入该目录，按下文和 [TESTING.md](TESTING.md) 安装所需工具。仓库公开不等于已在 Mooncakes 发布，不承诺 `moon add` 当前可用。
+
+查看 [GitHub Actions](https://github.com/tanglong2001/moonbit-dockerlint/actions) 时请核对 run 的 commit SHA；历史 evidence、旧 ZIP 与本地测试不能替代当前提交的 CI 结果。下文保留各版本的验证范围和兼容性限制。
+
+独立的 Dockerfile 静态检查库，提供 MoonBit API、编译后 JS 引擎、浏览器示例与实际文件/stdin CLI。分析器不会执行 Dockerfile、RUN、变量中的命令或拉取镜像。
 
 0.4 补上带引号的 shell 词法、有限命令/重定向/命令替换分析、脚本型 heredoc、包管理器规则、ARG/ENV 作用域快照、配置与多文件报告。修正最后一条 USER、ADD 源路径和默认诊断级别。仍不是完整 Hadolint/ShellCheck 或 BuildKit 实现。
 
