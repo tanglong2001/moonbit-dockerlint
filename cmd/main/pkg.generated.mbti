@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "localreview/dockerlint/cmd/main"
+package "tanglong2001/dockerlint/cmd/main"
 
 // Values
 
