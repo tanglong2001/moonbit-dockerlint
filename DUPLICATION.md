@@ -1,3 +1,5 @@
+> 2026-09-22 三份初审反馈后的当前判断：**暂缓复申**。初审已质疑价值，且暂无明确使用方或独特需求。新分析能力仍需实际构建仓库需求支撑。 本次差异说明：Docker/BuildKit 自身已有构建依赖求解，mizchi/syntree.mbt 已有 Dockerfile 分词。新增的是限定范围的 MoonBit 图查询 API 和解释输出，不是新算法，也不声称替代 BuildKit。 以下保留之前检索的固定提交与来源；此前“补足场景”不能理解为本次已解除价值异议。
+
 # dockerlint 查重与定位 · 2026-09-22
 
 [mizchi/syntree/dockerfile](https://github.com/mizchi/syntree.mbt)。mizchi/syntree/dockerfile 已有分词和高亮。这里申报的是语义诊断、阶段/变量报告与 CI 门禁，不是首个解析器；不把 Hadolint 的规则发明归于本项目。

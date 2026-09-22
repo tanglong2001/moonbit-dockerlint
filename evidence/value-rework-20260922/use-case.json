@@ -1,0 +1,88 @@
+{
+  "date": "2026-09-22",
+  "command": "node examples/run-use-case.mjs",
+  "passed": true,
+  "scope": "原创可构建结构样例；本轮仅做静态分析，未实际拉取镜像/构建。",
+  "actualUsersProven": false,
+  "externalServicesContacted": false,
+  "sourceSha256": {
+    "arguments.mbt": "e40eeb1a901c5b3c8009591765b7773ba0998957be2143ccfe6c8631d7c34354",
+    "configuration.mbt": "3959906437e9cc84860c3533648d97e55afd08933e0ee14a101b65ab26851147",
+    "extended_test.mbt": "1cb97bdc1e92c2425b4b5cb68c0c5ed54522f9fb280ff8685269638640b0f6b9",
+    "heredoc.mbt": "163c3059ff79c49afd2cb42079882b261b4054afd2dd82e035038196ea5b28f7",
+    "impact.mbt": "b81152719474d8c8313f38491ac6a2082c24f0d2f9eb88754c0cead5fa530107",
+    "impact_test.mbt": "fb8e87a1e9a69e97753a52d9af89de97a61c13f0468853b825fd2bba60e625e1",
+    "lint.mbt": "863e8fdf730cd6f531dcd4e1514e53285ef11853030613106d38f4e497394fd6",
+    "metadata_rules.mbt": "fb1d92a077ad52f8ef916f7ad727b2ae6d7a854cc3694e1b9ab354f04a812b70",
+    "moon.mod": "27260d0137609d09ed493846215a9faa0fea97cdf2955a59e0c427078a8d7246",
+    "moon.pkg": "0c9c8b5768ee43ba43fead81e79b877ec73f2ab9742f23fc18d5c816775b3272",
+    "parser.mbt": "39ff44553a61a181477991458450b2d4f56a920a22cc52b54a037da63e073a58",
+    "parser_test.mbt": "46b3dcc2b8c7b4edd7ba5ce11f25e80ebdf233dc1054595268125783bf239467",
+    "pkg.generated.mbti": "9768e64ee01f9689e6c6e2e1a13551c318baa19ba13030653887c7c4c3969425",
+    "reference_golden_test.mbt": "14743a19bf8c038c677523dd319635582d8085bedbf181c86659062b61b9a6d1",
+    "runtime_test.mbt": "fb3c60691b5c5e75c6f3cffdf328ac3dde538f240b3c6235bb4004190d268c36",
+    "shell.mbt": "ddfb685c5855e24a679f5dc9b570b95ba8cde815906487efebe77536c17ace5d",
+    "shell_diagnostics.mbt": "7dec6fe858d844c5a0e8d9afb16fa66a79d212ea657df8437d990d3b119cc158",
+    "shell_golden_test.mbt": "ec7a0236e725d6c14f88e9aea4f3157ea55f5be08b3339c03616633e6098b09b",
+    "shell_rules.mbt": "9319e022446933308f1b75762e2c66795f599117b9de35993d69ac542cc6e2a7",
+    "shell_tokens.mbt": "f9097f3a5be4664bedf46bd4e682bca5575b993899a9a571085a9b91c5d466fd",
+    "stages.mbt": "f6327a9c92c276ee6475d06af1c1ed6dabaeac6d4625ce6787f054da96834371",
+    "unicode.mbt": "e29dddece38721706fcdcc09a3b1e17dd9c3bc5bc8ca256124174a4537ba7408",
+    "usability.mbt": "dbfa31b1ee0519b176b37126a00857b42110cf4cce9aa2fc52ebd49082902179",
+    "variables.mbt": "c5e9d4328af46bf83fe99ce8196fd67b3efa8a729068f34a874ad56be17ffd3b",
+    "examples/impact.Dockerfile": "b24541f3151ad5559e566e544f1188ed1c1ffda67adfc3816a311a5b0919cc52",
+    "examples/lint-config.json": "d6af1a469b9f295082c988640d08c9ad598715eb363eddcc0519dd08747ffbfb",
+    "examples/run-use-case.mjs": "359ea34b13ee185b6cae0536da5e25bb56bfc51d2e5dd166c304b1684003a3bb",
+    "examples/use-case.json": "18812a199a0bb16dbc0dec05c9b2863ab928777508a422fe5a4e9f942821ab2b",
+    "examples/variables.Dockerfile": "5d0add0c309a87cf3a3829014fb4c14333cf6d83eb1fd09a4190b6836c3f647f",
+    "tools/benchmark.mjs": "53ac611536ba7cb3732017d22976ff8f38dbd9e7aa579c2469eab75b0cdc7216",
+    "tools/cli.mjs": "62976c7be0bf986fed2049765e0c7dfe8948601a913322b34396b34579c5c586",
+    "tools/compare-reference.mjs": "04ce27de05228d4116da2c907c1f63c8a55c0b7d3cb801093f8af89bd8bf7586",
+    "tools/compare-shell.mjs": "917e9465de074f642eb4fe57bbcf03020a94de107974fc3f3897a7ed77378b77",
+    "tools/formats.mjs": "2915b3f3715dafa0add0f510cdfcba3fba658a3b94ac632935ad8dbac887c346",
+    "tools/robustness.mjs": "24964a078897dccc448ba3d5db4c08f6446d38008424987bf26b4b6f042a21d6",
+    "tools/test-cli.mjs": "b1acaf8992e16d37e1527fd60beeea275ce0df574a9622ab3b44d86dcaf08b03",
+    "tools/test-demo.mjs": "12d680bc8416cf48b68e5ae457cd8dfa770642f783a257e5548ea0fa4ff001e6",
+    "tools/test-impact.mjs": "1bcbf98e37dc8ae74e19c944debed3053f7770d6d082c78b0e48a30a2a19b859",
+    "tools/test-report.mjs": "569fc33df6471df2881d8223c96ef39816d73eb2c4ee7ff3f8d392c9fd195651",
+    "tools/test-runtime.mjs": "e732f502c1c2d8e92a08b5e6143368c030cf7941cb9c65b65355ad8bfe2564ed",
+    "web/app.mjs": "48776698d3dc63fe6ccd5f91be18ccb0a8ac21825eec7427eb5c3c4c8d9069f0",
+    "web/config.mjs": "9c41a7a36b04355c3d1b9edaa1230481ef43816ffa4d5aa3142cf56bed737927",
+    "web/engine.mjs": "3d19d9abf4e5a4809497c4e988df3cadf75af4a3f2b6640162dc581d9fbe120d",
+    "cmd/main/main.mbt": "6a789ca9ac99bfc02563fbb33b245605affdd237916aa964dda37aa3665a3f58",
+    "cmd/main/moon.pkg": "efb7a52cfdd7de3a0231e7055ded0be1f520513bb8f647a6ff2ad67aa3018e42",
+    "cmd/main/pkg.generated.mbti": "18fa496fc156ff6cb87f26026f05b463afa200687b9f92fb53dfc88230f30336",
+    "cmd/web/main.mbt": "41b3aba1587d4551f79be776be55c6dff0e73f14f03b00f038400faf28e51520",
+    "cmd/web/moon.pkg": "e37c4c0c39935d8abe0680fce11c7a91dcd25d0990e2ae0407629163605e4677"
+  },
+  "outputs": [
+    {
+      "file": "step-1.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "step-1.stdout.txt",
+      "bytes": 915,
+      "sha256": "dc0751331c535e047620c162988857eee9526cc655f3b4a0fb7069a5a960c178"
+    }
+  ],
+  "additionalChecks": {
+    "coreJs": "21/21 passed",
+    "coreWasmGC": "21/21 passed",
+    "checkJs": true,
+    "buildJs": true,
+    "checks": [
+      "node tools/test-impact.mjs",
+      "node tools/test-report.mjs"
+    ],
+    "output": [
+      "impact CLI: dependency explanation, independent target, target/line errors passed",
+      "JSON diagnostics, stage graph and 5 CLI threshold/error cases passed"
+    ],
+    "externalBuilderExecuted": false
+  },
+  "previousCoreValidation": "evidence/innovation-review-20260922/results.json",
+  "note": "New sample execution only; earlier core/reference checks retain their original scope. Command output logs replace the machine-specific temporary directory with {output}; output hashes refer to original bytes.",
+  "sourceHashBasis": "Git-normalized blobs in the delivered source archive. Protocol fixtures are explicitly -text to preserve CRLF; ordinary source line endings normalize to LF."
+}

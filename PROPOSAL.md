@@ -1,34 +1,25 @@
-# Dockerfile 语义诊断与 CI 报告工具
+# Dockerfile 阶段依赖与修改影响分析 · 修订申报草稿
 
-本地申报候选材料，2026-09-22；模块 `tanglong2001/dockerlint`，版本 `0.5.0`。团队的公开仓库可能还是先前提交，本次没有推送；最终表单必须指向团队实际上传版本。
+本项目仓库：https://github.com/tanglong2001/moonbit-dockerlint
+模块 / 本地版本：`tanglong2001/dockerlint` / `0.6.0`；许可证：MIT。
+修订状态：暂缓复申；本轮仅本地修订，未推送或提交表单。
 
-## 要解决的任务
+## 任务与选择依据
+在不运行构建的情况下解释目标依赖、修改行可传播到的阶段和对应引用行；依赖不能静态确定时向调用方明确返回不确定。保留已有规则检查作为辅助功能。
+现阶段保留图分析原型与可复查接口；不以多加规则、改名或当前克隆成功证明选题异议已经解除。
 
-在镜像构建之前发现多阶段引用、变量上下文、包安装与常见 shell 写法问题，并以 SARIF/Checkstyle 和失败阈值接入 CI。
+## 已实现内容
+MoonBit 解析指令并构造 FROM/COPY/RUN mount 图，执行环检测、可达性及带路径的影响分析；Node 读取输入并输出 JSON。
+可复现任务：解释多阶段构建的修改影响；按 README 构建后运行 `node examples/run-use-case.mjs`，输入与输出见 USE-CASE.md。
+本轮新增图分析通过 JS/WasmGC 核心测试及 CLI 检查，原报告 CLI 回归通过；样例未实际调用 Docker 构建。
 
-以下是目标任务和可复现工程证据，不虚构客户、存量部署或采用人数。
+## 原创、复用与差异
+原创实现/参考来源/第三方材料许可按 README、DUPLICATION 与仓库来源说明披露；不将既有协议、算法、词库或规范发明归于本项目。
+Docker/BuildKit 自身已有构建依赖求解，mizchi/syntree.mbt 已有 Dockerfile 分词。新增的是限定范围的 MoonBit 图查询 API 和解释输出，不是新算法，也不声称替代 BuildKit。
+比较项目链接单列于 DUPLICATION.md，不作为本项目提交地址。检索范围不含完整未公开报名表，不能保证无重叠。
 
-## 现有工作与新增贡献
-
-[mizchi/syntree/dockerfile](https://github.com/mizchi/syntree.mbt)。mizchi/syntree/dockerfile 已有分词和高亮。这里申报的是语义诊断、阶段/变量报告与 CI 门禁，不是首个解析器；不把 Hadolint 的规则发明归于本项目。
-
-MoonBit 执行 Dockerfile 分析、有限 shell 词法、变量和阶段图及规则；Node 读取文件并输出报告，不执行 Dockerfile。
-
-- [mizchi/syntree.mbt 固定提交](https://github.com/mizchi/syntree.mbt/tree/0492c077be93ff5aa3b51a53e0f0ebc17f025844)：依据该版本的公开说明对照，不冒充本轮运行了对方全部实现。
-
-## 可复现路径
-
-仓库附编译引擎；修改源码后先构建。参考工具的额外依赖与环境变量见 TESTING.md；测试创建的网络服务仅在本机。
-
-```sh
-node tools/cli.mjs --file examples/variables.Dockerfile --stages
-node tools/test-report.mjs
-```
-
-本轮 JSON 诊断、阶段图及 5 类 CLI 阈值/错误检查通过；规则边界见 SHELL-CHECKS.md。 本轮 JS/WasmGC 核心测试及 JS 构建通过，原始日志见 [本轮验证](evidence/innovation-review-20260922/results.json)。测试数量证明所列范围，不能代替创新性论证或推断正式审核通过。
-
-## 边界与来源
-
-六类 shell 检查只是限定子集，不是完整 ShellCheck、BuildKit 或容器安全审计。
-
-许可证与来源沿用仓库现有 LICENSE/第三方说明，不将标准、算法、词库或参考软件写成本项目发明。查重不是对全生态不存在的证明，日期、相邻项与未覆盖范围见 [DUPLICATION.md](DUPLICATION.md)。
+## 边界与剩余计划
+用户已确认暂无明确使用方或独特需求。图分析只针对当前文件的显式依赖，忽略外部镜像元数据、命名 context 覆盖、上下文文件和缓存状态；不得用它直接证明某次构建可以跳过。动态引用、ONBUILD 等保守报告。
+初审已质疑价值，且暂无明确使用方或独特需求。新分析能力仍需实际构建仓库需求支撑。
+剩余计划：由对接团队核对真实表单链接、公开本轮对应提交及确认选题/换题流程；按实际接入输入补验证，避免以更多规则、测试数量或改名替代用途证据。
+交付：MoonBit 库、限定宿主入口、可运行任务、源码/来源说明及分层验证证据；不承诺自动通过初审。

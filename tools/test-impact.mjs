@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+const run=(args)=>spawnSync(process.execPath,['tools/cli.mjs',...args],{encoding:'utf8',timeout:10000,windowsHide:true});
+const result=run(['--file','examples/impact.Dockerfile','--impact','--target','release','--changed-line','2']);
+assert.equal(result.status,0,result.stderr);const report=JSON.parse(result.stdout);
+assert.deepEqual(report.required,[0,1,2,3]);assert.deepEqual(report.targets.map(t=>t.affected),[true,false,true,true,false]);
+assert.deepEqual(report.targets[3].path,[3,2,0]);assert.equal(report.conservative,false);
+assert.equal(run(['--file','examples/impact.Dockerfile','--changed-line','2']).status,1);
+assert.equal(run(['--file','examples/impact.Dockerfile','--impact','--target','missing']).status,2);
+assert.equal(run(['--file','examples/impact.Dockerfile','--impact','--changed-line','2147483648']).status,1);
+console.log('impact CLI: dependency explanation, independent target, target/line errors passed');

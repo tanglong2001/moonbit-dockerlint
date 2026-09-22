@@ -10,6 +10,8 @@ pub fn analyze_stages(Array[Instruction]) -> Array[Stage] raise ParseError
 
 pub fn analyze_variables(String, build_args? : Map[String, String]) -> Array[VariableScope] raise ParseError
 
+pub fn build_impact(String, target? : String, changed_lines? : Array[Int]) -> BuildImpact raise ParseError
+
 pub fn check(String, ignore_codes? : Array[String], honor_inline? : Bool, trusted_registries? : Array[String]) -> Array[Diagnostic] raise ParseError
 
 pub fn configured_report(String, String, filename? : String) -> String raise ParseError
@@ -37,6 +39,29 @@ pub struct Arguments {
   flags : Map[String, String]
   values : Array[String]
   json_form : Bool
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct BuildEdge {
+  consumer : Int
+  dependency : Int
+  line : Int
+  kind : String
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct BuildImpact {
+  stages : Array[Stage]
+  edges : Array[BuildEdge]
+  selected : Int
+  required : Array[Int]
+  changed_stages : Array[Int]
+  targets : Array[TargetImpact]
+  conservative : Bool
+  uncertainties : Array[BuildUncertainty]
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct BuildUncertainty {
+  line : Int
+  reason : String
 } derive(Eq, ToJson, @debug.Debug)
 
 pub struct Diagnostic {
@@ -82,6 +107,12 @@ pub struct Stage {
   base : String
   stage_name : String?
   dependencies : Array[Int]
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct TargetImpact {
+  target : Int
+  affected : Bool
+  path : Array[Int]
 } derive(Eq, ToJson, @debug.Debug)
 
 pub struct VariableScope {

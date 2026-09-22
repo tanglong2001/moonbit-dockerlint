@@ -1,0 +1,17 @@
+{
+  "project": "dockerlint",
+  "title": "Dockerfile 阶段依赖与修改影响分析",
+  "module": "tanglong2001/dockerlint",
+  "version": "0.6.0",
+  "repository": "https://github.com/tanglong2001/moonbit-dockerlint",
+  "status": "暂缓复申",
+  "remainingRisk": "初审已质疑价值，且暂无明确使用方或独特需求。新分析能力仍需实际构建仓库需求支撑。",
+  "actualUsersClaimed": false,
+  "anonymousCloneVerified": true,
+  "publicHead": "acc8f36e81d39693d2c6d3511fd2b00547e6da63",
+  "defaultBranch": "origin/main",
+  "localChangesPublished": false,
+  "proposalLines": 25,
+  "useCase": "解释多阶段构建的修改影响",
+  "diff": "Docker/BuildKit 自身已有构建依赖求解，mizchi/syntree.mbt 已有 Dockerfile 分词。新增的是限定范围的 MoonBit 图查询 API 和解释输出，不是新算法，也不声称替代 BuildKit。"
+}

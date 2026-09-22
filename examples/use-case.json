@@ -1,0 +1,19 @@
+{
+  "title": "解释多阶段构建的修改影响",
+  "scope": "原创可构建结构样例；本轮仅做静态分析，未实际拉取镜像/构建。",
+  "steps": [
+    {
+      "args": [
+        "tools/cli.mjs",
+        "--file",
+        "examples/impact.Dockerfile",
+        "--impact",
+        "--target",
+        "release",
+        "--changed-line",
+        "2"
+      ]
+    }
+  ],
+  "expected": "required=[0,1,2,3]，受影响阶段为 0/2/3，docs 阶段不受此静态路径影响，release 证据路径为 [3,2,0]。"
+}

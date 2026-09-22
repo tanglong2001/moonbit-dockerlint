@@ -1,8 +1,9 @@
 import fs from 'node:fs';
-import {run,configured,stage_graph,variables} from '../web/engine.mjs';
+import {run,configured,stage_graph,variables,impact} from '../web/engine.mjs';
 import {formatReport} from './formats.mjs';
 const argv=process.argv.slice(2), sources=[], buildArgs=Object.create(null);
-let json=false,mode='text',format,threshold='none',config={},configPath,inline=true,total=0;
+let json=false,mode='text',format,threshold='none',config={},configPath,inline=true,total=0,target='';
+const changedLines=[];
 const levels={error:0,warning:1,info:2,style:3,none:-1};
 const utf8=new TextDecoder('utf-8',{fatal:true});
 function decode(bytes){if(bytes.length>2097152)throw Error('Input exceeds 2 MiB');total+=bytes.length;if(total>16777216)throw Error('Total input exceeds 16 MiB');return utf8.decode(bytes)}
@@ -12,10 +13,12 @@ try {
  for(let i=0;i<argv.length;i++){
   const a=argv[i];
   const value=()=>{if(i+1>=argv.length)throw Error('Missing value for '+a);return argv[++i]};
-  if(a==='--help'){await write('Usage: node tools/cli.mjs [--input TEXT | --file PATH ...] [--json] [--diagnostics | --stages | --variables] [--format json|sarif|checkstyle|gnu|text] [--config JSON_FILE] [--no-inline] [--build-arg KEY=VALUE] [--fail-on error|warning|info|style|none]\nNo source: strict UTF-8 stdin. Config keys: ignore, honorInline, severity, trustedRegistries. Exit: 0 completed, 1 host/config error, 2 parse error, 3 threshold reached.\n');process.exit(0)}
+  if(a==='--help'){await write('Usage: node tools/cli.mjs [--input TEXT | --file PATH ...] [--json] [--diagnostics | --stages | --variables | --impact] [--target NAME] [--changed-line N ...] [--format json|sarif|checkstyle|gnu|text] [--config JSON_FILE] [--no-inline] [--build-arg KEY=VALUE] [--fail-on error|warning|info|style|none]\n--impact explains local literal-stage reachability and changed instruction lines; not a cache/skip-build proof. No source: strict UTF-8 stdin. Config keys: ignore, honorInline, severity, trustedRegistries. Exit: 0 completed, 1 host/config error, 2 parse error, 3 threshold reached.\n');process.exit(0)}
   else if(a==='--json')json=true;
   else if(a==='--no-inline')inline=false;
-  else if(['--diagnostics','--stages','--variables'].includes(a)){if(mode!=='text')throw Error('Choose one report mode');mode=a.slice(2)}
+  else if(['--diagnostics','--stages','--variables','--impact'].includes(a)){if(mode!=='text')throw Error('Choose one report mode');mode=a.slice(2)}
+  else if(a==='--target'){if(target)throw Error('Duplicate target');target=value();if(!target)throw Error('Empty target')}
+  else if(a==='--changed-line'){const raw=value();if(!/^[1-9][0-9]*$/.test(raw)||!Number.isSafeInteger(Number(raw))||Number(raw)>2147483647)throw Error('Changed line must be a positive Int32');changedLines.push(Number(raw));if(changedLines.length>10000)throw Error('Changed line count limit')}
   else if(a==='--format'){format=value();if(!['json','sarif','checkstyle','gnu','text'].includes(format))throw Error('Invalid format')}
   else if(a==='--fail-on'){threshold=value();if(!Object.hasOwn(levels,threshold))throw Error('Invalid failure threshold')}
   else if(a==='--config'){if(configPath)throw Error('Duplicate config');configPath=value()}
@@ -26,6 +29,7 @@ try {
  }
  if(format && !['text','diagnostics'].includes(mode))throw Error('Format is only supported for diagnostics');
  if(mode!=='variables' && Object.keys(buildArgs).length)throw Error('--build-arg requires --variables');
+ if(mode!=='impact' && (target||changedLines.length))throw Error('--target/--changed-line require --impact');
  if(configPath)config=JSON.parse(read(configPath));
  if(!config||typeof config!=='object'||Array.isArray(config))throw Error('Configuration must be an object');
  if(!inline)config.honorInline=false;
@@ -39,7 +43,7 @@ try {
   const report=configured(input,configText,source.file);
   if(report.startsWith('ERROR:')){if(format||mode==='diagnostics')reports.push({file:source.file,line:1,code:'ML1099',level:'error',message:report});else outputs.push(report);ok=false;continue}
   reports.push(...JSON.parse(report));
-  const result=mode==='stages'?stage_graph(input):mode==='variables'?variables(input,JSON.stringify(buildArgs)):null;
+  const result=mode==='stages'?stage_graph(input):mode==='variables'?variables(input,JSON.stringify(buildArgs)):mode==='impact'?impact(input,target,changedLines):null;
   if(result!==null){outputs.push(sources.length===1?result:JSON.stringify({file:source.file,result:result.startsWith('ERROR:')?result:JSON.parse(result)}));if(result.startsWith('ERROR:'))ok=false}
   else if(mode==='text'&&!format&&!configPath&&inline&&sources.length===1)outputs.push(run(input));
  }

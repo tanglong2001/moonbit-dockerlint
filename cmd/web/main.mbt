@@ -47,3 +47,14 @@ pub fn variables(input : String, build_args : String) -> String {
     e => "ERROR: " + Repr(e).to_string()
   }
 }
+
+///|
+pub fn impact(
+  input : String,
+  target : String,
+  changed_lines : Array[Int],
+) -> String {
+  @lib.build_impact(input, target~, changed_lines~).to_json().stringify() catch {
+    e => "ERROR: " + Repr(e).to_string()
+  }
+}

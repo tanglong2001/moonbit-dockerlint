@@ -1,3 +1,5 @@
+> 当前增量：0.6.0 新增 build_impact 与 --impact：FROM/COPY/重复 RUN --mount=from 依赖、环检测、选定目标闭包和修改行影响路径；动态/ONBUILD/声明修改保守报告。语义只覆盖当前文本显式图，不能证明缓存命中或安全跳过构建。
+
 > 0.5.0：新增六种常见 shell 检查，72/72 官方对照通过。当前范围与限制见 [SHELL-CHECKS.md](SHELL-CHECKS.md)；较早轮次的描述保留为历史。
 
 # 功能与兼容性边界

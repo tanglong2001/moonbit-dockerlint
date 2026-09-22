@@ -15,6 +15,7 @@ options(
         "stage_graph",
         "configured",
         "variables",
+        "impact",
       ],
       "format": "esm",
     },

@@ -44,60 +44,13 @@ pub fn analyze_stages(
       dependencies: [],
     })
   }
-  let mut current = -1
-  for instruction in instructions {
-    if instruction.name == "FROM" {
-      current += 1
-      if aliases.get(stages[current].base.to_lower()) is Some(parent) {
-        if parent < current {
-          stages[current].dependencies.push(parent)
-        }
-      }
-    } else if instruction.name == "COPY" && current >= 0 {
-      let args = instruction.split_arguments()
-      if args.flags.get("from") is Some(reference) {
-        let lower = reference.to_lower()
-        let dependency = if !lower.is_empty() &&
-          lower.iter().all(c => c >= '0' && c <= '9') {
-          let mut index = 0
-          for c in lower.iter() {
-            if index > 256 {
-              raise Invalid("COPY stage index out of range")
-            }
-            index = index * 10 + c.to_int() - 48
-          }
-          if index >= stages.length() {
-            raise Invalid("COPY stage index out of range")
-          }
-          Some(index)
-        } else {
-          aliases.get(lower)
-        }
-        if dependency is Some(index) {
-          if !stages[current].dependencies.contains(index) {
-            stages[current].dependencies.push(index)
-          }
-        }
-      }
+  let (edges, _) = build_edges(instructions, stages)
+  for edge in edges {
+    if !stages[edge.consumer].dependencies.contains(edge.dependency) {
+      stages[edge.consumer].dependencies.push(edge.dependency)
     }
   }
-  let colors = Array::make(stages.length(), 0)
-  fn visit(index : Int) -> Unit raise ParseError {
-    if colors[index] == 1 {
-      raise StageCycle(stages[index].line)
-    }
-    if colors[index] == 2 {
-      return
-    }
-    colors[index] = 1
-    for next in stages[index].dependencies {
-      visit(next)
-    }
-    colors[index] = 2
-  }
-  for i in 0..<stages.length() {
-    visit(i)
-  }
+  validate_stage_graph(stages)
   stages
 }
 
