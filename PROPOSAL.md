@@ -1,6 +1,6 @@
 # MoonBit 构建输入与阶段影响分析 · 修订申报草稿
 本项目仓库：https://github.com/tanglong2001/moonbit-dockerlint
-模块：tanglong2001/dockerlint；本地版本：0.7.0；许可证：MIT，适配来源另见 THIRD-PARTY。
+模块：tanglong2001/dockerlint；本地版本：0.7.0；许可证：MIT AND BSD-3-Clause，适配来源另见 THIRD-PARTY。
 状态：本轮仅本地交付，团队同步到上述仓库后提交复审。
 
 ## 解决的任务

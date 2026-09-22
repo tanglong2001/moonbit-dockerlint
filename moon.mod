@@ -2,7 +2,7 @@ name = "tanglong2001/dockerlint"
 
 version = "0.7.0"
 
-license = "MIT"
+license = "MIT AND BSD-3-Clause"
 
 readme = "README.md"
 
