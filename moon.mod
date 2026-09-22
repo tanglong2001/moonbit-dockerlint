@@ -1,9 +1,11 @@
 name = "tanglong2001/dockerlint"
 
-version = "0.6.0"
+version = "0.7.0"
 
 license = "MIT"
 
 readme = "README.md"
 
-description = "Dockerfile 阶段依赖与修改影响分析"
+description = "MoonBit 构建输入与阶段影响分析"
+
+repository = "https://github.com/tanglong2001/moonbit-dockerlint"

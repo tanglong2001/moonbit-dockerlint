@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "input": "original synthetic example, not an executed Docker build",
+  "checks": [
+    "file-to-stage-to-target witness",
+    "independent docs branch",
+    "excluded directory with re-included child",
+    "ignored bind input exits 2"
+  ],
+  "normal_summary": {
+    "entries": 11,
+    "files": 7,
+    "total_file_bytes": "422",
+    "included_file_bytes": "397",
+    "selected_known_file_bytes": "77",
+    "missing_sources": 0,
+    "uncertainties": 0
+  },
+  "excluded_summary": {
+    "entries": 11,
+    "files": 7,
+    "total_file_bytes": "430",
+    "included_file_bytes": "386",
+    "selected_known_file_bytes": "58",
+    "missing_sources": 1,
+    "uncertainties": 0
+  }
+}

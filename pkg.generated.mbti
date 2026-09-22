@@ -3,9 +3,12 @@ package "tanglong2001/dockerlint"
 
 import {
   "moonbitlang/core/debug",
+  "moonbitlang/core/json",
 }
 
 // Values
+pub fn analyze_context(String, Array[ContextEntry], target? : String, changes? : Array[ContextChange], build_args? : Map[String, String], control_files? : Array[String]) -> ContextPlan raise ParseError
+
 pub fn analyze_stages(Array[Instruction]) -> Array[Stage] raise ParseError
 
 pub fn analyze_variables(String, build_args? : Map[String, String]) -> Array[VariableScope] raise ParseError
@@ -15,6 +18,8 @@ pub fn build_impact(String, target? : String, changed_lines? : Array[Int]) -> Bu
 pub fn check(String, ignore_codes? : Array[String], honor_inline? : Bool, trusted_registries? : Array[String]) -> Array[Diagnostic] raise ParseError
 
 pub fn configured_report(String, String, filename? : String) -> String raise ParseError
+
+pub fn copy_source_matches(String, String) -> Bool raise ParseError
 
 pub fn expand_variables(String, Map[String, String]) -> Expansion raise ParseError
 
@@ -62,6 +67,46 @@ pub struct BuildImpact {
 pub struct BuildUncertainty {
   line : Int
   reason : String
+} derive(Eq, ToJson, @debug.Debug)
+
+pub(all) struct ContextChange {
+  path : String
+  excluded : Bool
+} derive(Eq, ToJson, @debug.Debug, @json.FromJson)
+
+pub(all) struct ContextEntry {
+  path : String
+  kind : String
+  excluded : Bool
+} derive(Eq, ToJson, @debug.Debug, @json.FromJson)
+
+pub struct ContextFileImpact {
+  path : String
+  excluded : Bool
+  source_lines : Array[Int]
+  conservative : Bool
+  targets : Array[TargetImpact]
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct ContextInput {
+  stage : Int
+  line : Int
+  kind : String
+  source : String
+  included : Array[Int]
+  excluded : Array[Int]
+  status : String
+  note : String
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct ContextPlan {
+  graph : BuildImpact
+  entries : Array[ContextEntry]
+  inputs : Array[ContextInput]
+  selected_entries : Array[Int]
+  missing_lines : Array[Int]
+  uncertainties : Array[BuildUncertainty]
+  changes : Array[ContextFileImpact]
 } derive(Eq, ToJson, @debug.Debug)
 
 pub struct Diagnostic {

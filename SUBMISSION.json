@@ -1,17 +1,19 @@
 {
   "project": "dockerlint",
-  "title": "Dockerfile 阶段依赖与修改影响分析",
+  "title": "MoonBit 构建输入与阶段影响分析",
   "module": "tanglong2001/dockerlint",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "repository": "https://github.com/tanglong2001/moonbit-dockerlint",
-  "status": "暂缓复申",
-  "remainingRisk": "初审已质疑价值，且暂无明确使用方或独特需求。新分析能力仍需实际构建仓库需求支撑。",
+  "status": "已补齐目录分析工作流，待团队同步后复审",
+  "remainingRisk": "暂无确认使用方；静态解释及 ignore 子集有明确边界；价值判断由组委会作出。",
   "actualUsersClaimed": false,
   "anonymousCloneVerified": true,
-  "publicHead": "acc8f36e81d39693d2c6d3511fd2b00547e6da63",
+  "publicHead": "91b348323871bc3ed32f3d5686280774d56a9fdf",
   "defaultBranch": "origin/main",
   "localChangesPublished": false,
-  "proposalLines": 25,
-  "useCase": "解释多阶段构建的修改影响",
-  "diff": "Docker/BuildKit 自身已有构建依赖求解，mizchi/syntree.mbt 已有 Dockerfile 分词。新增的是限定范围的 MoonBit 图查询 API 和解释输出，不是新算法，也不声称替代 BuildKit。"
+  "proposalLines": 28,
+  "useCase": "构建输入追踪、文件到阶段见证及 ignore 误排除定位",
+  "diff": "MoonBit 实际输入与依赖解释；复用 Balena ignore，COPY 匹配适配 Go，保留原始许可；不是新规则库或新构建算法。",
+  "publicHeadVerifiedAt": "2026-09-23",
+  "publicFetchVerified": true
 }

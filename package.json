@@ -1,0 +1,9 @@
+{
+  "name": "moonbit-dockerlint-host",
+  "version": "0.7.0",
+  "private": true,
+  "type": "module",
+  "description": "Node filesystem and Docker ignore adapter for the MoonBit context analyzer",
+  "engines": { "node": ">=24" },
+  "dependencies": { "@balena/dockerignore": "1.0.2" }
+}

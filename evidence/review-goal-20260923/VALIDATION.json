@@ -1,0 +1,132 @@
+{
+  "date": "2026-09-23",
+  "scope": "Dockerlint 0.7.0 local context feature and affected regressions",
+  "corePreviouslyRunThisIncrement": {
+    "js": {
+      "total": 28,
+      "passed": 28
+    },
+    "wasm-gc": {
+      "total": 28,
+      "passed": 28
+    },
+    "after": "empty-root and Go byte/chunk corrections; before docs/version only changes"
+  },
+  "commands": [
+    {
+      "name": "format",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "fmt"
+      ],
+      "exit": 0,
+      "log": "format.log"
+    },
+    {
+      "name": "interfaces",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "info"
+      ],
+      "exit": 0,
+      "log": "interfaces.log"
+    },
+    {
+      "name": "check-js",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "check",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "log": "check-js.log"
+    },
+    {
+      "name": "build-js",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "build",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "log": "build-js.log"
+    },
+    {
+      "name": "context-host",
+      "command": [
+        "node",
+        "--test",
+        "tools/test-context.mjs"
+      ],
+      "exit": 0,
+      "log": "context-host.log"
+    },
+    {
+      "name": "context-use-case",
+      "command": [
+        "node",
+        "examples/run-context.mjs"
+      ],
+      "exit": 0,
+      "log": "context-use-case.log"
+    },
+    {
+      "name": "impact-regression",
+      "command": [
+        "node",
+        "tools/test-impact.mjs"
+      ],
+      "exit": 0,
+      "log": "impact-regression.log"
+    },
+    {
+      "name": "report-regression",
+      "command": [
+        "node",
+        "tools/test-report.mjs"
+      ],
+      "exit": 0,
+      "log": "report-regression.log"
+    },
+    {
+      "name": "cli-regression",
+      "command": [
+        "node",
+        "tools/test-cli.mjs"
+      ],
+      "exit": 0,
+      "log": "cli-regression.log"
+    },
+    {
+      "name": "browser-bridge",
+      "command": [
+        "node",
+        "tools/test-demo.mjs"
+      ],
+      "exit": 0,
+      "log": "browser-bridge.log"
+    },
+    {
+      "name": "independent-context",
+      "command": [
+        "node",
+        "tools/test-context-reference.mjs"
+      ],
+      "exit": 0,
+      "log": "independent-context.log"
+    }
+  ],
+  "sourceSha256": {
+    "context.mbt": "d6e522f48c79fa3746b946e8af47bbf6fd7dc7097212b03f4f0cb41da920bbd6",
+    "context_patterns.mbt": "ba2740b384d90a16c730b4be5ae5c8d0ab62a672e9933fc660a3558797541730",
+    "impact.mbt": "ae7871fbd6f917477e3c52aeed398079259eef5ad977a70555a0880a4f0de953",
+    "web/engine.mjs": "a8998de3f13d4571c932eed688d9f0ea85697604b59e0a7f5993919c19f37bda",
+    "package-lock.json": "5f6fb3c9e90ef04927ab05aad65d8599bbe419d8663aac0c0ac78a30bf3e22a9",
+    "tools/context-worker.mjs": "2a2a1f9d7c2662b32decf3c7e34eb172457bccadbbcb8e2213abe6db3d787d48",
+    "tools/docker-ignore-adapter.mjs": "505735f21b8f8aad0a0ef3c9eecbd867568b12ba99e5230ba57ad54a47fa7c61"
+  },
+  "remoteCiRun": false,
+  "dockerBuildRun": false
+}

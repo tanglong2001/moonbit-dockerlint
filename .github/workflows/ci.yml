@@ -13,6 +13,7 @@ jobs:
           curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
           echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
       - run: moon version --all
+      - run: npm ci --ignore-scripts
       - run: moon fmt && moon info && git diff --exit-code
       - run: moon check
       - run: moon test --target wasm-gc
@@ -27,6 +28,8 @@ jobs:
       - run: node tools/test-cli.mjs
       - run: node tools/test-report.mjs
       - run: node tools/test-impact.mjs
+      - run: node --test tools/test-context.mjs
+      - run: node examples/run-context.mjs
       - run: node tools/robustness.mjs
       - run: node tools/benchmark.mjs
       - uses: actions/upload-artifact@v4

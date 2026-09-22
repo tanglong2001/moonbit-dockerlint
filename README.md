@@ -1,64 +1,50 @@
-# Dockerfile 阶段依赖与修改影响分析
+# MoonBit 构建输入与阶段影响分析
 
-**本项目仓库：[https://github.com/tanglong2001/moonbit-dockerlint](https://github.com/tanglong2001/moonbit-dockerlint)**
+本项目仓库：**https://github.com/tanglong2001/moonbit-dockerlint**
 
-模块 `tanglong2001/dockerlint`，本地版本 **0.6.0**，MIT。当前评审状态：**暂缓复申**。本文件是当前入口，旧轮次说明与详细用法保存在 [历史/完整使用说明](README-BEFORE-VALUE-REWORK.md)。
+模块 `tanglong2001/dockerlint`，0.7.0，MIT（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。本轮新增本地构建目录分析：解释 COPY/ADD/bind 实际读取哪些输入、哪些被忽略、某个文件变化通过哪些引用影响目标阶段。旧规则检查与行号影响接口继续可用。
 
-## 解决什么任务
+## 一次可复现的任务
 
-在不运行构建的情况下解释目标依赖、修改行可传播到的阶段和对应引用行；依赖不能静态确定时向调用方明确返回不确定。保留已有规则检查作为辅助功能。
-
-现阶段保留图分析原型与可复查接口；不以多加规则、改名或当前克隆成功证明选题异议已经解除。
-
-## 直接复现
-
-安装 MoonBit 和 Node.js 24，在本仓库根目录运行：
+安装 MoonBit、Node.js 24，在仓库根目录执行：
 
 ```sh
+npm ci --ignore-scripts
 moon build --target js
 node -e "require('node:fs').copyFileSync('_build/js/debug/build/cmd/web/web.js','web/engine.mjs')"
-node examples/run-use-case.mjs
+node examples/run-context.mjs
 ```
 
-流程：**解释多阶段构建的修改影响**。运行器创建新的系统临时目录，保留每一步的 stdout/stderr、产物及 `report.json`，打印实际目录；重复运行不会覆盖之前产物。它只执行仓库内的本地样例，不连接公网或发送消息。`report.json` 的 `expected` 是应观察的结果，实际结果在各步输出中；成功退出不替代内容核对。
+脚本在新临时目录完成两次分析并断言结果：修改应用文件只传播到 compile/release，文档修改传播到 docs；随后模拟 `.dockerignore` 误排除配置目录，指出第 3 行 bind 输入被排除。保留 JSON 报告和 stderr，打印输出目录。样例是原创，未运行 Docker build。
 
-输入性质：原创可构建结构样例；本轮仅做静态分析，未实际拉取镜像/构建。
-
-应观察：required=[0,1,2,3]，受影响阶段为 0/2/3，docs 阶段不受此静态路径影响，release 证据路径为 [3,2,0]。
-
-具体命令和输入路径见 [使用任务](USE-CASE.md) 与 [机器可读流程](examples/use-case.json)。只把这个脚本当复现入口，不把通用运行器计作核心技术贡献。
-
-## 实现与已有项目的关系
-
-MoonBit 解析指令并构造 FROM/COPY/RUN mount 图，执行环检测、可达性及带路径的影响分析；Node 读取输入并输出 JSON。
-
-Docker/BuildKit 自身已有构建依赖求解，mizchi/syntree.mbt 已有 Dockerfile 分词。新增的是限定范围的 MoonBit 图查询 API 和解释输出，不是新算法，也不声称替代 BuildKit。
-
-同类项目和检索边界见 [DUPLICATION](DUPLICATION.md)。查重用于避免错误的首创表述；关键词零结果不能证明生态空白，Node 宿主能力也不计为 MoonBit 原生 I/O。
-
-库使用从 [公共 API](pkg.generated.mbti) 和根包源码开始；可在本 checkout 的消费包中导入 `"tanglong2001/dockerlint"`。源码中的网络/文件宿主入口及完整参数仍见 [完整使用说明](README-BEFORE-VALUE-REWORK.md)。是否已发布到 Mooncakes 需另核实，本文不把 `moon add` 的下载成功作为已完成事项。
-
-## 验证与边界
-
-本轮新增图分析通过 JS/WasmGC 核心测试及 CLI 检查，原报告 CLI 回归通过；样例未实际调用 Docker 构建。
-
-[上一轮工程验证](evidence/innovation-review-20260922/results.json) 与 [本轮最小任务回执](evidence/value-rework-20260922/use-case.json) 分开。历史参考版本、golden 重放、本机 peer、真实第三方服务端和本次样例是不同证据，不能合并成“全部生产验证”。
-
-常规核心检查可运行 `moon check --target js`、`moon test --target js`、`moon test --target wasm-gc`。专项命令：
+分析自己的固定目录快照：
 
 ```sh
-node tools/test-impact.mjs
-node tools/test-report.mjs
+node tools/context-cli.mjs --context ./examples/context --target release --changed-file src/app.txt
 ```
 
-专项所需的参考环境和历史版本见原使用说明及 TESTING 文档；本轮回执只记录实际执行项，不声称上面所有参考服务在任意环境即装即跑。
+输出包含源路径、包含/排除的清单索引、指令行号、依赖路径和未知原因。`--changed-file` 可重复，支持已删除但仍被源码表达式引用的路径；`--build-arg KEY=VALUE` 提供参数；`--file` 选择上下文内部 Dockerfile；`--out` 仅写入不存在的文件。详见 [CONTEXT.md](CONTEXT.md)。
 
-用户已确认暂无明确使用方或独特需求。图分析只针对当前文件的显式依赖，忽略外部镜像元数据、命名 context 覆盖、上下文文件和缓存状态；不得用它直接证明某次构建可以跳过。动态引用、ONBUILD 等保守报告。
+## 实现与已有项目
 
-## 复审材料状态
+MoonBit 核心负责指令/变量语义、COPY 通配符、目录输入映射、FROM/COPY/RUN mount 图、环检查及文件到阶段的影响路径。`analyze_context` 接收宿主提供的清单，可在 JS 或 WasmGC 后端使用；不依赖 Node 才能调用纯核心。
 
-初审已质疑价值，且暂无明确使用方或独特需求。新分析能力仍需实际构建仓库需求支撑。
+Node 宿主负责目录清单、文件读取和 CLI，复用固定版本 `@balena/dockerignore` 1.0.2 的匹配器；不是新写一个 ignore 库。该旧库在部分模式上不等同现代 Moby，适配器对未支持范围明确报错。[现有 MoonBit ignore 库与其他实现对照](DUPLICATION.md)、[来源与许可](THIRD-PARTY.md)。Docker/BuildKit 已有更完整的求解器，本项目不主张构建图、通配符或规则首创。
 
-2026-09-22 匿名新克隆成功；默认分支 `main`，核验公开提交 `acc8f36e81d39693d2c6d3511fd2b00547e6da63`。本轮源码修订仅在本地，尚未推送；此记录不证明当时报名表中的地址正确，也不证明新修订已上线。
+这一轮提交的可评估贡献是无需启动 Docker daemon 的可复用 MoonBit 输入解释接口，以及可直接用于代码审阅的本地分析流程。没有已确认使用方；样例与公开仓库分析不代表用户部署。
 
-[申报草稿](PROPOSAL.md) 已压缩为 30 行以内，并单独标明本项目仓库；[复核说明](REVIEW-RESPONSE.md) 区分材料错误、功能变化及尚未解决的问题。没有编造用户、设备接入、生产部署或评审认可。
+## 验证与适用范围
+
+本轮 JS/WasmGC 核心各 28 项；6 组宿主流程验证实际目录、独立 ignore 文件、退出码、链接边界与输出不覆盖。Go1.27.1 `filepath.Match` 的 3,318 组独立对照和 Moby v0.6.0 的 1,069 组受支持 ignore 输入一致；另记录 7 个明确拒绝的规则/路径情况，未把拒绝当作匹配成功。
+
+Docker 官方 `docker/getting-started` 固定提交的未修改源码归档上，目标闭包及两组文件影响集合均通过断言。完整命令、哈希及证据见 [TESTING.md](TESTING.md) 和 `evidence/review-goal-20260923/`。
+
+分析采用 Linux 路径、当前 Dockerfile 和当前 ignore 规则；不读取外部镜像元数据、不执行 RUN、不解析命名 context 覆盖/链接内容或 COPY --exclude。未知输入显式返回 unknown。宿主拒绝 ignore 字符类、反斜线转义等未核实语法，以及 `?` 与非 BMP 文件名的组合。上限与所有限制见 CONTEXT。报告不能作为“安全跳过构建”的凭证，也不计算 Docker 缓存命中率或镜像体积。
+
+## 复审交接
+
+针对“规则罗列”意见，0.7.0 的主任务已改为构建目录与阶段的解释分析；旧 linter 不再是申报主贡献。针对链接问题，报名表应完整填写上述仓库 URL。
+
+2026-09-23 只读拉取公开 `main`：`91b348323871bc3ed32f3d5686280774d56a9fdf`，内容与本地 0.6.0 基线一致。本轮 0.7.0 尚未推送；团队同步后再更新报名材料。[申报草稿](PROPOSAL.md)、[逐条答复](REVIEW-RESPONSE.md)。是否达到赛事价值要求由组委会判断。
+
+旧入口和历史验证分别保存在 [0.6.0 说明](README-BEFORE-CONTEXT.md) 与 [更早完整用法](README-BEFORE-VALUE-REWORK.md)，不得作为本轮版本状态引用。

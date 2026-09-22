@@ -1,5 +1,6 @@
 import {
   "tanglong2001/dockerlint" @lib,
+  "moonbitlang/core/json",
 }
 
 supported_targets = "js"
@@ -16,6 +17,8 @@ options(
         "configured",
         "variables",
         "impact",
+        "context_plan",
+        "source_matches",
       ],
       "format": "esm",
     },

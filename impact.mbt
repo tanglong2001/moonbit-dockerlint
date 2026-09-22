@@ -255,6 +255,31 @@ pub fn build_impact(
     required.push(index)
   }
   collect(selected)
+  let targets = stage_impacts(
+    stages,
+    changed_stages,
+    conservative,
+    !changed_lines.is_empty(),
+  )
+  {
+    stages,
+    edges,
+    selected,
+    required,
+    changed_stages,
+    targets,
+    conservative,
+    uncertainties,
+  }
+}
+
+///|
+fn stage_impacts(
+  stages : Array[Stage],
+  changed_stages : Array[Int],
+  conservative : Bool,
+  has_changes : Bool,
+) -> Array[TargetImpact] {
   // Cache one witness per node; a diamond graph must not cause exponential walks.
   let witnesses : Map[Int, Array[Int]] = Map([])
   fn witness(index : Int) -> Array[Int] {
@@ -279,22 +304,12 @@ pub fn build_impact(
     witnesses[index] = []
     []
   }
-  let targets = stages.map(stage => {
+  stages.map(stage => {
     let path = witness(stage.index)
     {
       target: stage.index,
-      affected: !changed_lines.is_empty() && (conservative || !path.is_empty()),
+      affected: has_changes && (conservative || !path.is_empty()),
       path,
     }
   })
-  {
-    stages,
-    edges,
-    selected,
-    required,
-    changed_stages,
-    targets,
-    conservative,
-    uncertainties,
-  }
 }

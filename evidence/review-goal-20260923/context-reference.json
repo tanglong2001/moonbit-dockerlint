@@ -1,0 +1,41 @@
+{
+  "reference": "Go filepath.Match (js/wasm Linux separators), Moby patternmatcher v0.6.0",
+  "copy_pairs": 3318,
+  "ignore_rule_sets": 32,
+  "ignore_pairs": 1069,
+  "rejected_unsupported": [
+    {
+      "rules": "[a-c]\n",
+      "error": "Unsupported ignore syntax: character classes, escapes and regex metacharacters require Moby; use simple literals, *, **, ?, / and leading !"
+    },
+    {
+      "rules": "[^x]\n",
+      "error": "Unsupported ignore syntax: character classes, escapes and regex metacharacters require Moby; use simple literals, *, **, ?, / and leading !"
+    },
+    {
+      "rules": "\\!literal\n",
+      "error": "Unsupported ignore syntax: character classes, escapes and regex metacharacters require Moby; use simple literals, *, **, ?, / and leading !"
+    },
+    {
+      "rules": "?",
+      "path": "😀",
+      "error": "Unsupported ignore syntax: ? with non-BMP filenames requires Moby"
+    },
+    {
+      "rules": "?",
+      "path": "🙏",
+      "error": "Unsupported ignore syntax: ? with non-BMP filenames requires Moby"
+    },
+    {
+      "rules": "a?",
+      "path": "😀",
+      "error": "Unsupported ignore syntax: ? with non-BMP filenames requires Moby"
+    },
+    {
+      "rules": "a?",
+      "path": "🙏",
+      "error": "Unsupported ignore syntax: ? with non-BMP filenames requires Moby"
+    }
+  ],
+  "differences": []
+}

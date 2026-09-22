@@ -9,17 +9,19 @@ $env:MOON_HOME=Split-Path (Split-Path $MoonPath -Parent) -Parent
 $env:PATH="$(Split-Path $MoonPath -Parent);$env:PATH"
 Push-Location $PSScriptRoot
 try {
+  npm ci --ignore-scripts
+  if ($LASTEXITCODE -ne 0) {throw 'context host dependency install failed'}
   & $MoonPath fmt
   if ($LASTEXITCODE -ne 0) {throw 'format failed'}
   & $MoonPath info
   if ($LASTEXITCODE -ne 0) {throw 'API generation failed'}
-  & $MoonPath check --deny-warn
+  & $MoonPath check
   if ($LASTEXITCODE -ne 0) {throw 'check failed'}
-  & $MoonPath test --target wasm-gc --deny-warn
+  & $MoonPath test --target wasm-gc
   if ($LASTEXITCODE -ne 0) {throw 'tests failed'}
-  & $MoonPath test --target js --deny-warn
+  & $MoonPath test --target js
   if ($LASTEXITCODE -ne 0) {throw 'JS tests failed'}
-  & $MoonPath build --target js --deny-warn
+  & $MoonPath build --target js
   if ($LASTEXITCODE -ne 0) {throw 'build failed'}
   & $MoonPath run cmd/main
   if ($LASTEXITCODE -ne 0) {throw 'example failed'}
@@ -38,6 +40,10 @@ try {
   if ($LASTEXITCODE -ne 0) {throw 'runtime checks failed'}
   node tools/test-cli.mjs
   if ($LASTEXITCODE -ne 0) {throw 'CLI test failed'}
+  node --test tools/test-context.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'context host tests failed'}
+  node examples/run-context.mjs
+  if ($LASTEXITCODE -ne 0) {throw 'context use case failed'}
   node tools/robustness.mjs
   if ($LASTEXITCODE -ne 0) {throw 'robustness failed'}
   node tools/benchmark.mjs

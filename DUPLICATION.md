@@ -1,19 +1,15 @@
-> 2026-09-22 三份初审反馈后的当前判断：**暂缓复申**。初审已质疑价值，且暂无明确使用方或独特需求。新分析能力仍需实际构建仓库需求支撑。 本次差异说明：Docker/BuildKit 自身已有构建依赖求解，mizchi/syntree.mbt 已有 Dockerfile 分词。新增的是限定范围的 MoonBit 图查询 API 和解释输出，不是新算法，也不声称替代 BuildKit。 以下保留之前检索的固定提交与来源；此前“补足场景”不能理解为本次已解除价值异议。
+# 编码前检索与复用决定 · 更新至 2026-09-23
 
-# dockerlint 查重与定位 · 2026-09-22
+已有实现及本次范围：
 
-[mizchi/syntree/dockerfile](https://github.com/mizchi/syntree.mbt)。mizchi/syntree/dockerfile 已有分词和高亮。这里申报的是语义诊断、阶段/变量报告与 CI 门禁，不是首个解析器；不把 Hadolint 的规则发明归于本项目。
+- [Docker/BuildKit](https://github.com/moby/buildkit)、[构建上下文规范](https://docs.docker.com/build/concepts/context/) 已有完整构建图与输入求解。此项目是离线解释接口，不是新求解算法或构建器。
+- [Hadolint](https://github.com/hadolint/hadolint) 已有成熟规则库。旧 lint 功能继续保留，新申报任务为输入清单到阶段的解释。
+- [mizchi/syntree.mbt](https://github.com/mizchi/syntree.mbt/tree/0492c077be93ff5aa3b51a53e0f0ebc17f025844) 的 Dockerfile 分词已存在；不能主张首个解析器。
+- Mooncakes 的 sennenki/ignore 0.1.1 和 moonbit-community/ignore 0.0.1 指向 [zvmsbackend/ignore](https://github.com/zvmsbackend/ignore/tree/ddaddec0dd7809747d547bfa25be019019a22932)。已读取固定提交：Git 风格父目录排除和未锚定基名匹配不能直接等同 Docker 规则。本轮没有运行其全部测试，也没有将其移植重写。
+- mizchi/bit_ignore 0.48.0 亦是 Git ignore 邻接能力，不能据同名搜索结果声称 Docker context 已完全覆盖或完全空白。
+- 实际复用 [@balena/dockerignore](https://github.com/balena-io-modules/dockerignore) 1.0.2，固定 npm lock。注入 POSIX path 和大小写敏感选项，不修改该匹配器；对字符类、转义等已知未核实范围明确拒绝。
+- COPY 路径匹配依据 [Go filepath.Match](https://go.dev/src/path/filepath/match.go) 的顺序适配，保留 Go BSD 许可；独立验证使用 Go1.27.1 和 [Moby patternmatcher v0.6.0](https://github.com/moby/patternmatcher/tree/v0.6.0)。
 
-- [mizchi/syntree.mbt 固定提交](https://github.com/mizchi/syntree.mbt/tree/0492c077be93ff5aa3b51a53e0f0ebc17f025844)：依据该版本的公开说明对照，不冒充本轮运行了对方全部实现。
+MoonBit 核心的新集成是源码语义 + 过滤清单 + 带路径的目标影响报告；Node 宿主和第三方匹配器各自职责已公开。可对照的完整工作流见 USE-CASE 和 CONTEXT。
 
-本轮材料采用定位：**Dockerfile 语义诊断与 CI 报告工具**。
-
-MoonBit 与宿主分工：MoonBit 执行 Dockerfile 分析、有限 shell 词法、变量和阶段图及规则；Node 读取文件并输出报告，不执行 Dockerfile。
-
-本轮证据：本轮 JSON 诊断、阶段图及 5 类 CLI 阈值/错误检查通过；规则边界见 SHELL-CHECKS.md。 具体输入、脚本、已执行与历史对照分开记录在 [PROPOSAL.md](PROPOSAL.md) 和 evidence/innovation-review-20260922/。
-
-边界：六类 shell 检查只是限定子集，不是完整 ShellCheck、BuildKit 或容器安全审计。
-
-检索覆盖 Mooncakes 官方关键词/别名、GitHub 仓库查询、GitLink 公开索引、直接来源文档；没有完整赛事报名表、私有仓库、未公开分支或 GitHub 全代码索引。GitLink 索引也不完整。未找到同范围项目不等于生态空白；已有相关项目不自动等于无独立贡献。完整查询和固定提交快照在总交付目录 innovation-review-20260922/。
-
-初次复核风险为“中”。本次补足差异和可复现工作流，没有自行将重叠归零，也不替评委作创新性认定。最终公开代码与表单附件须使用一致版本。
+检索覆盖公开 Mooncakes、GitHub、规范和既有赛事资料，未覆盖全部未公开报名表/代码。旧检索原始响应保留在总交付 `review-goal-20260922/SEARCH.json` 与 `innovation-review-20260922/`；这些检索不能证明首创，也不替代赛事价值判断。
