@@ -1,6 +1,6 @@
 name = "tanglong2001/dockerlint"
 
-version = "0.7.0"
+version = "0.8.0"
 
 license = "MIT AND BSD-3-Clause"
 

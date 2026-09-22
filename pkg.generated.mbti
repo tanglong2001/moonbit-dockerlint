@@ -168,6 +168,9 @@ pub struct VariableScope {
   arguments : Map[String, String]
   environment : Map[String, String]
   unresolved : Array[String]
+  uncertain_arguments : Array[String]
+  uncertain_environment : Array[String]
+  unknown_base_environment : Bool
 } derive(Eq, ToJson, @debug.Debug)
 
 // Type aliases

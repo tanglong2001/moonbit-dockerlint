@@ -1,4 +1,4 @@
-# 构建目录分析接口 0.7.0
+# 构建目录分析接口 0.8.0
 
 `analyze_context(source, entries, target?, changes?, build_args?, control_files?)` 是纯 MoonBit API；结构定义见 pkg.generated.mbti。清单项包含规范相对 `/` 路径、file/directory/symlink 类型及宿主计算的 excluded 标记。核心不会自行读取文件或推断 ignore 规则。
 
@@ -28,3 +28,11 @@ CLI 退出码：0 所选已知输入存在；2 所选输入缺失/排除；3 存
 ## 资源限制
 
 Dockerfile 1 MiB、ignore 64 KiB/2048 行/每行 2048 字符；清单 20,000 项、深度 64、相对路径 2048 字符；2048 个本地输入、256 个变化路径/宿主 build args；核心模式匹配估算预算 50M；宿主 worker 30 秒及 256 MiB old-generation 限制。超过限额报错。宿主不执行源码中的命令、不拉取镜像，报告新文件禁止覆盖。
+
+## 0.8.0 变量信息
+
+COPY/ADD 源表达式保留原始引号直到展开。带空格的源必须用 JSON 形式；shell 形式的空白分组返回 unknown，非默认反引号 escape 指令明确拒绝。反斜线 shell 源仍为 unknown。
+
+ARG/ENV 未知值跨赋值、全局参数重声明及命名父阶段传播；字面美元符号数据与未知占位符分开跟踪。未读取外部镜像的 ENV 时，ARG 可能被镜像 ENV 覆盖，默认分支也可能改变，因此相关输入保持 unknown；本 Dockerfile 的明确 ENV 赋值可消除对应键的未知状态。
+
+`VariableScope` 新增 uncertain_arguments、uncertain_environment、unknown_base_environment。arguments/environment/expanded 保留近似展示值；调用方必须联合这些字段及 unresolved 判断，不能将展示字符串当作已经证明的文件来源。纯 `expand_variables` 仍只根据调用方给出的已知值映射工作。详细例子见 EXPANSION.md。

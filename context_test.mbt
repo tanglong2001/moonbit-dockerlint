@@ -1,4 +1,29 @@
 ///|
+test "context preserves quote syntax and uncertainty through inherited assignments" {
+  let plan = @dockerlint.analyze_context(
+    "FROM scratch AS base\nARG NAME=actual\nARG UNKNOWN=$MISSING\nENV INDIRECT=$UNKNOWN\nFROM base\nCOPY '$NAME' /out\nCOPY $NAME /out\nCOPY $INDIRECT /out",
+    [
+      { path: "$NAME", kind: "file", excluded: false, },
+      { path: "actual", kind: "file", excluded: false, },
+      { path: "$MISSING", kind: "file", excluded: false, },
+    ],
+    changes=[{ path: "unrelated", excluded: false, }],
+  )
+  assert_eq(plan.inputs.map(i => i.source), ["$NAME", "actual", "$MISSING"])
+  assert_eq(plan.inputs.map(i => i.status), ["resolved", "resolved", "unknown"])
+  assert_true(plan.changes[0].targets.iter().all(t => t.affected))
+}
+
+///|
+test "context cannot assume an external image ENV is empty" {
+  let plan = @dockerlint.analyze_context(
+    "FROM alpine\nARG NAME=actual\nCOPY $NAME /out\nCOPY ${OTHER:-actual} /out\nENV NAME=actual\nCOPY $NAME /out",
+    [{ path: "actual", kind: "file", excluded: false, }],
+  )
+  assert_eq(plan.inputs.map(i => i.status), ["unknown", "unknown", "resolved"])
+}
+
+///|
 test "context files flow through COPY and repeated bind mounts into selected targets" {
   let source = "FROM scratch AS docs\nCOPY docs /docs\nFROM scratch AS compile\nARG DIR=src\nCOPY [\"$DIR/*.mbt\", \"/src/\"]\nRUN --mount=type=bind,source=config,target=/cfg --mount=source=assets,target=/assets build\nFROM scratch AS release\nCOPY --from=compile /app /app"
   let entries : Array[@dockerlint.ContextEntry] = [

@@ -1,3 +1,11 @@
+# 0.8.0 展开与未知状态修复验证
+
+本轮具体命令、退出码、核心与参考引擎 SHA256 在 evidence/expansion-20260923/VALIDATION.json。JS/WasmGC 各 30 项；context 宿主 7 组，展开 8 组；BuildKit 已知展开 98 一致、4 个未知策略差异明确单列，复现说明见 EXPANSION.md。Go/Moby COPY 与 ignore 对照、Docker 官方教程静态分析及原有 CLI/图/报告/引擎回归在当前引擎重新执行。
+
+新 ZIP 的源码与 Git blob 逐文件核对；独立目录 npm ci、构建与受影响宿主回归的记录在交接包 ARTIFACTS.json。没有远端写入或远端 CI 运行。
+
+以下是 0.7.0 的原始范围与更早记录，不将旧文件时间戳冒充本次执行。
+
 # 0.7.0 构建输入分析验证
 
 本轮命令：npm ci --ignore-scripts；moon fmt/info/check；moon test --target js 和 --target wasm-gc；moon build --target js 后刷新 web/engine.mjs；node --test tools/test-context.mjs；node examples/run-context.mjs；旧 tools/test-impact.mjs、test-report.mjs、test-cli.mjs、test-demo.mjs 回归。实际执行及新归档复验见 evidence/review-goal-20260923/VALIDATION.json 和本轮交接包机器清单。

@@ -2,7 +2,7 @@
 
 本项目仓库：**https://github.com/tanglong2001/moonbit-dockerlint**
 
-模块 `tanglong2001/dockerlint`，0.7.0，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。本轮新增本地构建目录分析：解释 COPY/ADD/bind 实际读取哪些输入、哪些被忽略、某个文件变化通过哪些引用影响目标阶段。旧规则检查与行号影响接口继续可用。
+模块 `tanglong2001/dockerlint`，0.8.0，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。本轮新增本地构建目录分析：解释 COPY/ADD/bind 实际读取哪些输入、哪些被忽略、某个文件变化通过哪些引用影响目标阶段。旧规则检查与行号影响接口继续可用。
 
 ## 一次可复现的任务
 
@@ -35,16 +35,18 @@ Node 宿主负责目录清单、文件读取和 CLI，复用固定版本 `@balen
 
 ## 验证与适用范围
 
-本轮 JS/WasmGC 核心各 28 项；6 组宿主流程验证实际目录、独立 ignore 文件、退出码、链接边界与输出不覆盖。Go1.27.1 `filepath.Match` 的 3,318 组独立对照和 Moby v0.6.0 的 1,069 组受支持 ignore 输入一致；另记录 7 个明确拒绝的规则/路径情况，未把拒绝当作匹配成功。
+本轮 JS/WasmGC 核心各 30 项；7 组宿主流程验证实际目录、独立 ignore 文件、退出码、链接边界与输出不覆盖。Go1.27.1 `filepath.Match` 的 3,318 组独立对照和 Moby v0.6.0 的 1,069 组受支持 ignore 输入一致；另记录 7 个明确拒绝的规则/路径情况，未把拒绝当作匹配成功。
 
-Docker 官方 `docker/getting-started` 固定提交的未修改源码归档上，目标闭包及两组文件影响集合均通过断言。完整命令、哈希及证据见 [TESTING.md](TESTING.md) 和 `evidence/review-goal-20260923/`。
+Docker 官方 `docker/getting-started` 固定提交的未修改源码归档上，目标闭包及两组文件影响集合均通过断言。完整命令、哈希及证据见 [TESTING.md](TESTING.md)，本轮证据在 `evidence/expansion-20260923/`，0.7.0 原始记录保留。
 
 分析采用 Linux 路径、当前 Dockerfile 和当前 ignore 规则；不读取外部镜像元数据、不执行 RUN、不解析命名 context 覆盖/链接内容或 COPY --exclude。未知输入显式返回 unknown。宿主拒绝 ignore 字符类、反斜线转义等未核实语法，以及 `?` 与非 BMP 文件名的组合。上限与所有限制见 CONTEXT。报告不能作为“安全跳过构建”的凭证，也不计算 Docker 缓存命中率或镜像体积。
 
+0.8.0 修复 COPY 引号丢失及 ARG/ENV 未知状态丢失：字面 `$NAME` 不再误作变量，未知来源跨赋值和继承传播，外部镜像 ENV 未读取时不假定为空。新增 8 组回归与 BuildKit v0.25.1 的 98 项展开一致对照；4 项未知变量策略差异单列。详见 [展开边界与复现](EXPANSION.md)。
+
 ## 复审交接
 
-针对“规则罗列”意见，0.7.0 的主任务已改为构建目录与阶段的解释分析；旧 linter 不再是申报主贡献。针对链接问题，报名表应完整填写上述仓库 URL。
+针对“规则罗列”意见，0.8.0 的主任务已改为构建目录与阶段的解释分析；旧 linter 不再是申报主贡献。针对链接问题，报名表应完整填写上述仓库 URL。
 
-2026-09-23 只读拉取公开 `main`：`91b348323871bc3ed32f3d5686280774d56a9fdf`，内容与本地 0.6.0 基线一致。本轮 0.7.0 尚未推送；团队同步后再更新报名材料。[申报草稿](PROPOSAL.md)、[逐条答复](REVIEW-RESPONSE.md)。是否达到赛事价值要求由组委会判断。
+2026-09-23 只读拉取公开 `main`：`91b348323871bc3ed32f3d5686280774d56a9fdf`，内容与本地 0.6.0 基线一致。本轮 0.8.0 尚未推送；团队同步后再更新报名材料。[申报草稿](PROPOSAL.md)、[逐条答复](REVIEW-RESPONSE.md)。是否达到赛事价值要求由组委会判断。
 
 旧入口和历史验证分别保存在 [0.6.0 说明](README-BEFORE-CONTEXT.md) 与 [更早完整用法](README-BEFORE-VALUE-REWORK.md)，不得作为本轮版本状态引用。

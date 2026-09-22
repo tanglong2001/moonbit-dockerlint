@@ -1,0 +1,240 @@
+TAP version 13
+# Subtest: COPY keeps single double and concatenated quote meaning through expansion
+not ok 1 - COPY keeps single double and concatenated quote meaning through expansion
+  ---
+  duration_ms: 15.3709
+  type: 'test'
+  location: 'C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\docker-expansion-baseline-eftouomc\\tools\\test-context-expansion.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+
+      [
+    -   '$NAME',
+        'actual',
+    +   'actual',
+    -   'prefix$NAME',
+        'prefixactual',
+    +   'prefixactual',
+        'space name'
+      ]
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '$NAME'
+    1: 'actual'
+    2: 'prefix$NAME'
+    3: 'prefixactual'
+    4: 'space name'
+  actual:
+    0: 'actual'
+    1: 'actual'
+    2: 'prefixactual'
+    3: 'prefixactual'
+    4: 'space name'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/uiwcv/Documents/Codex/2026-09-10/ban/work/docker-expansion-baseline-eftouomc/tools/test-context-expansion.mjs:12:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.start (node:internal/test_runner/test:1003:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+  ...
+# Subtest: uncertainty survives ARG ENV and inherited named stages
+not ok 2 - uncertainty survives ARG ENV and inherited named stages
+  ---
+  duration_ms: 5.737
+  type: 'test'
+  location: 'C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\docker-expansion-baseline-eftouomc\\tools\\test-context-expansion.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+
+      assert(p.inputs.every(i=>i.status==='unknown'))
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/uiwcv/Documents/Codex/2026-09-10/ban/work/docker-expansion-baseline-eftouomc/tools/test-context-expansion.mjs:18:24)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: literal dollar data is known and explicit assignments clear uncertainty
+ok 3 - literal dollar data is known and explicit assignments clear uncertainty
+  ---
+  duration_ms: 1.336
+  type: 'test'
+  ...
+# Subtest: global ARG uncertainty survives redeclaration but an explicit build argument clears it
+not ok 4 - global ARG uncertainty survives redeclaration but an explicit build argument clears it
+  ---
+  duration_ms: 1.2379
+  type: 'test'
+  location: 'C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\docker-expansion-baseline-eftouomc\\tools\\test-context-expansion.mjs:27:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'resolved'
+    - 'unknown'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'unknown'
+  actual: 'resolved'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/uiwcv/Documents/Codex/2026-09-10/ban/work/docker-expansion-baseline-eftouomc/tools/test-context-expansion.mjs:29:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: unfetched image ENV may shadow an ARG or change a fallback
+not ok 5 - unfetched image ENV may shadow an ARG or change a fallback
+  ---
+  duration_ms: 2.5997
+  type: 'test'
+  location: 'C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\docker-expansion-baseline-eftouomc\\tools\\test-context-expansion.mjs:32:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+
+      [
+    -   'unknown',
+    -   'unknown',
+        'resolved',
+    -   'unknown',
+        'resolved',
+        'resolved',
+    +   'resolved',
+    +   'resolved',
+    +   'resolved'
+      ]
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'unknown'
+    1: 'unknown'
+    2: 'resolved'
+    3: 'unknown'
+    4: 'resolved'
+    5: 'resolved'
+  actual:
+    0: 'resolved'
+    1: 'resolved'
+    2: 'resolved'
+    3: 'resolved'
+    4: 'resolved'
+    5: 'resolved'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/uiwcv/Documents/Codex/2026-09-10/ban/work/docker-expansion-baseline-eftouomc/tools/test-context-expansion.mjs:34:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: an uncertain ADD expression cannot masquerade as a definitely remote input
+not ok 6 - an uncertain ADD expression cannot masquerade as a definitely remote input
+  ---
+  duration_ms: 1.4359
+  type: 'test'
+  location: 'C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\docker-expansion-baseline-eftouomc\\tools\\test-context-expansion.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'external'
+    - 'unknown'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'unknown'
+  actual: 'external'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/uiwcv/Documents/Codex/2026-09-10/ban/work/docker-expansion-baseline-eftouomc/tools/test-context-expansion.mjs:39:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: nondefault expansion escapes and empty expanded FROM fail with structured errors
+not ok 7 - nondefault expansion escapes and empty expanded FROM fail with structured errors
+  ---
+  duration_ms: 0.7814
+  type: 'test'
+  location: 'C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\docker-expansion-baseline-eftouomc\\tools\\test-context-expansion.mjs:42:1'
+  failureType: 'testCodeFailure'
+  error: '{"graph":{"stages":[{"index":0,"line":2,"base":"scratch","dependencies":[]}],"edges":[],"selected":0,"required":[0],"changed_stages":[],"targets":[{"target":0,"affected":false,"path":[]}],"conservative":false,"uncertainties":[]},"entries":[],"inputs":[{"stage":0,"line":3,"kind":"COPY","source":"`$NAME","included":[],"excluded":[],"status":"unknown","note":"unresolved variables: NAME"}],"selected_entries":[],"missing_lines":[],"uncertainties":[{"line":3,"reason":"unresolved variables: NAME"}],"changes":[]}'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/uiwcv/Documents/Codex/2026-09-10/ban/work/docker-expansion-baseline-eftouomc/tools/test-context-expansion.mjs:44:59)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: quoted shell whitespace is not mistaken for Docker COPY JSON syntax
+not ok 8 - quoted shell whitespace is not mistaken for Docker COPY JSON syntax
+  ---
+  duration_ms: 0.8769
+  type: 'test'
+  location: 'C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\docker-expansion-baseline-eftouomc\\tools\\test-context-expansion.mjs:47:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'resolved'
+    - 'unknown'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'unknown'
+  actual: 'resolved'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/uiwcv/Documents/Codex/2026-09-10/ban/work/docker-expansion-baseline-eftouomc/tools/test-context-expansion.mjs:49:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 1
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 209.593

@@ -1,0 +1,196 @@
+{
+  "date": "2026-09-23",
+  "version": "0.8.0",
+  "base": "30816ea202542f7e031501a3e8120684c2c898a5",
+  "baselineReproduction": {
+    "engineSha256": "a8998de3f13d4571c932eed688d9f0ea85697604b59e0a7f5993919c19f37bda",
+    "targetedTests": 8,
+    "failedOnBaseline": 7,
+    "log": "baseline-failures.log"
+  },
+  "core": {
+    "js": 30,
+    "wasm-gc": 30
+  },
+  "host": 7,
+  "expansion": 8,
+  "buildkitReference": {
+    "equal": 98,
+    "explicitUnknownPolicy": 4,
+    "actualBuild": false,
+    "parserInvoked": false
+  },
+  "freshBuildEngineIdentical": true,
+  "commands": [
+    {
+      "name": "fmt",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "fmt"
+      ],
+      "exit": 0,
+      "log": "fmt.log"
+    },
+    {
+      "name": "info",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "info"
+      ],
+      "exit": 0,
+      "log": "info.log"
+    },
+    {
+      "name": "check",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "check",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "log": "check.log"
+    },
+    {
+      "name": "core-js",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "test",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "log": "core-js.log"
+    },
+    {
+      "name": "core-wasm",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "test",
+        "--target",
+        "wasm-gc"
+      ],
+      "exit": 0,
+      "log": "core-wasm.log"
+    },
+    {
+      "name": "build",
+      "command": [
+        "C:\\Users\\uiwcv\\Documents\\Codex\\2026-09-10\\ban\\work\\moon\\bin\\moon.exe",
+        "build",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "log": "build.log"
+    },
+    {
+      "name": "context-host",
+      "command": [
+        "node",
+        "--test",
+        "tools/test-context.mjs"
+      ],
+      "exit": 0,
+      "log": "context-host.log"
+    },
+    {
+      "name": "expansion",
+      "command": [
+        "node",
+        "--test",
+        "tools/test-context-expansion.mjs"
+      ],
+      "exit": 0,
+      "log": "expansion.log"
+    },
+    {
+      "name": "buildkit-reference",
+      "command": [
+        "node",
+        "tools/test-expansion-reference.mjs"
+      ],
+      "exit": 0,
+      "log": "buildkit-reference.log"
+    },
+    {
+      "name": "go-moby-reference",
+      "command": [
+        "node",
+        "tools/test-context-reference.mjs"
+      ],
+      "exit": 0,
+      "log": "go-moby-reference.log"
+    },
+    {
+      "name": "public-context",
+      "command": [
+        "node",
+        "tools/test-context-public.mjs"
+      ],
+      "exit": 0,
+      "log": "public-context.log"
+    },
+    {
+      "name": "impact",
+      "command": [
+        "node",
+        "tools/test-impact.mjs"
+      ],
+      "exit": 0,
+      "log": "impact.log"
+    },
+    {
+      "name": "cli",
+      "command": [
+        "node",
+        "tools/test-cli.mjs"
+      ],
+      "exit": 0,
+      "log": "cli.log"
+    },
+    {
+      "name": "demo",
+      "command": [
+        "node",
+        "tools/test-demo.mjs"
+      ],
+      "exit": 0,
+      "log": "demo.log"
+    },
+    {
+      "name": "report",
+      "command": [
+        "node",
+        "tools/test-report.mjs"
+      ],
+      "exit": 0,
+      "log": "report.log"
+    },
+    {
+      "name": "use-case",
+      "command": [
+        "node",
+        "examples/run-context.mjs"
+      ],
+      "exit": 0,
+      "log": "use-case.log"
+    }
+  ],
+  "sourceSha256": {
+    "arguments.mbt": "e40eeb1a901c5b3c8009591765b7773ba0998957be2143ccfe6c8631d7c34354",
+    "context.mbt": "d71d7a724dcc17fa6a690a3520eed8c04a192731d3422cb3ee3fd04a75043e16",
+    "context_test.mbt": "eac90549c1a00fca9573156e50315c4891e5667e6acd921b7ef15ab085bb9d0a",
+    "variables.mbt": "ed70e90cd4931273bf76964879353f30eace253e7003d7fbdc0f66cde23a256e",
+    "web/engine.mjs": "b271f2adbb3773b8d56aeedf5b5e29a9664241a066e9984669446fec41691dbc",
+    "tools/test-context.mjs": "05e9b1a1c656f908334887ccf89547d498403de7182593972d616156fe064d79",
+    "tools/test-context-expansion.mjs": "ec05c4d36da4e1f47e07d821056e843689293e1813e948b8173c26ee9a9de676",
+    "tools/test-expansion-reference.mjs": "1c22362e8f726bbd41a2b410c75383aa4e969299e9f5813fe8c70933b0c6405a",
+    "tools/expansion-reference/main.go": "9b7c338578a4a86522d0dceb162a7dd9117b73870f771cf231348dc98bae4c8e",
+    "tools/expansion-reference/go.mod": "de28a8c440acdfa311edb46b0b4e454153886caa14909771aedebd2a4c3c3705",
+    "tools/expansion-reference/go.sum": "cb5b46f7113417795061debccb63c91176d4af42b93d1776419352e1de8217b0"
+  },
+  "referenceBinarySha256": "d8a449366fa59605da9b83613a58daca24aa1c95003e630859586498dbec86f2",
+  "remoteWrites": false,
+  "remoteCiRun": false
+}

@@ -1,6 +1,6 @@
 # MoonBit 构建输入与阶段影响分析 · 修订申报草稿
 本项目仓库：https://github.com/tanglong2001/moonbit-dockerlint
-模块：tanglong2001/dockerlint；本地版本：0.7.0；许可证：MIT AND BSD-3-Clause，适配来源另见 THIRD-PARTY。
+模块：tanglong2001/dockerlint；本地版本：0.8.0；许可证：MIT AND BSD-3-Clause，适配来源另见 THIRD-PARTY。
 状态：本轮仅本地交付，团队同步到上述仓库后提交复审。
 
 ## 解决的任务
@@ -8,7 +8,7 @@
 支持应用、文档等独立构建目标，帮助定位上下文路径与 ignore 配置错误；输出结构化 JSON 供工具接入。
 
 ## 本轮实质实现
-MoonBit：输入表达式解析、Go COPY 通配符适配、变量展开、清单映射、阶段依赖和带见证的影响分析。
+MoonBit：保留 COPY 引号、跨 ARG/ENV/阶段传播未知状态、Go COPY 匹配、清单映射和带见证的阶段影响。
 Node：受限只读目录扫描、Dockerfile 专属 ignore 选择、worker 超时、CLI 和不覆盖的报告输出。
 复用 @balena/dockerignore 1.0.2；该旧库的未核实模式明确拒绝，未将复用能力记为新算法。
 同一纯核心可用于 JS/WasmGC；不把 Node 文件系统操作描述为 MoonBit 原生 I/O。
@@ -19,7 +19,7 @@ Docker/BuildKit 已有完整构建求解，Hadolint 已有规则工具，mizchi/
 
 ## 复现与验证
 README 的 examples/run-context.mjs 完成输入追踪、独立目标及 ignore 误排除定位，并断言报告。
-JS/WasmGC 核心各 28 项；6 组宿主流程；Go/Moby 独立对照与受限语法拒绝分别记录。
+JS/WasmGC 核心各 30 项；7 组宿主流程、8 组展开回归；BuildKit 98 项展开一致，4 项未知策略差异单列。
 Docker 官方教程固定源码上完成目标闭包和两组文件影响集合断言；没有执行实际镜像构建。
 
 ## 边界

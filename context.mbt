@@ -77,6 +77,24 @@ pub fn analyze_context(
   build_args? : Map[String, String] = Map([]),
   control_files? : Array[String] = ["Dockerfile", ".dockerignore"],
 ) -> ContextPlan raise ParseError {
+  // The inventory contract uses Linux paths and the default Dockerfile escape.
+  // Parsing a backtick continuation is not enough to model backtick expansion.
+  for line in source.split("\n") {
+    let text = line.trim().to_owned()
+    if !text.has_prefix("#") {
+      break
+    }
+    let directive = text[1:].trim().to_owned().split("=").collect()
+    let key = directive[0].trim().to_owned().to_lower()
+    if directive.length() < 2 || !["syntax", "escape", "check"].contains(key) {
+      break
+    }
+    if key == "escape" && directive[1].trim() == "`" {
+      raise Invalid(
+        "context analysis requires the default backslash escape directive",
+      )
+    }
+  }
   if entries.length() > 20000 || changes.length() > 256 {
     raise Invalid("context inventory or change count limit")
   }
@@ -117,6 +135,9 @@ pub fn analyze_context(
   let scopes = analyze_variables(source, build_args~)
   let inputs : Array[ContextInput] = []
   let patterns : Array[ContextPattern?] = []
+  let mut input_uncertain : Map[String, Bool] = Map([])
+  let mut input_environment : Map[String, String] = Map([])
+  let mut input_unknown_base = false
   let uncertainties = graph.uncertainties.copy()
   let mut stage = -1
   let mut work = 0L
@@ -145,28 +166,27 @@ pub fn analyze_context(
       raise Invalid("context input count limit")
     }
     let mut note = extra_uncertainty
-    let expanded = if raw.contains("$") {
-      try {
-        let expansion = expand_variables(raw, values)
-        if !expansion.unresolved.is_empty() {
-          note = "unresolved variables: " + expansion.unresolved.join(",")
-        }
-        expansion.value
-      } catch {
-        _ => {
-          note = "unsupported source expansion"
-          raw
-        }
+    let expanded = try {
+      let expansion = expand_tracked(
+        raw, values, input_uncertain, input_unknown_base, input_environment,
+      )
+      if !expansion.unresolved.is_empty() {
+        note = "unresolved variables: " + expansion.unresolved.join(",")
       }
-    } else {
-      raw
+      expansion.value
+    } catch {
+      _ => {
+        note = "unsupported source expansion"
+        raw
+      }
     }
     if expanded.is_empty() ||
       expanded.length() > 2048 ||
       expanded.contains("\u0000") {
       note = "empty, oversized or invalid source expression"
     }
-    if kind == "ADD" &&
+    if note == "" &&
+      kind == "ADD" &&
       (
         expanded.has_prefix("https://") ||
         expanded.has_prefix("http://") ||
@@ -256,9 +276,19 @@ pub fn analyze_context(
       continue
     }
     let values = scopes[i].arguments.copy()
+    input_uncertain = Map([])
+    for name in scopes[i].uncertain_arguments {
+      input_uncertain[name] = true
+    }
     for (key, value) in scopes[i].environment {
       values[key] = value
+      ignore(input_uncertain.remove(key))
     }
+    for name in scopes[i].uncertain_environment {
+      input_uncertain[name] = true
+    }
+    input_environment = scopes[i].environment
+    input_unknown_base = scopes[i].unknown_base_environment
     if instruction.name == "COPY" || instruction.name == "ADD" {
       let args = instruction.split_arguments()
       if args.values.length() < 2 {
@@ -267,15 +297,32 @@ pub fn analyze_context(
       if args.flags.contains("from") {
         continue
       }
+      let raw_values = if args.json_form {
+        args.values
+      } else {
+        let mut rest = instruction.arguments.trim_start().to_owned()
+        for flag in leading_flags(rest) {
+          rest = rest[flag.length():].trim_start().to_owned()
+        }
+        raw_arguments(rest)
+      }
+      if raw_values.length() < 2 {
+        raise Invalid("COPY/ADD needs source and destination")
+      }
       let note = if args.flags.contains("exclude") {
         "COPY/ADD --exclude filtering is not evaluated"
+      } else if !args.json_form &&
+        raw_values
+        .iter()
+        .any(v => v.iter().any(c => c == ' ' || c.to_int() < 32)) {
+        "COPY/ADD shell sources with whitespace require JSON form"
       } else if !args.json_form && instruction.arguments.contains("\\") {
         "shell-form source escapes are not evaluated"
       } else {
         ""
       }
-      for j in 0..<(args.values.length() - 1) {
-        let value = args.values[j]
+      for j in 0..<(raw_values.length() - 1) {
+        let value = raw_values[j]
         if !args.json_form &&
           value.has_prefix("<<") &&
           !instruction.heredocs.is_empty() {

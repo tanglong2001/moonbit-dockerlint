@@ -1,0 +1,864 @@
+{
+  "reference": "BuildKit v0.25.1 shell.ProcessWord; Go js/wasm (case sensitive env)",
+  "scope": "known COPY/ADD source expression expansion only; no Dockerfile parse, image resolution or build",
+  "request": [
+    {
+      "words": [
+        "plain",
+        "$NAME",
+        "'$NAME'",
+        "\"$NAME\"",
+        "pre'$NAME'",
+        "pre\"$NAME\"",
+        "${NAME:-fallback}",
+        "${NONE:-fallback}",
+        "${EMPTY:-fallback}",
+        "${EMPTY-fallback}",
+        "\"plain\"",
+        "'plain'",
+        "\"a'b\"",
+        "a\\'b",
+        "$SPACE",
+        "${NONE:-space name}",
+        "$DOLLAR",
+        "文",
+        "${NAME:+yes}",
+        "${EMPTY:+no}",
+        "${EMPTY+yes}",
+        "${NONE+yes}",
+        "${NAME:-${NONE}}",
+        "${NONE:-${NAME}}",
+        "'a b'",
+        "\"$name\"",
+        "${name:-lowercase}"
+      ],
+      "env": [
+        "NAME=actual",
+        "EMPTY=",
+        "SPACE=space name",
+        "DOLLAR=$LITERAL"
+      ]
+    }
+  ],
+  "matched": 98,
+  "explicit_unknown_policy": 4,
+  "results": [
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "plain",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "plain",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "plain",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "plain",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "$NAME",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "$NAME",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "$NAME",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "$NAME",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "'$NAME'",
+      "reference": "$NAME",
+      "actual": "$NAME",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "'$NAME'",
+      "reference": "$NAME",
+      "actual": "$NAME",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "'$NAME'",
+      "reference": "$NAME",
+      "actual": "$NAME",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "'$NAME'",
+      "reference": "$NAME",
+      "actual": "$NAME",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "\"$NAME\"",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "\"$NAME\"",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "\"$NAME\"",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "\"$NAME\"",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "pre'$NAME'",
+      "reference": "pre$NAME",
+      "actual": "pre$NAME",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "pre'$NAME'",
+      "reference": "pre$NAME",
+      "actual": "pre$NAME",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "pre'$NAME'",
+      "reference": "pre$NAME",
+      "actual": "pre$NAME",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "pre'$NAME'",
+      "reference": "pre$NAME",
+      "actual": "pre$NAME",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "pre\"$NAME\"",
+      "reference": "preactual",
+      "actual": "preactual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "pre\"$NAME\"",
+      "reference": "preactual",
+      "actual": "preactual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "pre\"$NAME\"",
+      "reference": "preactual",
+      "actual": "preactual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "pre\"$NAME\"",
+      "reference": "preactual",
+      "actual": "preactual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${NAME:-fallback}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${NAME:-fallback}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${NAME:-fallback}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${NAME:-fallback}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${NONE:-fallback}",
+      "reference": "fallback",
+      "actual": "fallback",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${NONE:-fallback}",
+      "reference": "fallback",
+      "actual": "fallback",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${NONE:-fallback}",
+      "reference": "fallback",
+      "actual": "fallback",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${NONE:-fallback}",
+      "reference": "fallback",
+      "actual": "fallback",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${EMPTY:-fallback}",
+      "reference": "fallback",
+      "actual": "fallback",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${EMPTY:-fallback}",
+      "reference": "fallback",
+      "actual": "fallback",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${EMPTY:-fallback}",
+      "reference": "fallback",
+      "actual": "fallback",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${EMPTY:-fallback}",
+      "reference": "fallback",
+      "actual": "fallback",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${EMPTY-fallback}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${EMPTY-fallback}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${EMPTY-fallback}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${EMPTY-fallback}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "\"plain\"",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "\"plain\"",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "\"plain\"",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "\"plain\"",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "'plain'",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "'plain'",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "'plain'",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "'plain'",
+      "reference": "plain",
+      "actual": "plain",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "\"a'b\"",
+      "reference": "a'b",
+      "actual": "a'b",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "\"a'b\"",
+      "reference": "a'b",
+      "actual": "a'b",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "\"a'b\"",
+      "reference": "a'b",
+      "actual": "a'b",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "\"a'b\"",
+      "reference": "a'b",
+      "actual": "a'b",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "a\\'b",
+      "reference": "a'b",
+      "actual": "a'b",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "a\\'b",
+      "reference": "a'b",
+      "actual": "a'b",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "$SPACE",
+      "reference": "space name",
+      "actual": "space name",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "$SPACE",
+      "reference": "space name",
+      "actual": "space name",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "$SPACE",
+      "reference": "space name",
+      "actual": "space name",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "$SPACE",
+      "reference": "space name",
+      "actual": "space name",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${NONE:-space name}",
+      "reference": "space name",
+      "actual": "space name",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${NONE:-space name}",
+      "reference": "space name",
+      "actual": "space name",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "$DOLLAR",
+      "reference": "$LITERAL",
+      "actual": "$LITERAL",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "$DOLLAR",
+      "reference": "$LITERAL",
+      "actual": "$LITERAL",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "$DOLLAR",
+      "reference": "$LITERAL",
+      "actual": "$LITERAL",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "$DOLLAR",
+      "reference": "$LITERAL",
+      "actual": "$LITERAL",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "文",
+      "reference": "文",
+      "actual": "文",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "文",
+      "reference": "文",
+      "actual": "文",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "文",
+      "reference": "文",
+      "actual": "文",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "文",
+      "reference": "文",
+      "actual": "文",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${NAME:+yes}",
+      "reference": "yes",
+      "actual": "yes",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${NAME:+yes}",
+      "reference": "yes",
+      "actual": "yes",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${NAME:+yes}",
+      "reference": "yes",
+      "actual": "yes",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${NAME:+yes}",
+      "reference": "yes",
+      "actual": "yes",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${EMPTY:+no}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${EMPTY:+no}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${EMPTY:+no}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${EMPTY:+no}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${EMPTY+yes}",
+      "reference": "yes",
+      "actual": "yes",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${EMPTY+yes}",
+      "reference": "yes",
+      "actual": "yes",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${EMPTY+yes}",
+      "reference": "yes",
+      "actual": "yes",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${EMPTY+yes}",
+      "reference": "yes",
+      "actual": "yes",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${NONE+yes}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${NONE+yes}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${NONE+yes}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${NONE+yes}",
+      "reference": "",
+      "actual": "",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${NAME:-${NONE}}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${NAME:-${NONE}}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${NAME:-${NONE}}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${NAME:-${NONE}}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${NONE:-${NAME}}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${NONE:-${NAME}}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${NONE:-${NAME}}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${NONE:-${NAME}}",
+      "reference": "actual",
+      "actual": "actual",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "'a b'",
+      "reference": "a b",
+      "actual": "a b",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "'a b'",
+      "reference": "a b",
+      "actual": "a b",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "\"$name\"",
+      "reference": "",
+      "actual": "$name",
+      "policy": "unknown name retained"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "\"$name\"",
+      "reference": "",
+      "actual": "$name",
+      "policy": "unknown name retained"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "\"$name\"",
+      "reference": "",
+      "actual": "$name",
+      "policy": "unknown name retained"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "\"$name\"",
+      "reference": "",
+      "actual": "$name",
+      "policy": "unknown name retained"
+    },
+    {
+      "command": "COPY",
+      "form": "json",
+      "word": "${name:-lowercase}",
+      "reference": "lowercase",
+      "actual": "lowercase",
+      "policy": "equal"
+    },
+    {
+      "command": "COPY",
+      "form": "shell",
+      "word": "${name:-lowercase}",
+      "reference": "lowercase",
+      "actual": "lowercase",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "json",
+      "word": "${name:-lowercase}",
+      "reference": "lowercase",
+      "actual": "lowercase",
+      "policy": "equal"
+    },
+    {
+      "command": "ADD",
+      "form": "shell",
+      "word": "${name:-lowercase}",
+      "reference": "lowercase",
+      "actual": "lowercase",
+      "policy": "equal"
+    }
+  ],
+  "engine_sha256": "b271f2adbb3773b8d56aeedf5b5e29a9664241a066e9984669446fec41691dbc"
+}

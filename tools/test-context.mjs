@@ -43,6 +43,17 @@ test('CLI distinguishes excluded, missing, unknown and successful sources',t=>{
   fs.writeFileSync(path.join(root,'Dockerfile'),'FROM scratch\nARG INPUT=missing\nCOPY $INPUT /out');fs.writeFileSync(path.join(root,'actual'),'yes');
   r=call(root,'--build-arg','INPUT=actual');assert.equal(r.status,0,r.stderr);assert.equal(JSON.parse(r.stdout).plan.inputs[0].source,'actual');
 });
+test('CLI preserves literal COPY names and reports uncertainty through assignments',t=>{
+  const root=fixture(t,{'Dockerfile':"FROM scratch\nARG NAME=missing\nCOPY '$NAME' /out",'$NAME':'literal','actual':'ok','$MISSING':'must not prove resolution'});
+  let r=call(root);assert.equal(r.status,0,r.stderr);
+  assert.equal(JSON.parse(r.stdout).plan.inputs[0].source,'$NAME');
+  fs.writeFileSync(path.join(root,'Dockerfile'),'FROM scratch\nARG FIRST=$MISSING\nENV SECOND=$FIRST\nCOPY $SECOND /out');
+  r=call(root);assert.equal(r.status,3,r.stderr);assert.equal(JSON.parse(r.stdout).plan.inputs[0].status,'unknown');
+  fs.writeFileSync(path.join(root,'Dockerfile'),'FROM alpine\nARG NAME=actual\nCOPY $NAME /out');
+  r=call(root);assert.equal(r.status,3,r.stderr);
+  fs.appendFileSync(path.join(root,'Dockerfile'),'\nENV NAME=actual\nCOPY $NAME /another');
+  r=call(root);const inputs=JSON.parse(r.stdout).plan.inputs;assert.deepEqual(inputs.map(i=>i.status),['unknown','resolved']);
+});
 test('reports are reproducible and cannot overwrite an existing output',t=>{
   const root=fixture(t,{'Dockerfile':'FROM scratch\nCOPY src /out','src/a':'a'}),out=path.join(os.tmpdir(),path.basename(root)+'.json');
   t.after(()=>fs.rmSync(out,{force:true}));

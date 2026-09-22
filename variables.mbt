@@ -19,6 +19,20 @@ pub fn expand_variables(
   source : String,
   values : Map[String, String],
 ) -> Expansion raise ParseError {
+  expand_tracked(source, values, Map([]), false, Map([]))
+}
+
+///|
+// Keep an approximate value for display, but never lose uncertainty when it
+// travels through an assignment. External image ENV may shadow an ARG or alter
+// a fallback until this Dockerfile explicitly sets that ENV key.
+fn expand_tracked(
+  source : String,
+  values : Map[String, String],
+  uncertain : Map[String, Bool],
+  unknown_base : Bool,
+  environment : Map[String, String],
+) -> Expansion raise ParseError {
   if !valid_unicode(source) ||
     values.iter().any(pair => !valid_unicode(pair.0) || !valid_unicode(pair.1)) {
     raise Invalid("invalid variable Unicode")
@@ -130,6 +144,13 @@ pub fn expand_variables(
         i += 1
       }
       let value = values.get(name)
+      if (
+          uncertain.contains(name) ||
+          (unknown_base && !environment.contains(name))
+        ) &&
+        !unresolved.contains(name) {
+        unresolved.push(name)
+      }
       let set = value != None &&
         (!operator.has_prefix(":") || value != Some(""))
       let use_fallback = (operator.has_suffix("-") && !set) ||
@@ -170,6 +191,9 @@ pub struct VariableScope {
   arguments : Map[String, String]
   environment : Map[String, String]
   unresolved : Array[String]
+  uncertain_arguments : Array[String]
+  uncertain_environment : Array[String]
+  unknown_base_environment : Bool
 } derive(Debug, Eq, ToJson)
 
 ///|
@@ -185,7 +209,20 @@ pub fn analyze_variables(
     }
   }
   let global : Map[String, String] = Map([])
-  let parents : Map[String, (Map[String, String], Map[String, String])] = Map([])
+  let parents : Map[
+    String,
+    (
+      Map[String, String],
+      Map[String, String],
+      Map[String, Bool],
+      Map[String, Bool],
+      Bool,
+    ),
+  ] = Map([])
+  let global_uncertain : Map[String, Bool] = Map([])
+  let mut args_uncertain : Map[String, Bool] = Map([])
+  let mut env_uncertain : Map[String, Bool] = Map([])
+  let mut unknown_base = false
   let mut args : Map[String, String] = Map([])
   let mut env : Map[String, String] = Map([])
   let mut stage_name : String? = None
@@ -210,19 +247,46 @@ pub fn analyze_variables(
     }
     if ins.name == "FROM" {
       if stage_name is Some(name) {
-        parents[name] = (args.copy(), env.copy())
+        parents[name] = (
+          args.copy(),
+          env.copy(),
+          args_uncertain.copy(),
+          env_uncertain.copy(),
+          unknown_base,
+        )
       }
-      let expanded = expand_variables(ins.arguments, global)
+      let expanded = expand_tracked(
+        ins.arguments,
+        global,
+        global_uncertain,
+        false,
+        Map([]),
+      )
       let words = split_quoted(expanded.value)
+      if words.is_empty() {
+        raise Invalid("empty expanded FROM")
+      }
       let offset = if words[0].has_prefix("--platform=") { 1 } else { 0 }
       if words.length() <= offset {
         raise Invalid("malformed FROM")
       }
       let inherited = parents
         .get(words[offset].to_lower())
-        .unwrap_or((Map([]), Map([])))
+        .unwrap_or(
+          (
+            Map([]),
+            Map([]),
+            Map([]),
+            Map([]),
+            words[offset].to_lower() != "scratch" ||
+            !expanded.unresolved.is_empty(),
+          ),
+        )
       args = inherited.0.copy()
       env = inherited.1.copy()
+      args_uncertain = inherited.2.copy()
+      env_uncertain = inherited.3.copy()
+      unknown_base = inherited.4 || !expanded.unresolved.is_empty()
       stage += 1
       stage_name = if words.length() == offset + 3 &&
         words[offset + 1].to_upper() == "AS" {
@@ -238,12 +302,27 @@ pub fn analyze_variables(
         arguments: args.copy(),
         environment: env.copy(),
         unresolved: expanded.unresolved,
+        uncertain_arguments: args_uncertain.keys().collect(),
+        uncertain_environment: env_uncertain.keys().collect(),
+        unknown_base_environment: unknown_base,
       })
       continue
     }
     let values = if stage < 0 { global.copy() } else { args.copy() }
+    let before_environment = env.copy()
     for key, value in env {
       values[key] = value
+    }
+    let uncertain = if stage < 0 {
+      global_uncertain.copy()
+    } else {
+      args_uncertain.copy()
+    }
+    for key, _ in env {
+      ignore(uncertain.remove(key))
+    }
+    for key, _ in env_uncertain {
+      uncertain[key] = true
     }
     let unresolved : Array[String] = []
     let expanded = if ins.name == "ARG" {
@@ -258,27 +337,53 @@ pub fn analyze_variables(
       let value = if build_args.get(name) is Some(v) {
         Some(v)
       } else if parts.length() > 1 {
-        let value = expand_variables(
+        let value = expand_tracked(
           parts[1:].map(s => s.to_owned()).join("="),
           values,
+          uncertain,
+          unknown_base,
+          env,
         )
         for name in value.unresolved {
           unresolved.push(name)
         }
         Some(value.value)
       } else if stage < 0 {
+        if global_uncertain.contains(name) {
+          unresolved.push(name)
+        }
         global.get(name)
       } else {
         match args.get(name) {
-          Some(v) => Some(v)
-          None => global.get(name)
+          Some(v) => {
+            if args_uncertain.contains(name) {
+              unresolved.push(name)
+            }
+            Some(v)
+          }
+          None => {
+            if global_uncertain.contains(name) {
+              unresolved.push(name)
+            }
+            global.get(name)
+          }
         }
       }
       if value is Some(v) {
         if stage < 0 {
           global[name] = v
+          if unresolved.is_empty() {
+            ignore(global_uncertain.remove(name))
+          } else {
+            global_uncertain[name] = true
+          }
         } else {
           args[name] = v
+          if unresolved.is_empty() {
+            ignore(args_uncertain.remove(name))
+          } else {
+            args_uncertain[name] = true
+          }
         }
       }
       if value is Some(v) {
@@ -305,11 +410,20 @@ pub fn analyze_variables(
           raise Invalid("invalid ENV assignment")
         }
         let key = parts[0].to_owned()
-        let value = expand_variables(
+        let value = expand_tracked(
           parts[1:].map(s => s.to_owned()).join("="),
           values,
+          uncertain,
+          unknown_base,
+          // All assignments in one ENV use the environment before that ENV.
+          before_environment,
         )
         env[key] = value.value
+        if value.unresolved.is_empty() {
+          ignore(env_uncertain.remove(key))
+        } else {
+          env_uncertain[key] = true
+        }
         outputs.push(key + "=" + value.value)
         for name in value.unresolved {
           if !unresolved.contains(name) {
@@ -321,7 +435,13 @@ pub fn analyze_variables(
     } else if [
         "ADD", "COPY", "WORKDIR", "USER", "EXPOSE", "LABEL", "STOPSIGNAL", "VOLUME",
       ].contains(ins.name) {
-      let value = expand_variables(ins.arguments, values)
+      let value = expand_tracked(
+        ins.arguments,
+        values,
+        uncertain,
+        unknown_base,
+        env,
+      )
       for name in value.unresolved {
         unresolved.push(name)
       }
@@ -341,6 +461,13 @@ pub fn analyze_variables(
       },
       environment: env.copy(),
       unresolved,
+      uncertain_arguments: if stage < 0 {
+        global_uncertain.keys().collect()
+      } else {
+        args_uncertain.keys().collect()
+      },
+      uncertain_environment: env_uncertain.keys().collect(),
+      unknown_base_environment: unknown_base,
     })
   }
   result

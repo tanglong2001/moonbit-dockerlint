@@ -29,6 +29,7 @@ jobs:
       - run: node tools/test-report.mjs
       - run: node tools/test-impact.mjs
       - run: node --test tools/test-context.mjs
+      - run: node --test tools/test-context-expansion.mjs
       - run: node examples/run-context.mjs
       - run: node tools/robustness.mjs
       - run: node tools/benchmark.mjs

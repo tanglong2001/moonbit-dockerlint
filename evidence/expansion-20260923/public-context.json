@@ -1,0 +1,1326 @@
+{
+  "repository": "https://github.com/docker/getting-started",
+  "commit": "94d4031393bf8ebfd38aae640910f9435579d76b",
+  "input": "unmodified tracked-file archive",
+  "actual_docker_build": false,
+  "actual_user_claimed": false,
+  "checks": "target closure and both file-to-stage propagation sets asserted against the source Dockerfile",
+  "report": {
+    "format": "moonbit-build-context/1",
+    "semantics": "Linux paths; current Dockerfile and current ignore rules; static explanation, not a skip-build proof",
+    "dockerfile": "Dockerfile",
+    "ignore_file": ".dockerignore",
+    "source_sha256": "c3b9d5502a2727f8a2d5d81a5aec1da9864f7ded627261cb28f6cb8b7ce9afe5",
+    "ignore_sha256": "0213ddb0b69960982c441166096294c81746533aadc0e5bea4bd678b43e7e5fa",
+    "inventory_sha256": "d18599295fb56baf4eca2a5b28cddded74b86d692ea33f02aa8297b5cae881de",
+    "summary": {
+      "entries": 110,
+      "files": 83,
+      "total_file_bytes": "7324773",
+      "included_file_bytes": "7324773",
+      "selected_known_file_bytes": "4620367",
+      "missing_sources": 0,
+      "uncertainties": 0
+    },
+    "sizes": [
+      "28",
+      "0",
+      "0",
+      "317",
+      "28",
+      "22",
+      "1255",
+      "11556",
+      "1739",
+      "0",
+      "678",
+      "0",
+      "0",
+      "1554",
+      "0",
+      "914",
+      "655",
+      "578",
+      "1005",
+      "0",
+      "947",
+      "0",
+      "110",
+      "3483",
+      "3012",
+      "0",
+      "283",
+      "152",
+      "147",
+      "278",
+      "0",
+      "0",
+      "155764",
+      "0",
+      "56307",
+      "129590",
+      "694486",
+      "129284",
+      "87520",
+      "74524",
+      "34394",
+      "145255",
+      "34096",
+      "16804",
+      "13584",
+      "192122",
+      "844038",
+      "191836",
+      "98016",
+      "75408",
+      "572",
+      "879",
+      "0",
+      "5550",
+      "791260",
+      "563782",
+      "108222",
+      "12715",
+      "150541",
+      "267",
+      "179",
+      "0",
+      "0",
+      "6822",
+      "944",
+      "0",
+      "73568",
+      "0",
+      "6487",
+      "36167",
+      "24",
+      "0",
+      "0",
+      "127965",
+      "13623",
+      "3481",
+      "0",
+      "287063",
+      "10894",
+      "4990",
+      "0",
+      "249953",
+      "166213",
+      "5227",
+      "23360",
+      "70475",
+      "0",
+      "315302",
+      "7560",
+      "63754",
+      "0",
+      "3950",
+      "39595",
+      "171310",
+      "109800",
+      "0",
+      "284927",
+      "3937",
+      "25368",
+      "0",
+      "6162",
+      "21838",
+      "0",
+      "244008",
+      "289148",
+      "11279",
+      "0",
+      "1657",
+      "2076",
+      "110"
+    ],
+    "plan": {
+      "graph": {
+        "stages": [
+          {
+            "index": 0,
+            "line": 3,
+            "base": "python:alpine",
+            "stage_name": "base",
+            "dependencies": []
+          },
+          {
+            "index": 1,
+            "line": 8,
+            "base": "node:18-alpine",
+            "stage_name": "app-base",
+            "dependencies": []
+          },
+          {
+            "index": 2,
+            "line": 15,
+            "base": "app-base",
+            "stage_name": "test",
+            "dependencies": [
+              1
+            ]
+          },
+          {
+            "index": 3,
+            "line": 21,
+            "base": "app-base",
+            "stage_name": "app-zip-creator",
+            "dependencies": [
+              1,
+              2
+            ]
+          },
+          {
+            "index": 4,
+            "line": 29,
+            "base": "base",
+            "stage_name": "dev",
+            "dependencies": [
+              0
+            ]
+          },
+          {
+            "index": 5,
+            "line": 33,
+            "base": "base",
+            "stage_name": "build",
+            "dependencies": [
+              0
+            ]
+          },
+          {
+            "index": 6,
+            "line": 39,
+            "base": "nginx:alpine",
+            "dependencies": [
+              3,
+              5
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "consumer": 2,
+            "dependency": 1,
+            "line": 15,
+            "kind": "FROM"
+          },
+          {
+            "consumer": 3,
+            "dependency": 1,
+            "line": 21,
+            "kind": "FROM"
+          },
+          {
+            "consumer": 3,
+            "dependency": 2,
+            "line": 22,
+            "kind": "COPY"
+          },
+          {
+            "consumer": 4,
+            "dependency": 0,
+            "line": 29,
+            "kind": "FROM"
+          },
+          {
+            "consumer": 5,
+            "dependency": 0,
+            "line": 33,
+            "kind": "FROM"
+          },
+          {
+            "consumer": 6,
+            "dependency": 3,
+            "line": 40,
+            "kind": "COPY"
+          },
+          {
+            "consumer": 6,
+            "dependency": 5,
+            "line": 41,
+            "kind": "COPY"
+          }
+        ],
+        "selected": 3,
+        "required": [
+          1,
+          2,
+          3
+        ],
+        "changed_stages": [],
+        "targets": [
+          {
+            "target": 0,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 1,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 2,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 3,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 4,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 5,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 6,
+            "affected": false,
+            "path": []
+          }
+        ],
+        "conservative": false,
+        "uncertainties": []
+      },
+      "entries": [
+        {
+          "path": ".dockerignore",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": ".github",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": ".github/workflows",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": ".github/workflows/build.yml",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": ".gitignore",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": ".yarnrc.yml",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "Dockerfile",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "LICENSE",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "README.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/package.json",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/spec",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/spec/persistence",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/spec/persistence/sqlite.spec.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/spec/routes",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/spec/routes/addItem.spec.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/spec/routes/deleteItem.spec.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/spec/routes/getItems.spec.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/spec/routes/updateItem.spec.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/src/index.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/persistence",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/src/persistence/index.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/persistence/mysql.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/persistence/sqlite.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/routes",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/src/routes/addItem.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/routes/deleteItem.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/routes/getItems.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/routes/updateItem.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/bootstrap.min.css",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/all.min.css",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-brands-400.eot",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-brands-400.svg#fontawesome",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-brands-400.ttf",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-brands-400.woff",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-brands-400.woff2",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-regular-400.eot",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-regular-400.svg#fontawesome",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-regular-400.ttf",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-regular-400.woff",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-regular-400.woff2",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-solid-900.eot",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-solid-900.svg#fontawesome",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-solid-900.ttf",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-solid-900.woff",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/font-awesome/fa-solid-900.woff2",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/css/styles.css",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/index.html",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/js",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/js/app.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/js/babel.min.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/js/react-bootstrap.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/js/react-dom.production.min.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/src/static/js/react.production.min.js",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "app/yarn.lock",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "build.sh",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docker-compose.yml",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/css",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/css/dark-mode.css",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/css/styles.css",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/fonts",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/fonts/hinted-Geomanist-Book.ttf",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/images",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/images/docker-labs-logo.svg",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/images/pwd-badge.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/image-building-best-practices",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/image-building-best-practices/hvs.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/image-building-best-practices/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/multi-container-apps",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/multi-container-apps/dashboard-multi-container-app.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/multi-container-apps/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/multi-container-apps/multi-app-architecture.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/our-application",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/our-application/dashboard-two-containers.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/our-application/ide-screenshot.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/our-application/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/our-application/todo-list-empty.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/our-application/todo-list-sample.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/persisting-our-data",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/persisting-our-data/dashboard-open-cli-ubuntu.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/persisting-our-data/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/persisting-our-data/items-added.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/sharing-our-app",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/sharing-our-app/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/sharing-our-app/push-command.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/sharing-our-app/pwd-add-new-instance.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/tutorial-in-dashboard.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/updating-our-app",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/updating-our-app/dashboard-removing-container.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/updating-our-app/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/updating-our-app/todo-list-updated-empty-text.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/using-bind-mounts",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/using-bind-mounts/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/using-bind-mounts/updated-add-button.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/using-docker-compose",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/using-docker-compose/dashboard-app-project-collapsed.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/using-docker-compose/dashboard-app-project-expanded.png",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/using-docker-compose/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/what-next",
+          "kind": "directory",
+          "excluded": false
+        },
+        {
+          "path": "docs/tutorial/what-next/index.md",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "mkdocs.yml",
+          "kind": "file",
+          "excluded": false
+        },
+        {
+          "path": "requirements.txt",
+          "kind": "file",
+          "excluded": false
+        }
+      ],
+      "inputs": [
+        {
+          "stage": 0,
+          "line": 5,
+          "kind": "COPY",
+          "source": "requirements.txt",
+          "included": [
+            109
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        },
+        {
+          "stage": 1,
+          "line": 10,
+          "kind": "COPY",
+          "source": "app/package.json",
+          "included": [
+            10
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        },
+        {
+          "stage": 1,
+          "line": 10,
+          "kind": "COPY",
+          "source": "app/yarn.lock",
+          "included": [
+            58
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        },
+        {
+          "stage": 1,
+          "line": 11,
+          "kind": "COPY",
+          "source": "app/spec",
+          "included": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        },
+        {
+          "stage": 1,
+          "line": 12,
+          "kind": "COPY",
+          "source": "app/src",
+          "included": [
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        },
+        {
+          "stage": 2,
+          "line": 16,
+          "kind": "COPY",
+          "source": ".yarnrc.yml",
+          "included": [
+            5
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        },
+        {
+          "stage": 3,
+          "line": 23,
+          "kind": "COPY",
+          "source": "app/spec",
+          "included": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        },
+        {
+          "stage": 3,
+          "line": 24,
+          "kind": "COPY",
+          "source": "app/src",
+          "included": [
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        },
+        {
+          "stage": 5,
+          "line": 34,
+          "kind": "COPY",
+          "source": ".",
+          "included": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109
+          ],
+          "excluded": [],
+          "status": "resolved",
+          "note": ""
+        }
+      ],
+      "selected_entries": [
+        10,
+        58,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        5
+      ],
+      "missing_lines": [],
+      "uncertainties": [],
+      "changes": [
+        {
+          "path": "app/src/index.js",
+          "excluded": false,
+          "source_lines": [
+            12,
+            24,
+            34
+          ],
+          "conservative": false,
+          "targets": [
+            {
+              "target": 0,
+              "affected": false,
+              "path": []
+            },
+            {
+              "target": 1,
+              "affected": true,
+              "path": [
+                1
+              ]
+            },
+            {
+              "target": 2,
+              "affected": true,
+              "path": [
+                2,
+                1
+              ]
+            },
+            {
+              "target": 3,
+              "affected": true,
+              "path": [
+                3
+              ]
+            },
+            {
+              "target": 4,
+              "affected": false,
+              "path": []
+            },
+            {
+              "target": 5,
+              "affected": true,
+              "path": [
+                5
+              ]
+            },
+            {
+              "target": 6,
+              "affected": true,
+              "path": [
+                6,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "path": "requirements.txt",
+          "excluded": false,
+          "source_lines": [
+            5,
+            34
+          ],
+          "conservative": false,
+          "targets": [
+            {
+              "target": 0,
+              "affected": true,
+              "path": [
+                0
+              ]
+            },
+            {
+              "target": 1,
+              "affected": false,
+              "path": []
+            },
+            {
+              "target": 2,
+              "affected": false,
+              "path": []
+            },
+            {
+              "target": 3,
+              "affected": false,
+              "path": []
+            },
+            {
+              "target": 4,
+              "affected": true,
+              "path": [
+                4,
+                0
+              ]
+            },
+            {
+              "target": 5,
+              "affected": true,
+              "path": [
+                5
+              ]
+            },
+            {
+              "target": 6,
+              "affected": true,
+              "path": [
+                6,
+                5
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
