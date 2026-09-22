@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-22",
+  "project": "dockerlint",
+  "package": "tanglong2001/dockerlint",
+  "version": "0.5.0",
+  "code_base_commit_before_materials": "1f9c6eabbd9619288586d4b412562a81d9a20bba",
+  "core_checks": [
+    {
+      "command": [
+        "moon",
+        "test",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "seconds": 2.38,
+      "log": "dockerlint-test---target-js.log"
+    },
+    {
+      "command": [
+        "moon",
+        "test",
+        "--target",
+        "wasm-gc"
+      ],
+      "exit": 0,
+      "seconds": 1.92,
+      "log": "dockerlint-test---target-wasm-gc.log"
+    },
+    {
+      "command": [
+        "moon",
+        "build",
+        "--target",
+        "js"
+      ],
+      "exit": 0,
+      "seconds": 1.42,
+      "log": "dockerlint-build---target-js.log"
+    }
+  ],
+  "workflow_checks": [
+    {
+      "command": [
+        "node",
+        "tools/test-report.mjs"
+      ],
+      "exit": 0,
+      "seconds": 1.36,
+      "log": "dockerlint-workflow-0.log"
+    }
+  ],
+  "interpretation": "本轮 JSON 诊断、阶段图及 5 类 CLI 阈值/错误检查通过；规则边界见 SHELL-CHECKS.md。",
+  "limit": "六类 shell 检查只是限定子集，不是完整 ShellCheck、BuildKit 或容器安全审计。",
+  "remote_push_performed": false
+}

@@ -1,3 +1,5 @@
+> 2026-09-22 当前本地版 0.5.0：申报定位为“Dockerfile 语义诊断与 CI 报告工具”。已更新[现有项目对照](DUPLICATION.md)、[申报草稿](PROPOSAL.md)及[本轮验证](evidence/innovation-review-20260922/results.json)。下面带日期的旧轮次描述保留历史范围；团队已有公开仓库，本次本地修订尚未由本任务推送。
+
 > 0.5.0：新增六种常见 shell 检查，72/72 官方对照通过。当前范围与限制见 [SHELL-CHECKS.md](SHELL-CHECKS.md)；较早轮次的描述保留为历史。
 
 # MoonBit Dockerlint 0.5.0
