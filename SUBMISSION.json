@@ -4,16 +4,27 @@
   "module": "tanglong2001/dockerlint",
   "version": "0.9.0",
   "repository": "https://github.com/tanglong2001/moonbit-dockerlint",
-  "status": "构建输入工作流及展开误判已修复，待团队同步后复审",
+  "status": "原申报已驳回；本地修订待团队同步复审",
   "remainingRisk": "暂无确认使用方；静态解释及 ignore 子集有明确边界；价值判断由组委会作出。",
   "actualUsersClaimed": false,
-  "anonymousCloneVerified": true,
-  "publicHead": "91b348323871bc3ed32f3d5686280774d56a9fdf",
   "defaultBranch": "origin/main",
   "localChangesPublished": false,
-  "proposalLines": 28,
+  "proposalLines": 38,
   "useCase": "构建输入追踪、文件到阶段见证及 ignore 误排除定位",
   "diff": "MoonBit 实际输入与依赖解释；复用 Balena ignore，COPY 匹配适配 Go，保留原始许可；不是新规则库或新构建算法。",
   "publicHeadVerifiedAt": "2026-09-23",
-  "publicFetchVerified": true
+  "publicFetchVerified": true,
+  "historicalAnonymousClone": {
+    "publicHead": "91b348323871bc3ed32f3d5686280774d56a9fdf",
+    "anonymousCloneVerified": true,
+    "notCurrentPublicHeadClaim": true
+  },
+  "originalSubmission": "dockerlint",
+  "license": "MIT AND BSD-3-Clause",
+  "acceptance": "not established",
+  "remoteCIRunByThisTask": false,
+  "currentValidation": "evidence/closures-20260927/LOCAL-CHECKS.json",
+  "currentEvidence": "evidence/closures-20260927/LOCAL-CHECKS.json",
+  "metadataReviewedOn": "2026-09-27",
+  "currentEvidenceScope": "Before/after dependency impact union;21 fixed BuildKit LLB comparisons with selected-target metadata caveat,147 reachability checks,2 diff comparisons"
 }
