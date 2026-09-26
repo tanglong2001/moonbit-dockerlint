@@ -37,7 +37,7 @@ Node 宿主负责目录清单、文件读取和 CLI，复用固定版本 `@balen
 
 本轮 JS/WasmGC 核心各 30 项；7 组宿主流程验证实际目录、独立 ignore 文件、退出码、链接边界与输出不覆盖。Go1.27.1 `filepath.Match` 的 3,318 组独立对照和 Moby v0.6.0 的 1,069 组受支持 ignore 输入一致；另记录 7 个明确拒绝的规则/路径情况，未把拒绝当作匹配成功。
 
-Docker 官方 `docker/getting-started` 固定提交的未修改源码归档上，目标闭包及两组文件影响集合均通过断言。完整命令、哈希及证据见 [TESTING.md](TESTING.md)，本轮证据在 `evidence/expansion-20260923/`，0.7.0 原始记录保留。
+Docker 官方 `docker/getting-started` 固定提交的未修改源码归档上，目标闭包及两组文件影响集合均通过断言。完整命令、哈希及证据见 [TESTING.md](TESTING.md)，0.8.0历史证据在 `evidence/expansion-20260923/`，0.9.0当前证据在 `evidence/closures-20260927/LOCAL-CHECKS.json`，0.7.0 原始记录保留。
 
 分析采用 Linux 路径、当前 Dockerfile 和当前 ignore 规则；不读取外部镜像元数据、不执行 RUN、不解析命名 context 覆盖/链接内容或 COPY --exclude。未知输入显式返回 unknown。宿主拒绝 ignore 字符类、反斜线转义等未核实语法，以及 `?` 与非 BMP 文件名的组合。上限与所有限制见 CONTEXT。报告不能作为“安全跳过构建”的凭证，也不计算 Docker 缓存命中率或镜像体积。
 

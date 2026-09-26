@@ -5,13 +5,13 @@
   "version": "0.9.0",
   "repository": "https://github.com/tanglong2001/moonbit-dockerlint",
   "status": "原申报已驳回；本地修订待团队同步复审",
-  "remainingRisk": "暂无确认使用方；静态解释及 ignore 子集有明确边界；价值判断由组委会作出。",
+  "remainingRisk": "假镜像metadata且无ONBUILD；调用者须提供完整diff行；不能证明安全跳过构建",
   "actualUsersClaimed": false,
   "defaultBranch": "origin/main",
   "localChangesPublished": false,
   "proposalLines": 38,
-  "useCase": "构建输入追踪、文件到阶段见证及 ignore 误排除定位",
-  "diff": "MoonBit 实际输入与依赖解释；复用 Balena ignore，COPY 匹配适配 Go，保留原始许可；不是新规则库或新构建算法。",
+  "useCase": "解释文件/COPY输入和修改前后阶段依赖，给出影响路径及无法判断的原因",
+  "diff": "旧linter规则不是申报主贡献；BuildKit已有离线转换，增量为可嵌入MoonBit的目录和双快照解释API",
   "publicHeadVerifiedAt": "2026-09-23",
   "publicFetchVerified": true,
   "historicalAnonymousClone": {
@@ -26,5 +26,6 @@
   "currentValidation": "evidence/closures-20260927/LOCAL-CHECKS.json",
   "currentEvidence": "evidence/closures-20260927/LOCAL-CHECKS.json",
   "metadataReviewedOn": "2026-09-27",
-  "currentEvidenceScope": "Before/after dependency impact union;21 fixed BuildKit LLB comparisons with selected-target metadata caveat,147 reachability checks,2 diff comparisons"
+  "currentEvidenceScope": "Before/after dependency impact union;21 fixed BuildKit LLB comparisons with selected-target metadata caveat,147 reachability checks,2 diff comparisons",
+  "reviewDecision": "核心改为构建输入与修改影响"
 }
