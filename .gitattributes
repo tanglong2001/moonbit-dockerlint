@@ -2,3 +2,6 @@
 *.png -text
 *.jpg -text
 *.wasm -text
+
+examples/buildkit-closures/*.Dockerfile -text
+examples/buildkit-closures/LICENSE -text

@@ -36,3 +36,13 @@ COPY/ADD 源表达式保留原始引号直到展开。带空格的源必须用 J
 ARG/ENV 未知值跨赋值、全局参数重声明及命名父阶段传播；字面美元符号数据与未知占位符分开跟踪。未读取外部镜像的 ENV 时，ARG 可能被镜像 ENV 覆盖，默认分支也可能改变，因此相关输入保持 unknown；本 Dockerfile 的明确 ENV 赋值可消除对应键的未知状态。
 
 `VariableScope` 新增 uncertain_arguments、uncertain_environment、unknown_base_environment。arguments/environment/expanded 保留近似展示值；调用方必须联合这些字段及 unresolved 判断，不能将展示字符串当作已经证明的文件来源。纯 `expand_variables` 仍只根据调用方给出的已知值映射工作。详细例子见 EXPANSION.md。
+
+## 0.9.0：修改前后双快照影响（2026-09-27）
+
+`compare_build_impact(before, after, changed_before=[...], changed_after=[...])` 以各自快照的1起始行号接收完整变更集合，并合并旧图与新图的影响。删除COPY依赖时仍保留旧路径；阶段插入、删除、改名或重排不能稳定对齐时保守报告所有快照目标。`changed_before`/`changed_after` 必须由调用者正确提供；该接口不解析git diff，也不能检验调用者遗漏了哪些变更。
+
+`node tools/test-buildkit-closures.mjs` 在固定 docker/getting-started Dockerfile及两个明确标注的修改副本上复核21组目标闭包、147项变更阶段可达判断和2组双快照比较。参考不是另写一遍图算法，而是 BuildKit v0.25.1 的 `Dockerfile2LLB` 实际输出；[原始回执](examples/buildkit-closures/oracle.json)和[Go调用器](tools/closure-reference/main.go)可查。调用器用空ONBUILD的假Linux/amd64镜像配置，无daemon、registry取镜像或build，因此只证明Dockerfile显式依赖子集；不能推导真实镜像闭包、缓存失效或安全跳过构建。
+
+来源：[docker/getting-started固定提交](https://github.com/docker/getting-started/tree/94d4031393bf8ebfd38aae640910f9435579d76b)，Apache-2.0；原文件和两个单行修改副本均保留许可与SHA256。该公开教材不是本项目用户。已有 BuildKit 同样能离线转换，不能把“无daemon”说成对它的独占优势；这里的可评估价值是可嵌入MoonBit的有界解释接口、变更路径和目录分析，是否足够作为参赛扩展由组委会判断。
+
+参考观察边界：LLB操作标签不包含只有CMD元数据的dev阶段。对照保留原始标签列表，并显式加入所选target；21组中3组dev因此是“可观察操作阶段 + 所选target”。没有把该探针宣称为任意Dockerfile全部逻辑阶段的通用oracle。

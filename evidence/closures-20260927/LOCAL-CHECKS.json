@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-27",
+  "version": "0.9.0",
+  "checks": [
+    {
+      "check": "moon test --target js",
+      "exit": 0,
+      "tests": 32
+    },
+    {
+      "check": "moon test --target wasm-gc",
+      "exit": 0,
+      "tests": 32
+    },
+    {
+      "check": "moon fmt / info / build --target js and engine refresh",
+      "exit": 0
+    },
+    {
+      "check": "reference",
+      "command": [
+        "node",
+        "tools/test-buildkit-closures.mjs"
+      ],
+      "exit": 0
+    },
+    {
+      "check": "context-host",
+      "command": [
+        "node",
+        "--test",
+        "tools/test-context.mjs"
+      ],
+      "exit": 0
+    },
+    {
+      "check": "context-expansion",
+      "command": [
+        "node",
+        "tools/test-context-expansion.mjs"
+      ],
+      "exit": 0
+    }
+  ],
+  "moonChecksSource": "Completed immediately before receipt,32/32 each; not rerun",
+  "hashPolicy": "SHA256 LF-normalized source bytes; public Dockerfile hashes raw in oracle",
+  "sourceHashes": {
+    "comparison.mbt": "da1d7b70e22bb532f1841e144dc4e3aa42c270f5fd59cf58c4230650e5b2d8ff",
+    "impact.mbt": "ae7871fbd6f917477e3c52aeed398079259eef5ad977a70555a0880a4f0de953",
+    "cmd/web/main.mbt": "98bb6457455cfea09adce1fcda69e72a5ceca1912d9e4deac2b3fa8e82906942",
+    "web/engine.mjs": "afc4bf5006e43b5f2e57d73eeac9647477269f55b96da9f42e719b89c291f002",
+    "tools/closure-reference/main.go": "153c942b0346d4d5b5949fec6e18fbb17ce53b95b34d96e2acb5e403b033c200",
+    "examples/buildkit-closures/oracle.json": "b5fc63a607bf865d5f418664642e4188f27bf0825df4dc5f64012305a1e39982"
+  },
+  "remoteCI": false,
+  "published": false,
+  "buildExecuted": false,
+  "productionAdoption": false
+}

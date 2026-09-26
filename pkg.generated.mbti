@@ -17,6 +17,8 @@ pub fn build_impact(String, target? : String, changed_lines? : Array[Int]) -> Bu
 
 pub fn check(String, ignore_codes? : Array[String], honor_inline? : Bool, trusted_registries? : Array[String]) -> Array[Diagnostic] raise ParseError
 
+pub fn compare_build_impact(String, String, changed_before? : Array[Int], changed_after? : Array[Int]) -> BuildComparison raise ParseError
+
 pub fn configured_report(String, String, filename? : String) -> String raise ParseError
 
 pub fn copy_source_matches(String, String) -> Bool raise ParseError
@@ -44,6 +46,14 @@ pub struct Arguments {
   flags : Map[String, String]
   values : Array[String]
   json_form : Bool
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct BuildComparison {
+  before : BuildImpact
+  after : BuildImpact
+  affected_targets : Array[String]
+  conservative : Bool
+  reason : String
 } derive(Eq, ToJson, @debug.Debug)
 
 pub struct BuildEdge {

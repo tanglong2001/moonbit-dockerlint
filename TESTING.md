@@ -57,3 +57,5 @@ SARIF output was also validated with Python jsonschema against the [OASIS SARIF 
 The static browser engine smoke test passed. A new real-browser acceptance session was not run for this increment; variable/configuration/reporting features are API/CLI interfaces. The benchmark is 5 warmups and 30 executions of the 78-byte documented example, with runtime/CPU recorded. It is not an upstream or large-corpus performance comparison. Cross-platform, long-running and memory/representative throughput validation remain open.
 
 The final source/evidence fingerprint manifest is evidence/runtime-upgrade.json. Historical evidence and ZIP/Git bundles do not represent this commit unless explicitly regenerated. All commits are local, with no remote.
+
+当前0.9.0：`node tools/test-buildkit-closures.mjs`重放独立LLB输出；重新生成参考时在tools/closure-reference执行`go run . ../../examples/buildkit-closures/original.Dockerfile`，两个修改副本同理。Go模块锁固定版本；需联网下载依赖，无Docker daemon。证据为evidence/closures-20260927。

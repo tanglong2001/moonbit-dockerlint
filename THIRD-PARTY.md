@@ -9,3 +9,5 @@ tools/context-reference 是本项目自写的独立验证调用器，引用 Go �
 公开仓库案例仅记录 docker/getting-started 的 URL、固定提交、静态路径/长度报告及断言结论，不重新分发其应用、图片或依赖。原创样例在 examples/context。更早 Hadolint oracle 的范围和来源仍见 TESTING。
 
 tools/expansion-reference 是独立验证调用器，依赖 BuildKit v0.25.1（Apache-2.0）shell 包及 github.com/pkg/errors v0.9.1（BSD-2-Clause），只用于测试。未向运行时代码复制 BuildKit 实现；源码包只含调用器和依赖锁，不含参考库源码、Go SDK 或编译二进制。
+
+2026-09-27新增 examples/buildkit-closures：仅复制 Apache-2.0 的 Dockerfile、许可及两个有标注修改副本；不含应用源码或依赖。tools/closure-reference 是本项目Go调用器，实际引用Apache-2.0 BuildKit v0.25.1，依赖源码/二进制不随包分发。

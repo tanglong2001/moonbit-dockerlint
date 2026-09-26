@@ -1,0 +1,17 @@
+✔ a complete inventory explains release inputs and an independent docs target (83.4204ms)
+✔ Dockerfile-specific ignore overrides the root file and Linux matching is case sensitive (61.8849ms)
+✔ CLI distinguishes excluded, missing, unknown and successful sources (663.0715ms)
+✔ CLI preserves literal COPY names and reports uncertainty through assignments (649.4945ms)
+✔ reports are reproducible and cannot overwrite an existing output (652.9422ms)
+✔ directory links are listed without traversing and never counted as resolved content (99.4074ms)
+✔ invalid options, paths and source encoding fail through worker boundary (314.6543ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2649.6714
+
+STDERR

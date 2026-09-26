@@ -1,0 +1,338 @@
+{
+  "reference": "moby/buildkit v0.25.1",
+  "resolver": "fake Linux/amd64 config and dummy rootfs with empty Config.OnBuild; no image manifests, no daemon, no build/solve",
+  "closures": 21,
+  "impactMembershipChecks": 147,
+  "comparisons": [
+    {
+      "variant": "copy-test-to-app-base",
+      "line": 22,
+      "affectedTargets": [
+        "app-zip-creator",
+        "#6"
+      ],
+      "oldClosure": [
+        1,
+        2,
+        3,
+        0,
+        5,
+        6
+      ],
+      "newClosure": [
+        1,
+        3,
+        0,
+        5,
+        6
+      ]
+    },
+    {
+      "variant": "copy-appzip-to-app-base",
+      "line": 40,
+      "affectedTargets": [
+        "#6"
+      ],
+      "oldClosure": [
+        1,
+        2,
+        3,
+        0,
+        5,
+        6
+      ],
+      "newClosure": [
+        1,
+        0,
+        5,
+        6
+      ]
+    }
+  ],
+  "results": [
+    {
+      "variant": "original",
+      "target": "base",
+      "stages": [
+        "base"
+      ],
+      "observedOperationStages": [
+        "base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "original",
+      "target": "app-base",
+      "stages": [
+        "app-base"
+      ],
+      "observedOperationStages": [
+        "app-base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "original",
+      "target": "test",
+      "stages": [
+        "app-base",
+        "test"
+      ],
+      "observedOperationStages": [
+        "app-base",
+        "test"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "original",
+      "target": "app-zip-creator",
+      "stages": [
+        "app-base",
+        "app-zip-creator",
+        "test"
+      ],
+      "observedOperationStages": [
+        "app-base",
+        "test",
+        "app-zip-creator"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "original",
+      "target": "dev",
+      "stages": [
+        "base",
+        "dev"
+      ],
+      "observedOperationStages": [
+        "base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "original",
+      "target": "build",
+      "stages": [
+        "base",
+        "build"
+      ],
+      "observedOperationStages": [
+        "base",
+        "build"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "original",
+      "target": "stage-6",
+      "stages": [
+        "app-base",
+        "app-zip-creator",
+        "base",
+        "build",
+        "stage-6",
+        "test"
+      ],
+      "observedOperationStages": [
+        "base",
+        "app-base",
+        "test",
+        "app-zip-creator",
+        "build",
+        "stage-6"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-test-to-app-base",
+      "target": "base",
+      "stages": [
+        "base"
+      ],
+      "observedOperationStages": [
+        "base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-test-to-app-base",
+      "target": "app-base",
+      "stages": [
+        "app-base"
+      ],
+      "observedOperationStages": [
+        "app-base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-test-to-app-base",
+      "target": "test",
+      "stages": [
+        "app-base",
+        "test"
+      ],
+      "observedOperationStages": [
+        "app-base",
+        "test"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-test-to-app-base",
+      "target": "app-zip-creator",
+      "stages": [
+        "app-base",
+        "app-zip-creator"
+      ],
+      "observedOperationStages": [
+        "app-base",
+        "app-zip-creator"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-test-to-app-base",
+      "target": "dev",
+      "stages": [
+        "base",
+        "dev"
+      ],
+      "observedOperationStages": [
+        "base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-test-to-app-base",
+      "target": "build",
+      "stages": [
+        "base",
+        "build"
+      ],
+      "observedOperationStages": [
+        "base",
+        "build"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-test-to-app-base",
+      "target": "stage-6",
+      "stages": [
+        "app-base",
+        "app-zip-creator",
+        "base",
+        "build",
+        "stage-6"
+      ],
+      "observedOperationStages": [
+        "base",
+        "app-base",
+        "app-zip-creator",
+        "build",
+        "stage-6"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-appzip-to-app-base",
+      "target": "base",
+      "stages": [
+        "base"
+      ],
+      "observedOperationStages": [
+        "base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-appzip-to-app-base",
+      "target": "app-base",
+      "stages": [
+        "app-base"
+      ],
+      "observedOperationStages": [
+        "app-base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-appzip-to-app-base",
+      "target": "test",
+      "stages": [
+        "app-base",
+        "test"
+      ],
+      "observedOperationStages": [
+        "app-base",
+        "test"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-appzip-to-app-base",
+      "target": "app-zip-creator",
+      "stages": [
+        "app-base",
+        "app-zip-creator",
+        "test"
+      ],
+      "observedOperationStages": [
+        "app-base",
+        "test",
+        "app-zip-creator"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-appzip-to-app-base",
+      "target": "dev",
+      "stages": [
+        "base",
+        "dev"
+      ],
+      "observedOperationStages": [
+        "base"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-appzip-to-app-base",
+      "target": "build",
+      "stages": [
+        "base",
+        "build"
+      ],
+      "observedOperationStages": [
+        "base",
+        "build"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    },
+    {
+      "variant": "copy-appzip-to-app-base",
+      "target": "stage-6",
+      "stages": [
+        "app-base",
+        "base",
+        "build",
+        "stage-6"
+      ],
+      "observedOperationStages": [
+        "base",
+        "app-base",
+        "build",
+        "stage-6"
+      ],
+      "selectedTargetExplicitlyIncluded": true
+    }
+  ],
+  "actualBuildPerformed": false,
+  "skipBuildCertified": false
+}
+
+STDERR

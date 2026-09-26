@@ -58,3 +58,17 @@ pub fn impact(
     e => "ERROR: " + Repr(e).to_string()
   }
 }
+
+///|
+pub fn compare_impact(
+  before : String,
+  after : String,
+  changed_before : Array[Int],
+  changed_after : Array[Int],
+) -> String {
+  @lib.compare_build_impact(before, after, changed_before~, changed_after~)
+  .to_json()
+  .stringify() catch {
+    e => "ERROR: " + Repr(e).to_string()
+  }
+}

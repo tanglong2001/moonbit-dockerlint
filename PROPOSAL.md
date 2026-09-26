@@ -1,6 +1,6 @@
 # MoonBit 构建输入与阶段影响分析 · 修订申报草稿
 本项目仓库：https://github.com/tanglong2001/moonbit-dockerlint
-模块：tanglong2001/dockerlint；本地版本：0.8.0；许可证：MIT AND BSD-3-Clause，适配来源另见 THIRD-PARTY。
+模块：tanglong2001/dockerlint；本地版本：0.9.0；许可证：MIT AND BSD-3-Clause，适配来源另见 THIRD-PARTY。
 状态：本轮仅本地交付，团队同步到上述仓库后提交复审。
 
 ## 解决的任务
@@ -26,3 +26,13 @@ Docker 官方教程固定源码上完成目标闭包和两组文件影响集合�
 基于当前源码和当前 ignore 的静态解释，外部镜像元数据、命名 context、链接、部分模式未求解；未知项显式返回。
 不能直接据此跳过构建；目前无确认使用方，不编造客户或部署证据。
 完整范围、来源、验证与本轮驳回答复分别见 CONTEXT、DUPLICATION、TESTING、REVIEW-RESPONSE。
+
+## 0.9.0：修改前后双快照影响（2026-09-27）
+
+`compare_build_impact(before, after, changed_before=[...], changed_after=[...])` 以各自快照的1起始行号接收完整变更集合，并合并旧图与新图的影响。删除COPY依赖时仍保留旧路径；阶段插入、删除、改名或重排不能稳定对齐时保守报告所有快照目标。`changed_before`/`changed_after` 必须由调用者正确提供；该接口不解析git diff，也不能检验调用者遗漏了哪些变更。
+
+`node tools/test-buildkit-closures.mjs` 在固定 docker/getting-started Dockerfile及两个明确标注的修改副本上复核21组目标闭包、147项变更阶段可达判断和2组双快照比较。参考不是另写一遍图算法，而是 BuildKit v0.25.1 的 `Dockerfile2LLB` 实际输出；[原始回执](examples/buildkit-closures/oracle.json)和[Go调用器](tools/closure-reference/main.go)可查。调用器用空ONBUILD的假Linux/amd64镜像配置，无daemon、registry取镜像或build，因此只证明Dockerfile显式依赖子集；不能推导真实镜像闭包、缓存失效或安全跳过构建。
+
+来源：[docker/getting-started固定提交](https://github.com/docker/getting-started/tree/94d4031393bf8ebfd38aae640910f9435579d76b)，Apache-2.0；原文件和两个单行修改副本均保留许可与SHA256。该公开教材不是本项目用户。已有 BuildKit 同样能离线转换，不能把“无daemon”说成对它的独占优势；这里的可评估价值是可嵌入MoonBit的有界解释接口、变更路径和目录分析，是否足够作为参赛扩展由组委会判断。
+
+参考观察边界：LLB操作标签不包含只有CMD元数据的dev阶段。对照保留原始标签列表，并显式加入所选target；21组中3组dev因此是“可观察操作阶段 + 所选target”。没有把该探针宣称为任意Dockerfile全部逻辑阶段的通用oracle。

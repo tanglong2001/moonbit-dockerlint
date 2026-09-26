@@ -2,7 +2,7 @@
   "project": "dockerlint",
   "title": "MoonBit 构建输入与阶段影响分析",
   "module": "tanglong2001/dockerlint",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "repository": "https://github.com/tanglong2001/moonbit-dockerlint",
   "status": "构建输入工作流及展开误判已修复，待团队同步后复审",
   "remainingRisk": "暂无确认使用方；静态解释及 ignore 子集有明确边界；价值判断由组委会作出。",

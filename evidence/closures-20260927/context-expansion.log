@@ -1,0 +1,18 @@
+✔ COPY keeps single double and concatenated quote meaning through expansion (11.0218ms)
+✔ uncertainty survives ARG ENV and inherited named stages (2.5499ms)
+✔ literal dollar data is known and explicit assignments clear uncertainty (1.7528ms)
+✔ global ARG uncertainty survives redeclaration but an explicit build argument clears it (1.5145ms)
+✔ unfetched image ENV may shadow an ARG or change a fallback (1.2608ms)
+✔ an uncertain ADD expression cannot masquerade as a definitely remote input (0.7442ms)
+✔ nondefault expansion escapes and empty expanded FROM fail with structured errors (1.3471ms)
+✔ quoted shell whitespace is not mistaken for Docker COPY JSON syntax (0.5065ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25.1292
+
+STDERR
