@@ -17,3 +17,5 @@ CI先执行 `moon update` 初始化注册表及解析依赖，再进行fmt/info/
 升级时先修改版本文件，在独立目录执行fmt/info/check和受影响测试，更新生成API与编译引擎，再一起提交。不要通过删除确定性检查掩盖版本引起的差异。Node/Python、操作系统和外部服务仍有各自环境范围；固定MoonBit不意味着所有依赖完全冻结。
 
 本轮只改本地，远端CI状态和Mooncakes发布状态仍需团队同步后确认。
+
+发布前运行 `python3 tools/check-package.py`：它实际执行 `moon package --frozen`，核对工具链版本文件和上下文示例所需的 `.dockerignore`，在临时解包目录安装已锁定的 npm 依赖并运行 `examples/run-context.mjs`。`.moonignore` 保留现有排除规则，只显式纳入必要隐藏文件。该检查已经加入 CI 配置；它不执行发布，也不代表远端 CI 已运行。
