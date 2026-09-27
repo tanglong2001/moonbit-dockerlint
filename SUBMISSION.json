@@ -9,7 +9,7 @@
   "actualUsersClaimed": false,
   "defaultBranch": "origin/main",
   "localChangesPublished": false,
-  "proposalLines": 43,
+  "proposalLines": 28,
   "useCase": "解释文件/COPY输入和修改前后阶段依赖，给出影响路径及无法判断的原因",
   "diff": "旧linter规则不是申报主贡献；BuildKit已有离线转换，增量为可嵌入MoonBit的目录和双快照解释API",
   "publicHeadVerifiedAt": "2026-09-23",
