@@ -59,3 +59,7 @@ The static browser engine smoke test passed. A new real-browser acceptance sessi
 The final source/evidence fingerprint manifest is evidence/runtime-upgrade.json. Historical evidence and ZIP/Git bundles do not represent this commit unless explicitly regenerated. All commits are local, with no remote.
 
 当前0.9.0：`node tools/test-buildkit-closures.mjs`重放独立LLB输出；重新生成参考时在tools/closure-reference执行`go run . ../../examples/buildkit-closures/original.Dockerfile`，两个修改副本同理。Go模块锁固定版本；需联网下载依赖，无Docker daemon。证据为evidence/closures-20260927。
+
+## 0.10.0 自动快照比较
+
+本次通过 `moon check --target js`、`moon fmt`、`moon info`、`moon build --target js`；`moon test source_comparison_test.mbt --target js` 与 `--target wasm-gc` 各4组。`node tools/test-source-comparison.mjs` 通过固定BuildKit样例2组及文件CLI7项。此前参考引擎和其它核心检查保留原日期，没有重跑整套。回执：[source-comparison-20260927/LOCAL-CHECKS.json](evidence/source-comparison-20260927/LOCAL-CHECKS.json)。

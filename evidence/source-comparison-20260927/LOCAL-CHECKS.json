@@ -1,0 +1,65 @@
+{
+  "recordedUtc": "2026-09-27T05:17:54.447493+00:00",
+  "version": "0.10.0",
+  "baseline": "260095b84217a2039af8fca987d306c31efd20e7",
+  "environment": {
+    "os": "Windows",
+    "node": "24.11.0",
+    "moonCLI": "0.1.20260904",
+    "moonc": "0.10.12+1634b282e (2026-09-07)"
+  },
+  "recordingMethod": "Successful tool results observed in this session; not an additional rerun.",
+  "checks": [
+    {
+      "command": "moon check --target js",
+      "exit": 0,
+      "observedResult": "Finished successfully"
+    },
+    {
+      "command": "moon fmt",
+      "exit": 0,
+      "observedResult": "Finished successfully"
+    },
+    {
+      "command": "moon info",
+      "exit": 0,
+      "observedResult": "Generated API adds compare_build_sources and SourceComparison"
+    },
+    {
+      "command": "moon test source_comparison_test.mbt --target js",
+      "exit": 0,
+      "observedResult": "Total tests: 4, passed: 4, failed: 0."
+    },
+    {
+      "command": "moon test source_comparison_test.mbt --target wasm-gc",
+      "exit": 0,
+      "observedResult": "Total tests: 4, passed: 4, failed: 0."
+    },
+    {
+      "command": "moon build --target js",
+      "exit": 0,
+      "observedResult": "Finished successfully; cmd/web output copied to web/engine.mjs"
+    },
+    {
+      "command": "node tools/test-source-comparison.mjs",
+      "exit": 0,
+      "observedResult": "2 automatic comparisons: line22 => app-zip-creator/#6; line40 => #6. 7 CLI cases passed."
+    }
+  ],
+  "sourceFingerprints": {
+    "comparison.mbt": "a3280f9e63e7068bf868762314a0775d9abd5544fa0d0b7b84e18a306c13e164",
+    "source_comparison_test.mbt": "4fd2ef3e9653eec2eabdb3408f9fd73612ae8ed634cc69ecfb28ca90e7658c58",
+    "cmd/web/main.mbt": "549a70c72e8be2f62cd0a45b254d41d89f494d2a1ce51e960f81a3062b4f8e11",
+    "cmd/web/moon.pkg": "5978445315e85f13d5095c779c97e042773703f45717359d03b87f39919bd531",
+    "pkg.generated.mbti": "cf198ff55b6d291c865ed5a260b77c439f7837b443310d238c1cefdd8b9ce5a7",
+    "web/engine.mjs": "de279a10b2c388e3c39aad0da49118bc73e2b35644223db002aa6b4306a7307c",
+    "tools/compare-sources.mjs": "83ba9b6794d6181f2a258d0a3bb14db876066a3aaffbb1f756cfb3480d3105d7",
+    "tools/compare-sources-worker.mjs": "152e2f8c450e63214aa38ce09aec1461674ab3da5dea2aafa9523f6865c35d6e",
+    "tools/compare-sources-cli.mjs": "088d477b849cf0759609cfe6a5c9d91a50661288d4bf9c50fc9664e23e97758c",
+    "tools/test-source-comparison.mjs": "8d1e6d3dbf831b77451c506b10b9746bf64751a948ffd320d7607a685aa16449"
+  },
+  "unchangedValidation": "Prior BuildKit reference receipts retained; BuildKit/Docker were not rerun for this change.",
+  "remoteCIExecuted": false,
+  "officialAcceptanceEstablished": false,
+  "fingerprintNormalization": "CRLF to LF for source text, matching source archive line endings"
+}

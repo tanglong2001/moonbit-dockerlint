@@ -1116,6 +1116,19 @@ function _M0TP212tanglong200110dockerlint15BuildComparison(param0, param1, param
   this.conservative = param3;
   this.reason = param4;
 }
+function _M0DTPC16result6ResultGRP212tanglong200110dockerlint16SourceComparisonRP212tanglong200110dockerlint10ParseErrorE3Err(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP212tanglong200110dockerlint16SourceComparisonRP212tanglong200110dockerlint10ParseErrorE3Err.prototype.$tag = 0;
+function _M0DTPC16result6ResultGRP212tanglong200110dockerlint16SourceComparisonRP212tanglong200110dockerlint10ParseErrorE2Ok(param0) {
+  this._0 = param0;
+}
+_M0DTPC16result6ResultGRP212tanglong200110dockerlint16SourceComparisonRP212tanglong200110dockerlint10ParseErrorE2Ok.prototype.$tag = 1;
+function _M0TP212tanglong200110dockerlint16SourceComparison(param0, param1, param2) {
+  this.before_lines = param0;
+  this.after_lines = param1;
+  this.impact = param2;
+}
 const _M0FP092moonbitlang_2fcore_2fbuiltin_2fStringBuilder_24as_24_40moonbitlang_2fcore_2fbuiltin_2eLogger = { method_0: _M0IPB13StringBuilderPB6Logger13write__string, method_1: _M0IP016_24default__implPB6Logger16write__substringGRPB13StringBuilderE, method_2: _M0IPB13StringBuilderPB6Logger11write__view, method_3: _M0IPB13StringBuilderPB6Logger11write__char, method_4: _M0IP016_24default__implPB6Logger28write__string__interpolationGRPB13StringBuilderE, method_5: _M0IP016_24default__implPB6Logger5writeGRPB13StringBuilderE };
 function _M0FP15Error8to__repr(_e) {
   switch (_e.$tag) {
@@ -11431,118 +11444,118 @@ function _M0IPB3MapPC14json8FromJson10from__jsonGsE(json, path) {
     return _M0FPC14json13decode__errorGRPB3MapGssEE(path, "Map::from_json: expected object");
   }
 }
-function _M0IP212tanglong200110dockerlint10ParseErrorPC15debug5Debug8to__repr(_x_920) {
-  let _arg_922;
+function _M0IP212tanglong200110dockerlint10ParseErrorPC15debug5Debug8to__repr(_x_941) {
+  let _arg_943;
   _L: {
-    let _arg_921;
+    let _arg_942;
     _L$2: {
-      if (_x_920.$tag === 1) {
-        const _Invalid = _x_920;
-        const _$42$arg_921 = _Invalid._0;
-        _arg_921 = _$42$arg_921;
+      if (_x_941.$tag === 1) {
+        const _Invalid = _x_941;
+        const _$42$arg_942 = _Invalid._0;
+        _arg_942 = _$42$arg_942;
         break _L$2;
       } else {
-        const _StageCycle = _x_920;
-        const _$42$arg_922 = _StageCycle._0;
-        _arg_922 = _$42$arg_922;
+        const _StageCycle = _x_941;
+        const _$42$arg_943 = _StageCycle._0;
+        _arg_943 = _$42$arg_943;
         break _L;
       }
     }
-    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_921) }]);
+    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_942) }]);
   }
-  return _M0MPC15debug4Repr4ctor("StageCycle", [{ _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_922) }]);
+  return _M0MPC15debug4Repr4ctor("StageCycle", [{ _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_943) }]);
 }
-function _M0IP212tanglong200110dockerlint10ParseErrorPC15debug5Debug8to__reprGRP212tanglong200110dockerlint10ParseErrorE(_x_920) {
-  let _arg_922;
+function _M0IP212tanglong200110dockerlint10ParseErrorPC15debug5Debug8to__reprGRP212tanglong200110dockerlint10ParseErrorE(_x_941) {
+  let _arg_943;
   _L: {
-    let _arg_921;
+    let _arg_942;
     _L$2: {
-      if (_x_920.$tag === 1) {
-        const _Invalid = _x_920;
-        const _$42$arg_921 = _Invalid._0;
-        _arg_921 = _$42$arg_921;
+      if (_x_941.$tag === 1) {
+        const _Invalid = _x_941;
+        const _$42$arg_942 = _Invalid._0;
+        _arg_942 = _$42$arg_942;
         break _L$2;
       } else {
-        const _StageCycle = _x_920;
-        const _$42$arg_922 = _StageCycle._0;
-        _arg_922 = _$42$arg_922;
+        const _StageCycle = _x_941;
+        const _$42$arg_943 = _StageCycle._0;
+        _arg_943 = _$42$arg_943;
         break _L;
       }
     }
-    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_921) }]);
+    return _M0MPC15debug4Repr4ctor("Invalid", [{ _0: undefined, _1: _M0IPC16string6StringPC15debug5Debug8to__repr(_arg_942) }]);
   }
-  return _M0MPC15debug4Repr4ctor("StageCycle", [{ _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_922) }]);
+  return _M0MPC15debug4Repr4ctor("StageCycle", [{ _0: undefined, _1: _M0IPC13int3IntPC15debug5Debug8to__repr(_arg_943) }]);
 }
-function _M0IP212tanglong200110dockerlint11ContextPlanPB6ToJson8to__json(_x_911) {
+function _M0IP212tanglong200110dockerlint11ContextPlanPB6ToJson8to__json(_x_932) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "graph", _M0IP212tanglong200110dockerlint11BuildImpactPB6ToJson8to__json(_x_911.graph));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "entries", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint12ContextEntryE(_x_911.entries));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "inputs", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint12ContextInputE(_x_911.inputs));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "selected_entries", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_911.selected_entries));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "missing_lines", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_911.missing_lines));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "uncertainties", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint16BuildUncertaintyE(_x_911.uncertainties));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "changes", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint17ContextFileImpactE(_x_911.changes));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "graph", _M0IP212tanglong200110dockerlint11BuildImpactPB6ToJson8to__json(_x_932.graph));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "entries", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint12ContextEntryE(_x_932.entries));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "inputs", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint12ContextInputE(_x_932.inputs));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "selected_entries", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_932.selected_entries));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "missing_lines", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_932.missing_lines));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "uncertainties", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint16BuildUncertaintyE(_x_932.uncertainties));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "changes", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint17ContextFileImpactE(_x_932.changes));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint9BuildEdgePB6ToJson8to__json(_x_902) {
+function _M0IP212tanglong200110dockerlint9BuildEdgePB6ToJson8to__json(_x_923) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "consumer", _M0IPC13int3IntPB6ToJson8to__json(_x_902.consumer));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "dependency", _M0IPC13int3IntPB6ToJson8to__json(_x_902.dependency));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_902.line));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_902.kind));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "consumer", _M0IPC13int3IntPB6ToJson8to__json(_x_923.consumer));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "dependency", _M0IPC13int3IntPB6ToJson8to__json(_x_923.dependency));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_923.line));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_923.kind));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint12TargetImpactPB6ToJson8to__json(_x_893) {
+function _M0IP212tanglong200110dockerlint12TargetImpactPB6ToJson8to__json(_x_914) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "target", _M0IPC13int3IntPB6ToJson8to__json(_x_893.target));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "affected", _M0IPC14bool4BoolPB6ToJson8to__json(_x_893.affected));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "path", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_893.path));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "target", _M0IPC13int3IntPB6ToJson8to__json(_x_914.target));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "affected", _M0IPC14bool4BoolPB6ToJson8to__json(_x_914.affected));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "path", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_914.path));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint16BuildUncertaintyPB6ToJson8to__json(_x_884) {
+function _M0IP212tanglong200110dockerlint16BuildUncertaintyPB6ToJson8to__json(_x_905) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_884.line));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "reason", _M0IPC16string6StringPB6ToJson8to__json(_x_884.reason));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_905.line));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "reason", _M0IPC16string6StringPB6ToJson8to__json(_x_905.reason));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint12ContextInputPB6ToJson8to__json(_x_875) {
+function _M0IP212tanglong200110dockerlint12ContextInputPB6ToJson8to__json(_x_896) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "stage", _M0IPC13int3IntPB6ToJson8to__json(_x_875.stage));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_875.line));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_875.kind));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "source", _M0IPC16string6StringPB6ToJson8to__json(_x_875.source));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "included", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_875.included));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "excluded", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_875.excluded));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "status", _M0IPC16string6StringPB6ToJson8to__json(_x_875.status));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "note", _M0IPC16string6StringPB6ToJson8to__json(_x_875.note));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "stage", _M0IPC13int3IntPB6ToJson8to__json(_x_896.stage));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_896.line));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_896.kind));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "source", _M0IPC16string6StringPB6ToJson8to__json(_x_896.source));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "included", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_896.included));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "excluded", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_896.excluded));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "status", _M0IPC16string6StringPB6ToJson8to__json(_x_896.status));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "note", _M0IPC16string6StringPB6ToJson8to__json(_x_896.note));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint12ContextEntryPB6ToJson8to__json(_x_866) {
+function _M0IP212tanglong200110dockerlint12ContextEntryPB6ToJson8to__json(_x_887) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "path", _M0IPC16string6StringPB6ToJson8to__json(_x_866.path));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_866.kind));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "excluded", _M0IPC14bool4BoolPB6ToJson8to__json(_x_866.excluded));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "path", _M0IPC16string6StringPB6ToJson8to__json(_x_887.path));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "kind", _M0IPC16string6StringPB6ToJson8to__json(_x_887.kind));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "excluded", _M0IPC14bool4BoolPB6ToJson8to__json(_x_887.excluded));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint12ContextEntryPC14json8FromJson10from__json(_x_846, _x_847) {
-  const _de_path_850 = new _M0TPB8MutLocalGOsE(undefined);
-  const _de_kind_849 = new _M0TPB8MutLocalGOsE(undefined);
-  const _de_excluded_848 = new _M0TPB8MutLocalGObE(-1);
+function _M0IP212tanglong200110dockerlint12ContextEntryPC14json8FromJson10from__json(_x_867, _x_868) {
+  const _de_path_871 = new _M0TPB8MutLocalGOsE(undefined);
+  const _de_kind_870 = new _M0TPB8MutLocalGOsE(undefined);
+  const _de_excluded_869 = new _M0TPB8MutLocalGObE(-1);
   let _map;
   _L: {
-    if (_x_846.$tag === 6) {
-      const _Object = _x_846;
+    if (_x_867.$tag === 6) {
+      const _Object = _x_867;
       const __map = _Object._0;
       _map = __map;
       break _L;
     } else {
-      return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_847, _1: "Expected object to deserialize ContextEntry" }));
+      return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_868, _1: "Expected object to deserialize ContextEntry" }));
     }
   }
   let _v;
@@ -11558,7 +11571,7 @@ function _M0IP212tanglong200110dockerlint12ContextEntryPC14json8FromJson10from__
       }
       break _L$2;
     }
-    const _bind = _M0IPC16string6StringPC14json8FromJson10from__json(_v, _M0MPC14json8JsonPath8add__key(_x_847, "path"));
+    const _bind = _M0IPC16string6StringPC14json8FromJson10from__json(_v, _M0MPC14json8JsonPath8add__key(_x_868, "path"));
     let _tmp;
     if (_bind.$tag === 1) {
       const _ok = _bind;
@@ -11566,7 +11579,7 @@ function _M0IP212tanglong200110dockerlint12ContextEntryPC14json8FromJson10from__
     } else {
       return _bind;
     }
-    _de_path_850.val = _tmp;
+    _de_path_871.val = _tmp;
   }
   let _v$2;
   _L$3: {
@@ -11581,7 +11594,7 @@ function _M0IP212tanglong200110dockerlint12ContextEntryPC14json8FromJson10from__
       }
       break _L$3;
     }
-    const _bind = _M0IPC16string6StringPC14json8FromJson10from__json(_v$2, _M0MPC14json8JsonPath8add__key(_x_847, "kind"));
+    const _bind = _M0IPC16string6StringPC14json8FromJson10from__json(_v$2, _M0MPC14json8JsonPath8add__key(_x_868, "kind"));
     let _tmp;
     if (_bind.$tag === 1) {
       const _ok = _bind;
@@ -11589,7 +11602,7 @@ function _M0IP212tanglong200110dockerlint12ContextEntryPC14json8FromJson10from__
     } else {
       return _bind;
     }
-    _de_kind_849.val = _tmp;
+    _de_kind_870.val = _tmp;
   }
   let _v$3;
   _L$4: {
@@ -11604,7 +11617,7 @@ function _M0IP212tanglong200110dockerlint12ContextEntryPC14json8FromJson10from__
       }
       break _L$4;
     }
-    const _bind = _M0IPC14bool4BoolPC14json8FromJson10from__json(_v$3, _M0MPC14json8JsonPath8add__key(_x_847, "excluded"));
+    const _bind = _M0IPC14bool4BoolPC14json8FromJson10from__json(_v$3, _M0MPC14json8JsonPath8add__key(_x_868, "excluded"));
     let _tmp;
     if (_bind.$tag === 1) {
       const _ok = _bind;
@@ -11612,60 +11625,68 @@ function _M0IP212tanglong200110dockerlint12ContextEntryPC14json8FromJson10from__
     } else {
       return _bind;
     }
-    _de_excluded_848.val = _tmp;
+    _de_excluded_869.val = _tmp;
   }
-  let _de_path_850$2;
-  const _bind = _de_path_850.val;
+  let _de_path_871$2;
+  const _bind = _de_path_871.val;
   if (_bind === undefined) {
-    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_847, _1: "Missing field path" }));
+    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_868, _1: "Missing field path" }));
   } else {
     const _Some = _bind;
     const _v$4 = _Some;
-    _de_path_850$2 = _v$4;
+    _de_path_871$2 = _v$4;
   }
-  let _de_kind_849$2;
-  const _bind$2 = _de_kind_849.val;
+  let _de_kind_870$2;
+  const _bind$2 = _de_kind_870.val;
   if (_bind$2 === undefined) {
-    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_847, _1: "Missing field kind" }));
+    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_868, _1: "Missing field kind" }));
   } else {
     const _Some = _bind$2;
     const _v$4 = _Some;
-    _de_kind_849$2 = _v$4;
+    _de_kind_870$2 = _v$4;
   }
-  let _de_excluded_848$2;
-  const _bind$3 = _de_excluded_848.val;
+  let _de_excluded_869$2;
+  const _bind$3 = _de_excluded_869.val;
   if (_bind$3 === -1) {
-    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_847, _1: "Missing field excluded" }));
+    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_868, _1: "Missing field excluded" }));
   } else {
     const _Some = _bind$3;
     const _v$4 = _Some;
-    _de_excluded_848$2 = _v$4;
+    _de_excluded_869$2 = _v$4;
   }
-  return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE2Ok(new _M0TP212tanglong200110dockerlint12ContextEntry(_de_path_850$2, _de_kind_849$2, _de_excluded_848$2));
+  return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint12ContextEntryRPC14json15JsonDecodeErrorE2Ok(new _M0TP212tanglong200110dockerlint12ContextEntry(_de_path_871$2, _de_kind_870$2, _de_excluded_869$2));
 }
-function _M0IP212tanglong200110dockerlint11BuildImpactPB6ToJson8to__json(_x_828) {
+function _M0IP212tanglong200110dockerlint16SourceComparisonPB6ToJson8to__json(_x_858) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "stages", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint5StageE(_x_828.stages));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "edges", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint9BuildEdgeE(_x_828.edges));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "selected", _M0IPC13int3IntPB6ToJson8to__json(_x_828.selected));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "required", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_828.required));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "changed_stages", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_828.changed_stages));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "targets", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint12TargetImpactE(_x_828.targets));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "conservative", _M0IPC14bool4BoolPB6ToJson8to__json(_x_828.conservative));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "uncertainties", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint16BuildUncertaintyE(_x_828.uncertainties));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "before_lines", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_858.before_lines));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "after_lines", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_858.after_lines));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "impact", _M0IP212tanglong200110dockerlint15BuildComparisonPB6ToJson8to__json(_x_858.impact));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint5StagePB6ToJson8to__json(_x_818) {
+function _M0IP212tanglong200110dockerlint11BuildImpactPB6ToJson8to__json(_x_840) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "index", _M0IPC13int3IntPB6ToJson8to__json(_x_818.index));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_818.line));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "base", _M0IPC16string6StringPB6ToJson8to__json(_x_818.base));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "stages", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint5StageE(_x_840.stages));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "edges", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint9BuildEdgeE(_x_840.edges));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "selected", _M0IPC13int3IntPB6ToJson8to__json(_x_840.selected));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "required", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_840.required));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "changed_stages", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_840.changed_stages));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "targets", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint12TargetImpactE(_x_840.targets));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "conservative", _M0IPC14bool4BoolPB6ToJson8to__json(_x_840.conservative));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "uncertainties", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint16BuildUncertaintyE(_x_840.uncertainties));
+  return _M0MPC14json4Json6object($36$map);
+}
+function _M0IP212tanglong200110dockerlint5StagePB6ToJson8to__json(_x_830) {
+  const _bind = [];
+  const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "index", _M0IPC13int3IntPB6ToJson8to__json(_x_830.index));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_830.line));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "base", _M0IPC16string6StringPB6ToJson8to__json(_x_830.base));
   let $36$inner;
   _L: {
     _L$2: {
-      const _bind$2 = _x_818.stage_name;
+      const _bind$2 = _x_830.stage_name;
       if (_bind$2 === undefined) {
       } else {
         const _Some = _bind$2;
@@ -11677,21 +11698,21 @@ function _M0IP212tanglong200110dockerlint5StagePB6ToJson8to__json(_x_818) {
     }
     _M0MPB3Map3setGsRPB4JsonE($36$map, "stage_name", _M0IPC16string6StringPB6ToJson8to__json($36$inner));
   }
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "dependencies", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_818.dependencies));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "dependencies", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_830.dependencies));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint13ContextChangePC14json8FromJson10from__json(_x_794, _x_795) {
-  const _de_path_797 = new _M0TPB8MutLocalGOsE(undefined);
-  const _de_excluded_796 = new _M0TPB8MutLocalGObE(-1);
+function _M0IP212tanglong200110dockerlint13ContextChangePC14json8FromJson10from__json(_x_806, _x_807) {
+  const _de_path_809 = new _M0TPB8MutLocalGOsE(undefined);
+  const _de_excluded_808 = new _M0TPB8MutLocalGObE(-1);
   let _map;
   _L: {
-    if (_x_794.$tag === 6) {
-      const _Object = _x_794;
+    if (_x_806.$tag === 6) {
+      const _Object = _x_806;
       const __map = _Object._0;
       _map = __map;
       break _L;
     } else {
-      return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint13ContextChangeRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_795, _1: "Expected object to deserialize ContextChange" }));
+      return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint13ContextChangeRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_807, _1: "Expected object to deserialize ContextChange" }));
     }
   }
   let _v;
@@ -11707,7 +11728,7 @@ function _M0IP212tanglong200110dockerlint13ContextChangePC14json8FromJson10from_
       }
       break _L$2;
     }
-    const _bind = _M0IPC16string6StringPC14json8FromJson10from__json(_v, _M0MPC14json8JsonPath8add__key(_x_795, "path"));
+    const _bind = _M0IPC16string6StringPC14json8FromJson10from__json(_v, _M0MPC14json8JsonPath8add__key(_x_807, "path"));
     let _tmp;
     if (_bind.$tag === 1) {
       const _ok = _bind;
@@ -11715,7 +11736,7 @@ function _M0IP212tanglong200110dockerlint13ContextChangePC14json8FromJson10from_
     } else {
       return _bind;
     }
-    _de_path_797.val = _tmp;
+    _de_path_809.val = _tmp;
   }
   let _v$2;
   _L$3: {
@@ -11730,7 +11751,7 @@ function _M0IP212tanglong200110dockerlint13ContextChangePC14json8FromJson10from_
       }
       break _L$3;
     }
-    const _bind = _M0IPC14bool4BoolPC14json8FromJson10from__json(_v$2, _M0MPC14json8JsonPath8add__key(_x_795, "excluded"));
+    const _bind = _M0IPC14bool4BoolPC14json8FromJson10from__json(_v$2, _M0MPC14json8JsonPath8add__key(_x_807, "excluded"));
     let _tmp;
     if (_bind.$tag === 1) {
       const _ok = _bind;
@@ -11738,61 +11759,61 @@ function _M0IP212tanglong200110dockerlint13ContextChangePC14json8FromJson10from_
     } else {
       return _bind;
     }
-    _de_excluded_796.val = _tmp;
+    _de_excluded_808.val = _tmp;
   }
-  let _de_path_797$2;
-  const _bind = _de_path_797.val;
+  let _de_path_809$2;
+  const _bind = _de_path_809.val;
   if (_bind === undefined) {
-    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint13ContextChangeRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_795, _1: "Missing field path" }));
+    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint13ContextChangeRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_807, _1: "Missing field path" }));
   } else {
     const _Some = _bind;
     const _v$3 = _Some;
-    _de_path_797$2 = _v$3;
+    _de_path_809$2 = _v$3;
   }
-  let _de_excluded_796$2;
-  const _bind$2 = _de_excluded_796.val;
+  let _de_excluded_808$2;
+  const _bind$2 = _de_excluded_808.val;
   if (_bind$2 === -1) {
-    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint13ContextChangeRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_795, _1: "Missing field excluded" }));
+    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint13ContextChangeRPC14json15JsonDecodeErrorE3Err(new _M0DTPC15error5Error61moonbitlang_2fcore_2fjson_2eJsonDecodeError_2eJsonDecodeError({ _0: _x_807, _1: "Missing field excluded" }));
   } else {
     const _Some = _bind$2;
     const _v$3 = _Some;
-    _de_excluded_796$2 = _v$3;
+    _de_excluded_808$2 = _v$3;
   }
-  return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint13ContextChangeRPC14json15JsonDecodeErrorE2Ok(new _M0TP212tanglong200110dockerlint13ContextChange(_de_path_797$2, _de_excluded_796$2));
+  return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint13ContextChangeRPC14json15JsonDecodeErrorE2Ok(new _M0TP212tanglong200110dockerlint13ContextChange(_de_path_809$2, _de_excluded_808$2));
 }
-function _M0IP212tanglong200110dockerlint13VariableScopePB6ToJson8to__json(_x_785) {
+function _M0IP212tanglong200110dockerlint13VariableScopePB6ToJson8to__json(_x_797) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_785.line));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "stage", _M0IPC13int3IntPB6ToJson8to__json(_x_785.stage));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "instruction", _M0IPC16string6StringPB6ToJson8to__json(_x_785.instruction));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "expanded", _M0IPC16string6StringPB6ToJson8to__json(_x_785.expanded));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "arguments", _M0IPB3MapPB6ToJson8to__jsonGssE(_x_785.arguments));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "environment", _M0IPB3MapPB6ToJson8to__jsonGssE(_x_785.environment));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "unresolved", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_785.unresolved));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "uncertain_arguments", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_785.uncertain_arguments));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "uncertain_environment", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_785.uncertain_environment));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "unknown_base_environment", _M0IPC14bool4BoolPB6ToJson8to__json(_x_785.unknown_base_environment));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "line", _M0IPC13int3IntPB6ToJson8to__json(_x_797.line));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "stage", _M0IPC13int3IntPB6ToJson8to__json(_x_797.stage));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "instruction", _M0IPC16string6StringPB6ToJson8to__json(_x_797.instruction));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "expanded", _M0IPC16string6StringPB6ToJson8to__json(_x_797.expanded));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "arguments", _M0IPB3MapPB6ToJson8to__jsonGssE(_x_797.arguments));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "environment", _M0IPB3MapPB6ToJson8to__jsonGssE(_x_797.environment));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "unresolved", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_797.unresolved));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "uncertain_arguments", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_797.uncertain_arguments));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "uncertain_environment", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_797.uncertain_environment));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "unknown_base_environment", _M0IPC14bool4BoolPB6ToJson8to__json(_x_797.unknown_base_environment));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint17ContextFileImpactPB6ToJson8to__json(_x_767) {
+function _M0IP212tanglong200110dockerlint17ContextFileImpactPB6ToJson8to__json(_x_779) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "path", _M0IPC16string6StringPB6ToJson8to__json(_x_767.path));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "excluded", _M0IPC14bool4BoolPB6ToJson8to__json(_x_767.excluded));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "source_lines", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_767.source_lines));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "conservative", _M0IPC14bool4BoolPB6ToJson8to__json(_x_767.conservative));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "targets", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint12TargetImpactE(_x_767.targets));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "path", _M0IPC16string6StringPB6ToJson8to__json(_x_779.path));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "excluded", _M0IPC14bool4BoolPB6ToJson8to__json(_x_779.excluded));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "source_lines", _M0IPC15array5ArrayPB6ToJson8to__jsonGiE(_x_779.source_lines));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "conservative", _M0IPC14bool4BoolPB6ToJson8to__json(_x_779.conservative));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "targets", _M0IPC15array5ArrayPB6ToJson8to__jsonGRP212tanglong200110dockerlint12TargetImpactE(_x_779.targets));
   return _M0MPC14json4Json6object($36$map);
 }
-function _M0IP212tanglong200110dockerlint15BuildComparisonPB6ToJson8to__json(_x_749) {
+function _M0IP212tanglong200110dockerlint15BuildComparisonPB6ToJson8to__json(_x_761) {
   const _bind = [];
   const $36$map = _M0MPB3Map3MapGsRPB4JsonE(new _M0TPB9ArrayViewGUsRPB4JsonEE(_bind, 0, 0), undefined);
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "before", _M0IP212tanglong200110dockerlint11BuildImpactPB6ToJson8to__json(_x_749.before));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "after", _M0IP212tanglong200110dockerlint11BuildImpactPB6ToJson8to__json(_x_749.after));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "affected_targets", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_749.affected_targets));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "conservative", _M0IPC14bool4BoolPB6ToJson8to__json(_x_749.conservative));
-  _M0MPB3Map3setGsRPB4JsonE($36$map, "reason", _M0IPC16string6StringPB6ToJson8to__json(_x_749.reason));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "before", _M0IP212tanglong200110dockerlint11BuildImpactPB6ToJson8to__json(_x_761.before));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "after", _M0IP212tanglong200110dockerlint11BuildImpactPB6ToJson8to__json(_x_761.after));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "affected_targets", _M0IPC15array5ArrayPB6ToJson8to__jsonGsE(_x_761.affected_targets));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "conservative", _M0IPC14bool4BoolPB6ToJson8to__json(_x_761.conservative));
+  _M0MPB3Map3setGsRPB4JsonE($36$map, "reason", _M0IPC16string6StringPB6ToJson8to__json(_x_761.reason));
   return _M0MPC14json4Json6object($36$map);
 }
 function _M0FP212tanglong200110dockerlint14variable__char(c, first) {
@@ -17743,7 +17764,84 @@ function _M0FP212tanglong200110dockerlint30compare__build__impact_2einner(before
   };
   collect(before, before_names);
   collect(after, after_names);
-  return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint15BuildComparisonRP212tanglong200110dockerlint10ParseErrorE2Ok(new _M0TP212tanglong200110dockerlint15BuildComparison(before, after, affected_targets, conservative, alignment_changed ? "stage insertion/deletion/rename/reorder prevents stable alignment; all snapshot targets retained" : conservative ? "uncertain input or changed declaration; all snapshot targets retained" : "union of before/after literal dependency paths; caller supplies complete diff lines"));
+  return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint15BuildComparisonRP212tanglong200110dockerlint10ParseErrorE2Ok(new _M0TP212tanglong200110dockerlint15BuildComparison(before, after, affected_targets, conservative, alignment_changed ? "stage insertion/deletion/rename/reorder prevents stable alignment; all snapshot targets retained" : conservative ? "uncertain input or changed declaration; all snapshot targets retained" : "union of before/after literal dependency paths for the supplied line sets"));
+}
+function _M0FP212tanglong200110dockerlint23compare__build__sources(before_source, after_source) {
+  if (before_source.length > 1000000 || after_source.length > 1000000) {
+    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint16SourceComparisonRP212tanglong200110dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error48tanglong2001_2fdockerlint_2eParseError_2eInvalid("snapshot source size limit"));
+  }
+  let _tmp;
+  const _bind = "\n";
+  if (_M0MPB4Iter5countGRPC16string10StringViewE(_M0MPC16string6String5split(before_source, new _M0TPC16string10StringView(_bind, 0, _bind.length))) > 10000) {
+    _tmp = true;
+  } else {
+    const _bind$2 = "\n";
+    _tmp = _M0MPB4Iter5countGRPC16string10StringViewE(_M0MPC16string6String5split(after_source, new _M0TPC16string10StringView(_bind$2, 0, _bind$2.length))) > 10000;
+  }
+  if (_tmp) {
+    return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint16SourceComparisonRP212tanglong200110dockerlint10ParseErrorE3Err(new _M0DTPC15error5Error48tanglong2001_2fdockerlint_2eParseError_2eInvalid("snapshot physical line limit"));
+  }
+  const _bind$2 = "\n";
+  const before = _M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(before_source, new _M0TPC16string10StringView(_bind$2, 0, _bind$2.length)));
+  const _bind$3 = "\n";
+  const after = _M0MPB4Iter9to__arrayGRPC16string10StringViewE(_M0MPC16string6String5split(after_source, new _M0TPC16string10StringView(_bind$3, 0, _bind$3.length)));
+  const prefix = new _M0TPB8MutLocalGiE(0);
+  while (true) {
+    if (prefix.val < before.length && (prefix.val < after.length && _M0IPC16string10StringViewPB2Eq5equal(_M0MPC15array5Array2atGRPC16string10StringViewE(before, prefix.val), _M0MPC15array5Array2atGRPC16string10StringViewE(after, prefix.val)))) {
+      prefix.val = prefix.val + 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  const before_end = new _M0TPB8MutLocalGiE(before.length);
+  const after_end = new _M0TPB8MutLocalGiE(after.length);
+  while (true) {
+    if (before_end.val > prefix.val && (after_end.val > prefix.val && _M0IPC16string10StringViewPB2Eq5equal(_M0MPC15array5Array2atGRPC16string10StringViewE(before, before_end.val - 1 | 0), _M0MPC15array5Array2atGRPC16string10StringViewE(after, after_end.val - 1 | 0)))) {
+      before_end.val = before_end.val - 1 | 0;
+      after_end.val = after_end.val - 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  const before_lines = [];
+  const after_lines = [];
+  const _bind$4 = prefix.val;
+  const _bind$5 = before_end.val;
+  let _tmp$2 = _bind$4;
+  while (true) {
+    const i = _tmp$2;
+    if (i < _bind$5) {
+      _M0MPC15array5Array4pushGiE(before_lines, i + 1 | 0);
+      _tmp$2 = i + 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  const _bind$6 = prefix.val;
+  const _bind$7 = after_end.val;
+  let _tmp$3 = _bind$6;
+  while (true) {
+    const i = _tmp$3;
+    if (i < _bind$7) {
+      _M0MPC15array5Array4pushGiE(after_lines, i + 1 | 0);
+      _tmp$3 = i + 1 | 0;
+      continue;
+    } else {
+      break;
+    }
+  }
+  const _bind$8 = _M0FP212tanglong200110dockerlint30compare__build__impact_2einner(before_source, after_source, before_lines, after_lines);
+  let impact;
+  if (_bind$8.$tag === 1) {
+    const _ok = _bind$8;
+    impact = _ok._0;
+  } else {
+    return _bind$8;
+  }
+  return new _M0DTPC16result6ResultGRP212tanglong200110dockerlint16SourceComparisonRP212tanglong200110dockerlint10ParseErrorE2Ok(new _M0TP212tanglong200110dockerlint16SourceComparison(before_lines, after_lines, impact));
 }
 function _M0FP412tanglong200110dockerlint3cmd3web3run(input) {
   let _try_err;
@@ -17903,6 +18001,24 @@ function _M0FP412tanglong200110dockerlint3cmd3web15compare__impact(before, after
   const e = _try_err;
   return `ERROR: ${_M0IP016_24default__implPB4Show10to__stringGRPC15debug4ReprE(_M0MPC15debug4Repr4ReprGRP212tanglong200110dockerlint10ParseErrorE(e))}`;
 }
+function _M0FP412tanglong200110dockerlint3cmd3web16compare__sources(before, after) {
+  let _try_err;
+  _L: {
+    const _bind = _M0FP212tanglong200110dockerlint23compare__build__sources(before, after);
+    let _tmp;
+    if (_bind.$tag === 1) {
+      const _ok = _bind;
+      _tmp = _ok._0;
+    } else {
+      const _err = _bind;
+      _try_err = _err._0;
+      break _L;
+    }
+    return _M0MPC14json4Json17stringify_2einner(_M0IP212tanglong200110dockerlint16SourceComparisonPB6ToJson8to__json(_tmp), false, 0, undefined);
+  }
+  const e = _try_err;
+  return `ERROR: ${_M0IP016_24default__implPB4Show10to__stringGRPC15debug4ReprE(_M0MPC15debug4Repr4ReprGRP212tanglong200110dockerlint10ParseErrorE(e))}`;
+}
 function _M0FP412tanglong200110dockerlint3cmd3web13context__plan(source, manifest, target, changes, build_args, control_files) {
   let _try_err;
   _L: {
@@ -18021,5 +18137,5 @@ function _M0FP412tanglong200110dockerlint3cmd3web15source__matches(pattern, path
 }
 (() => {
 })();
-export { _M0FP412tanglong200110dockerlint3cmd3web3run as run, _M0FP412tanglong200110dockerlint3cmd3web11diagnostics as diagnostics, _M0FP412tanglong200110dockerlint3cmd3web12stage__graph as stage_graph, _M0FP412tanglong200110dockerlint3cmd3web10configured as configured, _M0FP412tanglong200110dockerlint3cmd3web9variables as variables, _M0FP412tanglong200110dockerlint3cmd3web6impact as impact, _M0FP412tanglong200110dockerlint3cmd3web15compare__impact as compare_impact, _M0FP412tanglong200110dockerlint3cmd3web13context__plan as context_plan, _M0FP412tanglong200110dockerlint3cmd3web15source__matches as source_matches }
+export { _M0FP412tanglong200110dockerlint3cmd3web3run as run, _M0FP412tanglong200110dockerlint3cmd3web11diagnostics as diagnostics, _M0FP412tanglong200110dockerlint3cmd3web12stage__graph as stage_graph, _M0FP412tanglong200110dockerlint3cmd3web10configured as configured, _M0FP412tanglong200110dockerlint3cmd3web9variables as variables, _M0FP412tanglong200110dockerlint3cmd3web6impact as impact, _M0FP412tanglong200110dockerlint3cmd3web15compare__impact as compare_impact, _M0FP412tanglong200110dockerlint3cmd3web16compare__sources as compare_sources, _M0FP412tanglong200110dockerlint3cmd3web13context__plan as context_plan, _M0FP412tanglong200110dockerlint3cmd3web15source__matches as source_matches }
 //# sourceMappingURL=web.js.map

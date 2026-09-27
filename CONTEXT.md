@@ -46,3 +46,7 @@ ARG/ENV 未知值跨赋值、全局参数重声明及命名父阶段传播；字
 来源：[docker/getting-started固定提交](https://github.com/docker/getting-started/tree/94d4031393bf8ebfd38aae640910f9435579d76b)，Apache-2.0；原文件和两个单行修改副本均保留许可与SHA256。该公开教材不是本项目用户。已有 BuildKit 同样能离线转换，不能把“无daemon”说成对它的独占优势；这里的可评估价值是可嵌入MoonBit的有界解释接口、变更路径和目录分析，是否足够作为参赛扩展由组委会判断。
 
 参考观察边界：LLB操作标签不包含只有CMD元数据的dev阶段。对照保留原始标签列表，并显式加入所选target；21组中3组dev因此是“可观察操作阶段 + 所选target”。没有把该探针宣称为任意Dockerfile全部逻辑阶段的通用oracle。
+
+## 0.10.0：自动选择完整改动范围
+
+面向完整前后Dockerfile，优先使用 `compare_build_sources` 或 `tools/compare-sources-cli.mjs`。0.9.0低层行号接口保留原合同；新接口自动覆盖全部文本差异，不依赖用户手填坐标。见 [SOURCE-COMPARISON](SOURCE-COMPARISON.md)。目录文件变化、镜像元数据和缓存仍不在这个双文本接口内。

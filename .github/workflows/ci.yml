@@ -35,6 +35,7 @@ jobs:
       - run: node tools/robustness.mjs
       - run: node tools/benchmark.mjs
       - run: node tools/test-buildkit-closures.mjs
+      - run: node tools/test-source-comparison.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: quality-evidence

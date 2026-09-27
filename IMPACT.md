@@ -20,3 +20,7 @@
 依赖语义参考 [Dockerfile reference](https://docs.docker.com/reference/dockerfile/)，阶段闭包参考 [Docker 多阶段构建说明](https://docs.docker.com/build/building/multi-stage/)。BuildKit 已经有构建图求解；这里不主张发明该算法。MoonBit 实现通过访问状态检测环，记忆化保留影响见证，避免菱形图反复指数遍历；阶段上限 256。
 
 核心测试包括官方文档的独立分支拓扑、重复 mount、传递 COPY、动态保守路径、ONBUILD、引用环、续行、外部引用及无变化查询。`node tools/test-impact.mjs` 检查实际 CLI。没有把这些测试称作与 BuildKit 实际执行的差分验证。
+
+## 完整快照入口
+
+0.10.0 `compare_build_sources(before, after)` 自动生成各自物理行坐标，调用两图比较。它覆盖插入、删除及远距修改，可能保守多报；上述单文件 `build_impact` 合同保持不变。文件CLI及限制见 [SOURCE-COMPARISON](SOURCE-COMPARISON.md)。

@@ -2,7 +2,17 @@
 
 本项目仓库：**https://github.com/tanglong2001/moonbit-dockerlint**
 
-模块 `tanglong2001/dockerlint`，0.9.0，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。本轮新增本地构建目录分析：解释 COPY/ADD/bind 实际读取哪些输入、哪些被忽略、某个文件变化通过哪些引用影响目标阶段。旧规则检查与行号影响接口继续可用。
+模块 `tanglong2001/dockerlint`，0.10.0，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。本轮新增本地构建目录分析：解释 COPY/ADD/bind 实际读取哪些输入、哪些被忽略、某个文件变化通过哪些引用影响目标阶段。旧规则检查与行号影响接口继续可用。
+
+## 0.10.0：直接比较两份文件
+
+新增纯 MoonBit `compare_build_sources(before, after)` 及文件入口：
+
+```sh
+node tools/compare-sources-cli.mjs --before examples/buildkit-closures/original.Dockerfile --after examples/buildkit-closures/copy-test-to-app-base.Dockerfile
+```
+
+先按下节重建引擎。无需手工填写改动行号；完整前后文本自动选择覆盖全部差异的行区间，再合并旧图和新图。相距较远的修改之间，未变化的行也可能被保守纳入，输出不是最小diff。[算法、输入限制、退出码及复现](SOURCE-COMPARISON.md)。这补上了调用方漏填改动行可能漏报影响的接入缺口，仍不能证明可以跳过构建。
 
 ## 一次可复现的任务
 
@@ -47,7 +57,7 @@ Docker 官方 `docker/getting-started` 固定提交的未修改源码归档上�
 
 针对“规则罗列”意见，0.9.0 的主任务已改为构建目录与阶段的解释分析；旧 linter 不再是申报主贡献。针对链接问题，报名表应完整填写上述仓库 URL。
 
-2026-09-23 只读拉取公开 `main`：`91b348323871bc3ed32f3d5686280774d56a9fdf`，内容与本地 0.6.0 基线一致。本轮 0.9.0 尚未推送；团队同步后再更新报名材料。[申报草稿](PROPOSAL.md)、[逐条答复](REVIEW-RESPONSE.md)。是否达到赛事价值要求由组委会判断。
+2026-09-23 只读拉取公开 `main`：`91b348323871bc3ed32f3d5686280774d56a9fdf`，内容与本地 0.6.0 基线一致。本轮 0.10.0 尚未推送；团队同步后再更新报名材料。[申报草稿](PROPOSAL.md)、[逐条答复](REVIEW-RESPONSE.md)。是否达到赛事价值要求由组委会判断。
 
 旧入口和历史验证分别保存在 [0.6.0 说明](README-BEFORE-CONTEXT.md) 与 [更早完整用法](README-BEFORE-VALUE-REWORK.md)，不得作为本轮版本状态引用。
 

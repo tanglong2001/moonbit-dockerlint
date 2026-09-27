@@ -72,3 +72,10 @@ pub fn compare_impact(
     e => "ERROR: " + Repr(e).to_string()
   }
 }
+
+///|
+pub fn compare_sources(before : String, after : String) -> String {
+  @lib.compare_build_sources(before, after).to_json().stringify() catch {
+    e => "ERROR: " + Repr(e).to_string()
+  }
+}

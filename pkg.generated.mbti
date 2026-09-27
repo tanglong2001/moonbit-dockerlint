@@ -19,6 +19,8 @@ pub fn check(String, ignore_codes? : Array[String], honor_inline? : Bool, truste
 
 pub fn compare_build_impact(String, String, changed_before? : Array[Int], changed_after? : Array[Int]) -> BuildComparison raise ParseError
 
+pub fn compare_build_sources(String, String) -> SourceComparison raise ParseError
+
 pub fn configured_report(String, String, filename? : String) -> String raise ParseError
 
 pub fn copy_source_matches(String, String) -> Bool raise ParseError
@@ -154,6 +156,12 @@ pub struct ShellToken {
   line : Int
   quoted : Bool
   dynamic : Bool
+} derive(Eq, ToJson, @debug.Debug)
+
+pub struct SourceComparison {
+  before_lines : Array[Int]
+  after_lines : Array[Int]
+  impact : BuildComparison
 } derive(Eq, ToJson, @debug.Debug)
 
 pub struct Stage {

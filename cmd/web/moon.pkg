@@ -18,6 +18,7 @@ options(
         "variables",
         "impact",
         "compare_impact",
+        "compare_sources",
         "context_plan",
         "source_matches",
       ],

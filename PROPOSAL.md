@@ -1,6 +1,6 @@
 # MoonBit 构建输入与阶段影响分析 · 修订申报草稿
 本项目仓库：https://github.com/tanglong2001/moonbit-dockerlint
-模块：tanglong2001/dockerlint；本地版本：0.9.0；许可证：MIT AND BSD-3-Clause，适配来源另见 THIRD-PARTY。
+模块：tanglong2001/dockerlint；本地版本：0.10.0；许可证：MIT AND BSD-3-Clause，适配来源另见 THIRD-PARTY。
 状态：本轮仅本地交付，团队同步到上述仓库后提交复审。
 
 ## 解决的任务
@@ -10,6 +10,7 @@
 ## 本轮实质实现
 MoonBit：保留 COPY 引号、跨 ARG/ENV/阶段传播未知状态、Go COPY 匹配、清单映射和带见证的阶段影响。
 Node：受限只读目录扫描、Dockerfile 专属 ignore 选择、worker 超时、CLI 和不覆盖的报告输出。
+0.10.0新增完整快照比较：MoonBit自动选择覆盖所有差异的保守行区间，Node读取前后文件，不再依赖手工填写变更坐标。
 复用 @balena/dockerignore 1.0.2；该旧库的未核实模式明确拒绝，未将复用能力记为新算法。
 同一纯核心可用于 JS/WasmGC；不把 Node 文件系统操作描述为 MoonBit 原生 I/O。
 
@@ -36,3 +37,7 @@ Docker 官方教程固定源码上完成目标闭包和两组文件影响集合�
 来源：[docker/getting-started固定提交](https://github.com/docker/getting-started/tree/94d4031393bf8ebfd38aae640910f9435579d76b)，Apache-2.0；原文件和两个单行修改副本均保留许可与SHA256。该公开教材不是本项目用户。已有 BuildKit 同样能离线转换，不能把“无daemon”说成对它的独占优势；这里的可评估价值是可嵌入MoonBit的有界解释接口、变更路径和目录分析，是否足够作为参赛扩展由组委会判断。
 
 参考观察边界：LLB操作标签不包含只有CMD元数据的dev阶段。对照保留原始标签列表，并显式加入所选target；21组中3组dev因此是“可观察操作阶段 + 所选target”。没有把该探针宣称为任意Dockerfile全部逻辑阶段的通用oracle。
+
+## 本轮新增证据
+
+自动快照比较新增4组JS/Wasm-GC公共API检查，以及2份已固定BuildKit样例/7项文件CLI检查。详见SOURCE-COMPARISON。以上0.9.0行号接口仍保留，但新消费者优先调用0.10.0自动入口。多处修改可保守多报；没有扩张为完整Docker语义或构建跳过证明。
