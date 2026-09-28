@@ -42,6 +42,7 @@ pub suberror ParseError {
   Invalid(String)
   StageCycle(Int)
 } derive(@debug.Debug)
+pub fn ParseError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
 pub struct Arguments {
@@ -49,6 +50,10 @@ pub struct Arguments {
   values : Array[String]
   json_form : Bool
 } derive(Eq, ToJson, @debug.Debug)
+pub fn Arguments::equal(Self, Self) -> Bool
+pub fn Arguments::not_equal(Self, Self) -> Bool
+pub fn Arguments::to_json(Self) -> Json
+pub fn Arguments::to_repr(Self) -> @debug.Repr
 
 pub struct BuildComparison {
   before : BuildImpact
@@ -57,6 +62,10 @@ pub struct BuildComparison {
   conservative : Bool
   reason : String
 } derive(Eq, ToJson, @debug.Debug)
+pub fn BuildComparison::equal(Self, Self) -> Bool
+pub fn BuildComparison::not_equal(Self, Self) -> Bool
+pub fn BuildComparison::to_json(Self) -> Json
+pub fn BuildComparison::to_repr(Self) -> @debug.Repr
 
 pub struct BuildEdge {
   consumer : Int
@@ -64,6 +73,10 @@ pub struct BuildEdge {
   line : Int
   kind : String
 } derive(Eq, ToJson, @debug.Debug)
+pub fn BuildEdge::equal(Self, Self) -> Bool
+pub fn BuildEdge::not_equal(Self, Self) -> Bool
+pub fn BuildEdge::to_json(Self) -> Json
+pub fn BuildEdge::to_repr(Self) -> @debug.Repr
 
 pub struct BuildImpact {
   stages : Array[Stage]
@@ -75,22 +88,40 @@ pub struct BuildImpact {
   conservative : Bool
   uncertainties : Array[BuildUncertainty]
 } derive(Eq, ToJson, @debug.Debug)
+pub fn BuildImpact::equal(Self, Self) -> Bool
+pub fn BuildImpact::not_equal(Self, Self) -> Bool
+pub fn BuildImpact::to_json(Self) -> Json
+pub fn BuildImpact::to_repr(Self) -> @debug.Repr
 
 pub struct BuildUncertainty {
   line : Int
   reason : String
 } derive(Eq, ToJson, @debug.Debug)
+pub fn BuildUncertainty::equal(Self, Self) -> Bool
+pub fn BuildUncertainty::not_equal(Self, Self) -> Bool
+pub fn BuildUncertainty::to_json(Self) -> Json
+pub fn BuildUncertainty::to_repr(Self) -> @debug.Repr
 
 pub(all) struct ContextChange {
   path : String
   excluded : Bool
 } derive(Eq, ToJson, @debug.Debug, @json.FromJson)
+pub fn ContextChange::equal(Self, Self) -> Bool
+pub fn ContextChange::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
+pub fn ContextChange::not_equal(Self, Self) -> Bool
+pub fn ContextChange::to_json(Self) -> Json
+pub fn ContextChange::to_repr(Self) -> @debug.Repr
 
 pub(all) struct ContextEntry {
   path : String
   kind : String
   excluded : Bool
 } derive(Eq, ToJson, @debug.Debug, @json.FromJson)
+pub fn ContextEntry::equal(Self, Self) -> Bool
+pub fn ContextEntry::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
+pub fn ContextEntry::not_equal(Self, Self) -> Bool
+pub fn ContextEntry::to_json(Self) -> Json
+pub fn ContextEntry::to_repr(Self) -> @debug.Repr
 
 pub struct ContextFileImpact {
   path : String
@@ -99,6 +130,10 @@ pub struct ContextFileImpact {
   conservative : Bool
   targets : Array[TargetImpact]
 } derive(Eq, ToJson, @debug.Debug)
+pub fn ContextFileImpact::equal(Self, Self) -> Bool
+pub fn ContextFileImpact::not_equal(Self, Self) -> Bool
+pub fn ContextFileImpact::to_json(Self) -> Json
+pub fn ContextFileImpact::to_repr(Self) -> @debug.Repr
 
 pub struct ContextInput {
   stage : Int
@@ -110,6 +145,10 @@ pub struct ContextInput {
   status : String
   note : String
 } derive(Eq, ToJson, @debug.Debug)
+pub fn ContextInput::equal(Self, Self) -> Bool
+pub fn ContextInput::not_equal(Self, Self) -> Bool
+pub fn ContextInput::to_json(Self) -> Json
+pub fn ContextInput::to_repr(Self) -> @debug.Repr
 
 pub struct ContextPlan {
   graph : BuildImpact
@@ -120,18 +159,30 @@ pub struct ContextPlan {
   uncertainties : Array[BuildUncertainty]
   changes : Array[ContextFileImpact]
 } derive(Eq, ToJson, @debug.Debug)
+pub fn ContextPlan::equal(Self, Self) -> Bool
+pub fn ContextPlan::not_equal(Self, Self) -> Bool
+pub fn ContextPlan::to_json(Self) -> Json
+pub fn ContextPlan::to_repr(Self) -> @debug.Repr
 
 pub struct Diagnostic {
   line : Int
   code : String
   message : String
 } derive(Eq, ToJson, @debug.Debug)
+pub fn Diagnostic::equal(Self, Self) -> Bool
+pub fn Diagnostic::not_equal(Self, Self) -> Bool
 pub fn Diagnostic::severity(Self) -> String
+pub fn Diagnostic::to_json(Self) -> Json
+pub fn Diagnostic::to_repr(Self) -> @debug.Repr
 
 pub struct Expansion {
   value : String
   unresolved : Array[String]
 } derive(Eq, ToJson, @debug.Debug)
+pub fn Expansion::equal(Self, Self) -> Bool
+pub fn Expansion::not_equal(Self, Self) -> Bool
+pub fn Expansion::to_json(Self) -> Json
+pub fn Expansion::to_repr(Self) -> @debug.Repr
 
 pub struct HereDoc {
   name : String
@@ -139,6 +190,10 @@ pub struct HereDoc {
   strip_tabs : Bool
   expand : Bool
 } derive(Eq, ToJson, @debug.Debug)
+pub fn HereDoc::equal(Self, Self) -> Bool
+pub fn HereDoc::not_equal(Self, Self) -> Bool
+pub fn HereDoc::to_json(Self) -> Json
+pub fn HereDoc::to_repr(Self) -> @debug.Repr
 
 pub struct Instruction {
   line : Int
@@ -147,7 +202,11 @@ pub struct Instruction {
   arguments : String
   heredocs : Array[HereDoc]
 } derive(Eq, ToJson, @debug.Debug)
+pub fn Instruction::equal(Self, Self) -> Bool
+pub fn Instruction::not_equal(Self, Self) -> Bool
 pub fn Instruction::split_arguments(Self) -> Arguments raise ParseError
+pub fn Instruction::to_json(Self) -> Json
+pub fn Instruction::to_repr(Self) -> @debug.Repr
 
 pub struct ShellToken {
   kind : String
@@ -157,12 +216,20 @@ pub struct ShellToken {
   quoted : Bool
   dynamic : Bool
 } derive(Eq, ToJson, @debug.Debug)
+pub fn ShellToken::equal(Self, Self) -> Bool
+pub fn ShellToken::not_equal(Self, Self) -> Bool
+pub fn ShellToken::to_json(Self) -> Json
+pub fn ShellToken::to_repr(Self) -> @debug.Repr
 
 pub struct SourceComparison {
   before_lines : Array[Int]
   after_lines : Array[Int]
   impact : BuildComparison
 } derive(Eq, ToJson, @debug.Debug)
+pub fn SourceComparison::equal(Self, Self) -> Bool
+pub fn SourceComparison::not_equal(Self, Self) -> Bool
+pub fn SourceComparison::to_json(Self) -> Json
+pub fn SourceComparison::to_repr(Self) -> @debug.Repr
 
 pub struct Stage {
   index : Int
@@ -171,12 +238,20 @@ pub struct Stage {
   stage_name : String?
   dependencies : Array[Int]
 } derive(Eq, ToJson, @debug.Debug)
+pub fn Stage::equal(Self, Self) -> Bool
+pub fn Stage::not_equal(Self, Self) -> Bool
+pub fn Stage::to_json(Self) -> Json
+pub fn Stage::to_repr(Self) -> @debug.Repr
 
 pub struct TargetImpact {
   target : Int
   affected : Bool
   path : Array[Int]
 } derive(Eq, ToJson, @debug.Debug)
+pub fn TargetImpact::equal(Self, Self) -> Bool
+pub fn TargetImpact::not_equal(Self, Self) -> Bool
+pub fn TargetImpact::to_json(Self) -> Json
+pub fn TargetImpact::to_repr(Self) -> @debug.Repr
 
 pub struct VariableScope {
   line : Int
@@ -190,6 +265,10 @@ pub struct VariableScope {
   uncertain_environment : Array[String]
   unknown_base_environment : Bool
 } derive(Eq, ToJson, @debug.Debug)
+pub fn VariableScope::equal(Self, Self) -> Bool
+pub fn VariableScope::not_equal(Self, Self) -> Bool
+pub fn VariableScope::to_json(Self) -> Json
+pub fn VariableScope::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
