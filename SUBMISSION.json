@@ -9,7 +9,7 @@
   "actualUsersClaimed": false,
   "defaultBranch": "origin/main",
   "localChangesPublished": false,
-  "proposalLines": 28,
+  "proposalLines": 30,
   "useCase": "解释文件/COPY输入和修改前后阶段依赖，给出影响路径及无法判断的原因",
   "diff": "旧linter规则不是申报主贡献；BuildKit已有离线转换，增量为可嵌入MoonBit的目录和双快照解释API",
   "publicHeadVerifiedAt": "2026-09-23",
@@ -25,7 +25,7 @@
   "remoteCIRunByThisTask": false,
   "currentValidation": "evidence/source-comparison-20260927/LOCAL-CHECKS.json",
   "currentEvidence": "evidence/source-comparison-20260927/LOCAL-CHECKS.json",
-  "metadataReviewedOn": "2026-09-27",
+  "metadataReviewedOn": "2026-09-28",
   "currentEvidenceScope": "Automatic complete-source line coverage; JS/Wasm 4 groups each; 2 saved BuildKit fixtures and 7 CLI checks",
   "reviewDecision": "核心改为构建输入与修改影响",
   "previousEvidence": "evidence/closures-20260927/LOCAL-CHECKS.json"
