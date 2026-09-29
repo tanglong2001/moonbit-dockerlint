@@ -2,15 +2,21 @@
 
 本项目仓库：**https://github.com/tanglong2001/moonbit-dockerlint**
 
-模块 `tanglong2001/dockerlint`，公开版 `0.10.0`、本地未发布候选 `0.10.1`，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。当前主任务是审阅多阶段 Dockerfile 的实际构建修改：解释上下文文件输入、stage 引用和影响范围，不以旧规则检查作为独立价值主张。本地候选版未推送或发布。
+模块 `tanglong2001/dockerlint`，公开版 `0.10.0`、本地未发布候选 `0.11.0`，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。当前主任务是审阅多阶段 Dockerfile 的实际构建修改：解释上下文文件输入、stage 引用和影响范围，不以旧规则检查作为独立价值主张。本地候选版未推送或发布；0.10.1 的本地交付与回执保留为历史记录。
 
-## 0.10.1 本地候选：真实 Dockerfile 修改复核
+## 0.10.1 历史回执：真实 Dockerfile 修改复核
 
 固定 Grafana Tempo 提交 `3f54f1c040a5c014a7f3acde22376060807178c6`（AGPL-3.0）更新了 `cmd/tempo/Dockerfile` 的 Distroless debug 与 runtime digest。Makefile 的 `docker-tempo -> docker-component -> exe -> tempo` 目标链确认该文件用于项目构建；使用的根 `.dockerignore` 有四条路径规则，没有 Dockerfile 专属 ignore。所取五个固定 Linux/amd64 OCI config（含两版 Distroless）均按 digest 校验，`OnBuild` 为空。[BuildKit v0.25.1 LLB 回执](evidence/tempo-docker-update-20260716/buildkit-after.json)显示最终目标 14 个 vertex，闭包包括 ca-certificates、tempo-setup 和最终阶段；前后比较识别两个变动的 base stage，ca-certificates 操作保持不变。
 
-MoonBit 完整源码比较目前把两处分散的 base digest 改动扩成第 5–11 行，`changed_stages` 只点出 setup 阶段但随后保守标记全部目标；BuildKit 证实其中 ca-certificates 未变，说明当前会多报。目录分析可以将 Makefile 生成的 `bin/linux/tempo-amd64` 解析到最终 COPY，但证据清单仅在 post-Make 模型里合成该路径，未构建二进制。无 profile 输入时，MoonBit 仍把外部镜像 `ONBUILD` 标记为未知并保守影响所有外部 base 阶段；虽然本例镜像 config 已核实为空，该 profile 尚未接入核心接口。另有离线小型 BuildKit 对照验证 `ARG TARGETARCH=amd64` 会覆盖同名 base ENV，而后续 Dockerfile `ENV TARGETARCH=arm64` 会覆盖 ARG。
+0.10.1 的源码比较把两处分散的 base digest 改动扩成第 5–11 行，`changed_stages` 只点出 setup 阶段但随后保守标记全部目标；BuildKit 证实其中 ca-certificates 未变，暴露了精度损失。该版本的目录分析可将 Makefile 生成的 `bin/linux/tempo-amd64` 解析到最终 COPY，但证据清单仅在 post-Make 模型里合成该路径，未构建二进制。无 profile 输入时，MoonBit 仍把外部镜像 `ONBUILD` 标记为未知并保守影响所有外部 base 阶段；虽然本例镜像 config 已核实为空，该 profile 尚未接入核心接口。另有离线小型 BuildKit 对照验证 `ARG TARGETARCH=amd64` 会覆盖同名 base ENV，而后续 Dockerfile `ENV TARGETARCH=arm64` 会覆盖 ARG。
 
-这次新增回归覆盖上述 ARG 解析与未知 `ONBUILD` 的保守路径，JS/WasmGC 各 39 项；完整命令、SHA256、原始输出和限制见 [0.10.1 本地检查记录](TESTING.md#0101-local-tempo-build-change-review) 及 `evidence/tempo-docker-update-20260716/LOCAL-CHECKS.json`。本次没有 Docker build、缓存测量、部署、性能或采用结论；旧公开 CI 只覆盖 0.10.0，不覆盖本地改动。
+0.10.1 当时新增回归覆盖上述 ARG 解析与未知 `ONBUILD` 的保守路径，JS/WasmGC 各 39 项；完整命令、SHA256、原始输出和限制见 [0.10.1 本地检查记录](TESTING.md#0101-local-tempo-build-change-review) 及 `evidence/tempo-docker-update-20260716/LOCAL-CHECKS.json`。当时没有 Docker build、缓存测量、部署、性能或采用结论；旧公开 CI 只覆盖 0.10.0。
+
+## 0.11.0 本地候选：精确报告分离修改
+
+0.10.1 回执暴露真实 Tempo 更新中的明确精度损失：两处 FROM digest 改动（第 5、11 行）被扩成第 5–11 行，因中间有 FROM 而影响全部目标。0.11.0 以有界 LCS 选取各自快照里的改动行，真实样例现在分别报告 `[5,11]`；仅为拓扑、别名、参数与引用均可对齐的外部镜像 FROM token 替换播种对应阶段，再合并前后依赖图。结果只影响 `tempo-setup` 与最终阶段 `#2`，不再扩大到未变的 `ca-certificates`，并与已保存的 BuildKit LLB 目标影响相符。[新回执](evidence/source-precision-20260929/LOCAL-REPLAY-0.11.0.json)保留原始 0.10.1 回执哈希；这是离线重放固定 BuildKit 输出，不是本次重新运行 BuildKit。
+
+重复行匹配不唯一或 LCS 超过 1,000,000 个单元时会回退到完整差异跨度，`diff_exact=false` 与原因可见；阶段插删/改名/重排、内部或动态 FROM 引用及其他未知变更仍保守处理。外部镜像 `ONBUILD` profile 尚未接入上下文分析器。JS/WasmGC 与完整源对照、可移植重放命令和资源边界见 [来源比较说明](SOURCE-COMPARISON.md) 与 [本地验收记录](TESTING.md#0110-local-source-precision-review)。版本 `0.11.0` 只在本地，旧公开 CI 仅覆盖 `0.10.0`。
 
 ## 0.10.0：直接比较两份文件
 
@@ -65,7 +71,7 @@ Docker 官方 `docker/getting-started` 固定提交的未修改源码归档上�
 
 针对“规则罗列”意见，0.9.0 的主任务已改为构建目录与阶段的解释分析；旧 linter 不再是申报主贡献。针对链接问题，报名表应完整填写上述仓库 URL。
 
-2026-09-23 只读拉取公开 `main`：`91b348323871bc3ed32f3d5686280774d56a9fdf`，内容与本地 0.6.0 基线一致。该历史记录只证明 0.6.0 基线；当前 0.10.0 已出现公开版号，但本次文档提交仍未上线。[申报草稿](PROPOSAL.md)、[逐条答复](REVIEW-RESPONSE.md)。是否达到赛事价值要求由组委会判断。
+2026-09-23 只读拉取公开 `main`：`91b348323871bc3ed32f3d5686280774d56a9fdf`，内容与本地 0.6.0 基线一致。该历史记录只证明 0.6.0 基线；之后核实的公开版本为 0.10.0，本地 0.11.0 候选尚未发布。[申报草稿](PROPOSAL.md)、[逐条答复](REVIEW-RESPONSE.md)。是否达到赛事价值要求由组委会判断。
 
 旧入口和历史验证分别保存在 [0.6.0 说明](README-BEFORE-CONTEXT.md) 与 [更早完整用法](README-BEFORE-VALUE-REWORK.md)，不得作为本轮版本状态引用。
 

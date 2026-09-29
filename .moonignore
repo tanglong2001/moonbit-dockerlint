@@ -1,5 +1,6 @@
 # Publication policy: preserve repository exclusions, plus required hidden fixtures.
 _build/
+work/
 target/
 .mooncakes/
 node_modules/

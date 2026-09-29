@@ -1,19 +1,22 @@
-# 完整 Dockerfile 快照比较 · 0.10.0
+# 完整 Dockerfile 快照比较 · 本地 0.11.0 候选
 
-任务：给定两份完整Dockerfile，解释可能受影响的构建目标，避免调用者手填变更行遗漏。MoonBit函数 `compare_build_sources(before, after)` 返回 `SourceComparison`，包含两侧行号数组与既有双图影响报告。JS桥接为 `compare_sources`。
+`compare_build_sources(before, after)` 自动选取完整源码差异，再以两份快照的依赖图合并影响。`SourceComparison` 给出旧/新快照各自的 1 起始物理行号、`diff_exact`、`diff_reason` 与 `impact`；文件 CLI/Node 入口为 `compare_sources`。公开接口 `compare_build_impact` 保持调用方提供行号的原契约。
 
-算法只移除完全相同的公共行前缀与不重叠公共行后缀，将剩余连续区间全部纳入。比较保留CRLF/LF和最后换行差异；不做语义等价推断，不解析git diff。两次相距很远的修改可能把中间未变阶段也纳入，甚至因中间FROM变成全目标保守报告。这是可解释的多报，不能称最小修改集。`impact.conservative`仍表示图不确定性；它为false也不表示行区间最小。
+源码先按完整行驻留为整数身份，再运行最多 1,000,000 单元的 LCS；唯一对齐时保留分离的编辑段和各自坐标。普通替换保持精确；重复保留行存在另一种最优匹配时，或 DP 超过单元预算时，回退到公共前后缀间的完整差异跨度，并设 `diff_exact=false`、在 `diff_reason` 中说明歧义或超预算。源大小为每侧 1,000,000 UTF-16 单位、物理行最多 10,000；宿主文件入口另限每侧 1,000,000 字节。原始换行及尾空行差异保留。
 
-每侧核心上限1,000,000 UTF-16单位、10,000物理行（末尾空行也计数），超限拒绝；解析、阶段环与既有图限制继续生效。删光全部构建阶段是无效输入，不给部分报告。旧 `compare_build_impact` 仍供已拥有可靠坐标的消费者使用。
+仅当单个 FROM 编辑段在旧/新快照都是同一对齐 stage 的外部字面镜像 token 替换、`--` 参数及其值不含动态变量、`AS` 别名完全相同，且 stage 顺序/命名可稳定对齐时，才直接播种该 stage 并合并前后图依赖。匿名阶段还必须在屏蔽该镜像 token 后保持唯一且不变。不同的 FROM 改动、内部/数字/动态引用、动态平台参数、阶段插删/改名/重排、其他结构变化及无法确认的对齐继续走保守路径；旧图仍参与影响合并，因此移除依赖不会抹掉旧受影响目标。未知外部 `ONBUILD` 上下文影响仍保守，本接口不加载镜像 profile。
+
+Tempo 固定样例的两处分散 digest 改动现在各报第 5、11 行，前后图直接改动阶段为 `[1,2]`，影响目标只为 `tempo-setup` 和最终 `#2`；`ca-certificates` 未改，也不再因中间未改的 FROM 被扩大。结果 `diff_exact=true`、`impact.conservative=false`，与所附 BuildKit v0.25.1 LLB 中发生变化的 setup/最终阶段相符。该回执重放的是固定 BuildKit 输出，不代表本次重新运行 BuildKit。未知镜像 `ONBUILD`、缓存、镜像配置或安全跳过构建均不由此结果证明。
+
+复现来源比较回归（构建过的 `web/engine.mjs` 应与核心一致）：
 
 ```sh
-moon build --target js
-node -e "require('node:fs').copyFileSync('_build/js/debug/build/cmd/web/web.js','web/engine.mjs')"
-node tools/compare-sources-cli.mjs --before examples/buildkit-closures/original.Dockerfile --after examples/buildkit-closures/copy-test-to-app-base.Dockerfile
+moon test source_comparison_test.mbt --target js --deny-warn
+moon test source_comparison_test.mbt --target wasm-gc --deny-warn
+node tools/test-source-comparison.mjs
+node tools/run-tempo-impact.mjs --out evidence/source-precision-20260929/REPLAY.json
 ```
 
-Node也可导入 `compareDockerfileSources({before, after})`。文件入口严格读取UTF-8普通文件，每侧最多1,000,000字节；拒绝坏编码及读取期间长度变化。源文件必须保持稳定，不是并发文件系统快照。宿主仅读取文件、写可选JSON报告；worker限制30秒/256MiB old-generation。两个源文件SHA256随报告返回。`--out`仅创建新文件，不覆盖已有结果。退出0表示分析完成，3表示图有保守不确定性，1表示参数/输入/宿主错误；成功退出不表示无需构建。
+最小可移植重放需 Node.js 24 或更高版本，并在仓库根目录先运行 `npm ci --ignore-scripts`（加载锁定的 `@balena/dockerignore` 1.0.2）。命令本身不访问网络或 Docker；依赖安装按锁文件获取包。`--out` 必须指定不存在的新路径，不会覆盖旧回执；重复重放需另取新文件名。精确回执、SHA256 和范围见 [TESTING.md](TESTING.md#0110-local-source-precision-review)。
 
-已验证4组MoonBit公共API测试（JS/Wasm-GC）：新增/删除与移除依赖、分散修改、换行/指令变化、坏输入/资源上限。文件宿主自动定位两份固定BuildKit样例的第22/40行并核对影响目标；另核对删除、输出不覆盖、保守退出码、坏UTF-8、大小和参数。两份样例复用此前保存的BuildKit独立LLB证据，本次没有再次执行BuildKit或Docker构建。新宿主检查接入CI配置，尚无远端执行结论。
-
-只解释Dockerfile显式图，未求解上下文文件变化、外部镜像、ONBUILD、命名context和缓存。没有确认使用方；本轮修复接入可靠性，不把已有diff或构建图概念宣称原创。实跑回执见 [LOCAL-CHECKS](evidence/source-comparison-20260927/LOCAL-CHECKS.json)。
+文件 CLI 严格读取 UTF-8 普通文件、检测读取时大小变化，worker 限时 30 秒/256 MiB old-generation。宿主只读源文件，可选 JSON 报告使用创建新文件语义。退出 0 表示分析完成，3 表示影响图存在保守不确定性，1 表示参数、输入或宿主错误；成功退出不代表构建可跳过。

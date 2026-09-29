@@ -68,7 +68,7 @@ The final source/evidence fingerprint manifest is evidence/runtime-upgrade.json.
 
 本节仅记本地候选版。公开 `0.10.0` 的 CI 成功记录没有执行这里的核心修改或检查回放。输入是 Grafana Tempo AGPL-3.0 固定提交 `3f54f1c040a5c014a7f3acde22376060807178c6` 的 Dockerfile、`.dockerignore`、Makefile、完整未截断 git tree 和 commit 回执；所取镜像为固定 `linux/amd64` OCI index/manifest/config。Dockerfile 前后 SHA256 分别为 `cdd1928b8fd76be06251d2ee2a00163cd04c99e86ace1090648d6e45e7ffdd9e` 和 `72693daf717c08c0752e9d97d7a7bf60a21fef554110c0560c03b6f97c9e4379`；root `.dockerignore` 为 `5a55c351e9651776d20123c4daa380e5865bb14645beb9aae03aff67dbf4c01e`；完整镜像配置集为 `b4dc34d8f608c4f919e107fc71e1cafbca7fe493a20f6cdd6a0101f6414dd159`。
 
-作者本机重新生成记录（Windows 固定 Moon toolchain；WSL 使用已有 BuildKit 源码和 Go module cache，Go proxy 校验/下载关闭）。这组 D: 与 Ubuntu-D 路径只在作者机器可用，不是通用安装步骤：
+以下是 0.10.1 当时的作者本机生成记录（Windows 固定 Moon toolchain；WSL 使用已有 BuildKit 源码和 Go module cache，Go proxy 校验/下载关闭），不是当前候选的可执行复现步骤。这组 D: 与 Ubuntu-D 路径只在作者机器可用；当时的 Tempo 命令把 `--out` 放在 `evidence/tempo-docker-update-20260716/`，当前 runner 已限定输出至独立 `source-precision-20260929/` 并采用不覆盖语义，因此不要照搬旧输出路径。
 
 ```powershell
 $env:MOON_HOME='D:\CodexLocal\ban\work\acceptance-20260928\moon'
@@ -98,3 +98,22 @@ node tools/run-tempo-impact.mjs --out evidence/tempo-docker-update-20260716/LOCA
 `node tools/run-tempo-impact.mjs` 对源哈希、ignore、生成路径、目标影响及 BuildKit 结果执行断言，结果在 [LOCAL-CHECKS.json](evidence/tempo-docker-update-20260716/LOCAL-CHECKS.json)。它确认 MoonBit 自动源码比较选择第 5–11 行、只标记 setup 为直接变化而保守影响全部目标；BuildKit 证明 setup 与最终阶段的 digest 均变、ca-certificates 未变。目录分析把 Make 生成的 `bin/linux/tempo-amd64` 作为 post-Make 合成项解析到 COPY 第 14 行，但没有生成该文件或执行 Make。
 
 限制：没有运行 Docker build/daemon/runtime、没有缓存键或性能测量、没有部署或采用证明。BuildKit LLB vertex 数不是构建成本；本例 profile 虽证实 ONBUILD 为空，MoonBit 核心不能接收该 profile，故仍把外部 ONBUILD 保持未知并多报。候选 `0.10.1` 未推送或发布，旧公开 CI 不覆盖本次改动。
+
+## 0.11.0 local source precision review
+
+本节记录新的本地候选；公开 `0.10.0` 及旧 `0.10.1` 回执均不覆盖本次源码精化。固定 MoonBit `moonc 0.10.14+7d59c7ec9` 下运行格式化、严格检查、接口生成、完整双后端测试和 JS 引擎构建：
+
+```powershell
+$env:MOON_HOME='D:\CodexLocal\ban\work\acceptance-20260928\moon'
+$moon='D:\CodexLocal\ban\work\acceptance-20260928\moon\bin\moon.exe'
+& $moon fmt --check
+& $moon check --deny-warn
+& $moon info
+& $moon test --target js --deny-warn
+& $moon test --target wasm-gc --deny-warn
+& $moon build --target js --deny-warn
+```
+
+JS 与 WasmGC 完整套件各 44/44；来源专测各 9/9。`moon info` 只为公共 `SourceComparison` 增加 `diff_exact` 和 `diff_reason`；旧 `compare_build_impact` 调用契约未改。构建产物复制为 `web/engine.mjs` 后，`node tools/test-source-comparison.mjs` 通过两份固定 BuildKit 样例和 7 项文件 CLI 检查。`node tools/run-tempo-impact.mjs --out evidence/source-precision-20260929/REPLAY.json` 可在干净 checkout 重放；重复运行时另取未占用文件名。最终保存的作者本机回执为 [LOCAL-REPLAY-0.11.0.json](evidence/source-precision-20260929/LOCAL-REPLAY-0.11.0.json)，SHA256 为 `ee46eedf6315b5e7db521b77186a1f37e1c0e6d850a9f62e9faa575ed9a709dc`。该回执断言完整 Tempo 输入哈希、两侧第 5/11 行、旧/新直接变化阶段 `[1,2]`、影响目标 `tempo-setup`/`#2`、未变 `ca-certificates` 和固定 BuildKit 对照；`reason` 来自双图 `impact` 结果。
+
+该新报告消费保存的 BuildKit v0.25.1 转换输出和固定 OCI config 资料，本次没有重新运行 BuildKit、Docker build 或下载镜像。相同断言已加入 GitHub Actions，以每次运行独有的新报告路径执行并清理；此次本地提交尚未推送，因此没有新的远端 CI 结果。离线包预检还发现 context 示例仍把未知外部 ONBUILD 当作无不确定性，脚本已改为断言其实际原因、退出码 3 和精确跨目标向量，并保留显式图的独立 stage 断言；`node tools/test-context.mjs` 7/7、`node examples/run-context.mjs` 与包解包重放现通过。`tools/check-package.py` 校验12个文档/固定fixture逐字节一致、隐藏 `.dockerignore` 存在、无 work/build cache 路径；当前离线包预检通过。LCS 重复行歧义及 1,000,000 单元预算分别有回退测试；回退可见且保守。其余 ONBUILD profile、缓存、安全跳过、性能和用户采用均不在该报告证明范围。

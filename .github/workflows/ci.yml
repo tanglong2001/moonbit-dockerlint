@@ -36,6 +36,11 @@ jobs:
       - run: node tools/benchmark.mjs
       - run: node tools/test-buildkit-closures.mjs
       - run: node tools/test-source-comparison.mjs
+      - name: Replay fixed Tempo source-impact evidence
+        run: |
+          report="evidence/source-precision-20260929/ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+          trap 'rm -f "$report"' EXIT
+          node tools/run-tempo-impact.mjs --out "$report"
       - name: Check the distributable package and context example
         timeout-minutes: 5
         run: python3 tools/check-package.py --receipt evidence/package-check.json

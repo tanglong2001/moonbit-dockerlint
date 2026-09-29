@@ -224,6 +224,8 @@ pub fn ShellToken::to_repr(Self) -> @debug.Repr
 pub struct SourceComparison {
   before_lines : Array[Int]
   after_lines : Array[Int]
+  diff_exact : Bool
+  diff_reason : String
   impact : BuildComparison
 } derive(Eq, ToJson, @debug.Debug)
 pub fn SourceComparison::equal(Self, Self) -> Bool

@@ -12,9 +12,12 @@ function run(name,expected,args){
  fs.writeFileSync(path.join(out,name+'.json'),r.stdout);fs.writeFileSync(path.join(out,name+'.stderr.txt'),r.stderr);
  assert.equal(r.status,expected,r.stderr);return JSON.parse(r.stdout);
 }
-const normal=run('normal',0,['--target','release','--changed-file','src/app.txt','--changed-file','docs/manual.md']);
+const normal=run('normal',3,['--target','release','--changed-file','src/app.txt','--changed-file','docs/manual.md']);
 assert.deepEqual(normal.plan.graph.required,[0,2]);
-assert.deepEqual(normal.plan.changes.map(c=>c.targets.map(t=>t.affected)),[[true,false,true],[false,true,false]]);
+assert.equal(normal.plan.inputs[2].stage,1);
+assert.deepEqual(normal.plan.uncertainties,[{line:1,reason:'external base image ONBUILD metadata is unavailable'}]);
+assert.deepEqual(normal.plan.changes.map(c=>c.targets.map(t=>t.affected)),[[true,false,true],[true,true,true]]);
+assert.deepEqual(normal.plan.changes.map(c=>c.conservative),[true,true]);
 assert.deepEqual(normal.plan.changes[0].targets[2].path,[2,0]);
 const selected=normal.plan.selected_entries.map(i=>normal.plan.entries[i].path);
 assert(selected.includes('src/generated/keep.txt'));assert(!selected.includes('src/generated/drop.txt'));
@@ -22,5 +25,5 @@ assert(selected.includes('src/generated/keep.txt'));assert(!selected.includes('s
 fs.appendFileSync(path.join(context,'.dockerignore'),'\nconfig\n');
 const broken=run('excluded-input',2,['--target','release']);
 assert.deepEqual(broken.plan.missing_lines,[3]);assert.equal(broken.plan.inputs[1].status,'excluded');
-fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({status:'pass',input:'original synthetic example, not an executed Docker build',checks:['file-to-stage-to-target witness','independent docs branch','excluded directory with re-included child','ignored bind input exits 2'],normal_summary:normal.summary,excluded_summary:broken.summary},null,2)+'\n');
+fs.writeFileSync(path.join(out,'report.json'),JSON.stringify({status:'pass',input:'original synthetic example, not an executed Docker build',checks:['release graph requires stages [0,2] while docs input belongs to stage 1','unknown external ONBUILD explains exit 3 and conservative cross-stage widening','excluded directory with re-included child','ignored bind input exits 2'],onbuild_uncertainty:normal.plan.uncertainties,normal_summary:normal.summary,excluded_summary:broken.summary},null,2)+'\n');
 console.log(out);

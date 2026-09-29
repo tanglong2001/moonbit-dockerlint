@@ -10,6 +10,7 @@ import {context_plan} from '../web/engine.mjs';
 const repo = fileURLToPath(new URL('..', import.meta.url));
 const relative = 'evidence/tempo-docker-update-20260716';
 const evidence = path.join(repo, relative);
+const precisionEvidence = path.join(repo, 'evidence/source-precision-20260929');
 const sourceDir = path.join(evidence, 'source');
 const microDir = path.join(evidence, 'buildarg-reference');
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -97,16 +98,21 @@ const comparison = await compareDockerfileSources({
 });
 assert.equal(comparison.before.sha256, 'cdd1928b8fd76be06251d2ee2a00163cd04c99e86ace1090648d6e45e7ffdd9e');
 assert.equal(comparison.after.sha256, '72693daf717c08c0752e9d97d7a7bf60a21fef554110c0560c03b6f97c9e4379');
-assert.deepEqual(comparison.result.before_lines, [5, 6, 7, 8, 9, 10, 11]);
-assert.deepEqual(comparison.result.after_lines, [5, 6, 7, 8, 9, 10, 11]);
+assert.deepEqual(comparison.result.before_lines, [5, 11]);
+assert.deepEqual(comparison.result.after_lines, [5, 11]);
+assert.equal(comparison.result.diff_exact, true);
+assert.equal(comparison.result.diff_reason, 'bounded line diff retained separate edit hunks');
 assert.equal(comparison.result.impact.before.stages[0].base, comparison.result.impact.after.stages[0].base);
 assert.notEqual(comparison.result.impact.before.stages[1].base, comparison.result.impact.after.stages[1].base);
 assert.notEqual(comparison.result.impact.before.stages[2].base, comparison.result.impact.after.stages[2].base);
-assert(comparison.result.impact.affected_targets.includes('tempo-setup'));
-assert(comparison.result.impact.affected_targets.includes('#2'));
+assert.deepEqual(comparison.result.impact.before.changed_stages, [1, 2]);
+assert.deepEqual(comparison.result.impact.after.changed_stages, [1, 2]);
+assert.deepEqual(comparison.result.impact.affected_targets, ['tempo-setup', '#2']);
+assert.equal(comparison.result.impact.before.targets[0].affected, false);
 assert.equal(comparison.result.impact.before.targets[1].affected, true);
 assert.equal(comparison.result.impact.before.targets[2].affected, true);
-assert.equal(comparison.result.impact.conservative, true);
+assert.equal(comparison.result.impact.after.targets[0].affected, false);
+assert.equal(comparison.result.impact.conservative, false);
 
 const buildkitBefore = parse(path.join(evidence, 'buildkit-before.json'));
 const buildkitAfter = parse(path.join(evidence, 'buildkit-after.json'));
@@ -147,9 +153,10 @@ assert(targetResult(envAfterArgReceipt).file_copies.some(copy => copy.source ===
 assert(targetResult(envAfterArgReceipt).raw_custom_names.some(name => name.includes('COPY bin/linux/tempo-arm64 /tempo')));
 
 const output = {
-  format: 'moonbit-dockerlint-local-impact-review/1',
+  format: 'moonbit-dockerlint-local-source-precision-review/1',
   generated_at_utc: new Date().toISOString(),
-  project_version: {published: '0.10.0', local: '0.10.1', published_or_pushed: false},
+  project_version: {published: '0.10.0', local: '0.11.0', published_or_pushed: false, prior_0_10_1_receipt_preserved: true},
+  prior_tempo_receipt_sha256: digest(fs.readFileSync(path.join(evidence, 'LOCAL-CHECKS.json'))),
   case: {
     repository: metadata.repository,
     license: metadata.licenseSpdx,
@@ -181,10 +188,13 @@ const output = {
     moonbit_source_compare: {
       before_lines: comparison.result.before_lines,
       after_lines: comparison.result.after_lines,
+      diff_exact: comparison.result.diff_exact,
+      diff_reason: comparison.result.diff_reason,
       changed_stages_before: comparison.result.impact.before.changed_stages,
+      changed_stages_after: comparison.result.impact.after.changed_stages,
       affected_targets: comparison.result.impact.affected_targets,
       conservative: comparison.result.impact.conservative,
-      reason: comparison.result.reason,
+      reason: comparison.result.impact.reason,
     },
   },
   local_artifact_change_review: {
@@ -208,18 +218,20 @@ const output = {
   limitations: [
     'No Docker build, daemon, runtime test, cache-key comparison, benchmark, production adoption, security-skip claim, or deployment was performed.',
     'BuildKit LLB reference resolves graph operations; 14 vertices do not measure build cost or cache reuse.',
-    'MoonBit source comparison conservatively widens a disjoint two-base-image edit span and currently reports all targets; BuildKit identifies ca-certificates as unchanged.',
+    'The new bounded source diff reports the two Tempo FROM lines separately and agrees with BuildKit target impact for this case; source-diff precision does not establish cache reuse or safe build skipping.',
+    'Ambiguous repeated-line alignment and comparisons over the 1,000,000-cell LCS budget explicitly fall back to the full differing span and mark the result conservative.',
     'MoonBit context analysis does not consume the image profile. It resolves the declared TARGETARCH input but keeps external ONBUILD metadata uncertain, so a local binary change is conservatively attributed to every external-base stage.',
     'The Tempo binary is generated by Make and was not built. Its post-Make path was modeled only to verify COPY resolution.',
-    'The public CI result covers the published 0.10.0 commit only; it did not execute these 0.10.1 changes or this acceptance runner.',
+    'External ONBUILD metadata remains unavailable to the core context analyzer; local context-file impact still conservatively widens across external-base stages.',
+    'The public CI result covers the published 0.10.0 commit only; it did not execute these 0.11.0 changes or this acceptance runner.',
   ],
 };
 
 const args = process.argv.slice(2);
 if (args.length !== 2 || args[0] !== '--out') {
-  throw new Error('Usage: node tools/run-tempo-impact.mjs --out evidence/tempo-docker-update-20260716/LOCAL-CHECKS.json');
+  throw new Error('Usage: node tools/run-tempo-impact.mjs --out evidence/source-precision-20260929/REPLAY.json (choose a new unused path for each run)');
 }
 const destination = path.resolve(repo, args[1]);
-assert(destination.startsWith(evidence + path.sep), 'report output must remain inside the fixed case evidence directory');
+assert(destination.startsWith(precisionEvidence + path.sep), 'report output must remain inside the precision reassessment evidence directory');
 fs.writeFileSync(destination, JSON.stringify(output, null, 2) + '\n', {flag: 'wx'});
-console.log(JSON.stringify({ok: true, report: path.relative(repo, destination), source_entries: tree.tree.length, modeled_entries: entries.length, image_profiles: buildkitAfter.image_profiles.length, changed_base_stages: changedBaseStages, buildkit_explicit_arg: true, buildkit_env_after_arg: true}, null, 2));
+console.log(JSON.stringify({ok: true, report: path.relative(repo, destination), prior_receipt_sha256: output.prior_tempo_receipt_sha256, source_entries: tree.tree.length, modeled_entries: entries.length, image_profiles: buildkitAfter.image_profiles.length, changed_lines: comparison.result.before_lines, changed_stages: comparison.result.impact.before.changed_stages, affected_targets: comparison.result.impact.affected_targets, conservative: comparison.result.impact.conservative, buildkit_explicit_arg: true, buildkit_env_after_arg: true}, null, 2));

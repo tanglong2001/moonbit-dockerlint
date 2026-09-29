@@ -1,4 +1,4 @@
-# 编码前检索与复用决定 · 更新至 2026-09-23
+# 编码前检索与复用决定 · 更新至 2026-09-29
 
 已有实现及本次范围：
 
@@ -13,3 +13,9 @@
 MoonBit 核心的新集成是源码语义 + 过滤清单 + 带路径的目标影响报告；Node 宿主和第三方匹配器各自职责已公开。可对照的完整工作流见 USE-CASE 和 CONTEXT。
 
 检索覆盖公开 Mooncakes、GitHub、规范和既有赛事资料，未覆盖全部未公开报名表/代码。旧检索原始响应保留在总交付 `review-goal-20260922/SEARCH.json` 与 `innovation-review-20260922/`；这些检索不能证明首创，也不替代赛事价值判断。
+
+## 与浏览器 LLB 探索器及 Dockerfile 演化研究的关系
+
+- [Depot Dockerfile Explorer](https://preview.depot.dev/blog/dockerfile-explorer) 已把 BuildKit Dockerfile 前端编译到 WASM，在浏览器中编辑 Dockerfile 并显示 LLB。浏览器编辑、图形展示或 BuildKit 转换不是本项目首创；本次也没有复制其代码。
+- [Cadre/DodeX 论文](https://arxiv.org/abs/2607.12541)研究 Dockerfile 漂移：Cadre 构造指令与文件/指令依赖图以选取修复上下文并产生定向 LLM 补丁，DodeX 从 CI 构建日志挖掘真实漂移实例；[公开实现](https://github.com/dw763j/Cadre)。本次没有运行完整 Cadre，也不主张依赖图、Dockerfile 演化分析或定向修复为新概念。
+- 当前实现仅提供受限的本地 MoonBit 双快照接口：在预算内分离唯一行对齐的编辑，并对可确认的外部 FROM 镜像字面值变化合并旧/新 stage 图；不生成 LLM 修复，也不取代 BuildKit LLB。Tempo 的 5、11 行实证及退回条件见 SOURCE-COMPARISON。该边界说明与已有工具的关系，不构成独立产品价值或实际采用证明。

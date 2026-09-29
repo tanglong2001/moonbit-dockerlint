@@ -46,11 +46,27 @@ def main():
         if not archive.is_absolute():
             archive = root / archive
     archive = archive.resolve(strict=True)
-    required = ['.moonbit-version', '.moonignore', 'examples/context/.dockerignore']
+    required = [
+        'README.md',
+        'PROPOSAL.md',
+        'REVIEW-RESPONSE.md',
+        'SOURCE-COMPARISON.md',
+        'TESTING.md',
+        'DUPLICATION.md',
+        'SUBMISSION.json',
+        '.moonbit-version',
+        '.moonignore',
+        'examples/context/.dockerignore',
+        'evidence/tempo-docker-update-20260716/source/.dockerignore',
+        'evidence/source-precision-20260929/LOCAL-REPLAY-0.11.0.json',
+    ]
     with tempfile.TemporaryDirectory(prefix='dockerlint-package-check-') as temporary:
         extracted = Path(temporary).resolve()
         with zipfile.ZipFile(archive) as package:
+            forbidden_prefixes = ('work/', '_build/', 'target/', 'node_modules/', '.mooncakes/')
             for member in package.infolist():
+                if member.filename.startswith(forbidden_prefixes):
+                    raise RuntimeError(f'Local work/cache path in package: {member.filename}')
                 path = (extracted / member.filename).resolve()
                 if not path.is_relative_to(extracted):
                     raise RuntimeError('Package member escapes extraction directory')
