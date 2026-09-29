@@ -89,4 +89,5 @@ moon package
 
 本地核验：JS/Wasm-GC 测试、构建上下文示例和宿主检查通过。 `moon package` 已完成离线打包预检，它不等于已发布到 Mooncakes。
 
-公开交付（2026-09-29 只读核对）：[https://github.com/tanglong2001/moonbit-dockerlint](https://github.com/tanglong2001/moonbit-dockerlint) 的公开 Git HEAD 是本地提交的祖先；Mooncakes 最新版号 `0.10.0` 与本地版号相同。版号不证明包内容与本次本地提交一致；当前 README、申报书、远端 CI 与报名表仍须对照公开提交核实。项目许可见 [LICENSE](LICENSE)；第三方来源和许可见仓内说明。
+
+**公开状态（2026-09-29 核对）**：GitHub [公开仓库](https://github.com/tanglong2001/moonbit-dockerlint)、[Mooncakes 0.10.0](https://mooncakes.io/docs/tanglong2001/dockerlint@0.10.0) 已可访问；[CI 成功记录](https://github.com/tanglong2001/moonbit-dockerlint/actions/runs/36435905692) 对应 `765378e4cf77`。本次材料更新尚未推送；该远端 CI 对应所列公开提交。报名表一致性及赛事审核结果尚未核实。

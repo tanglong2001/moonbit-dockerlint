@@ -1,30 +1,23 @@
-# MoonBit 构建输入与阶段影响分析
-本项目仓库：https://github.com/tanglong2001/moonbit-dockerlint
-模块：tanglong2001/dockerlint；本地0.10.0；MIT AND BSD-3-Clause，第三方来源另附许可。
-状态：初审驳回后的申报材料修订仍在本地；Mooncakes 已出现 0.10.0 版号，本次文档和复审表单尚未核对公开版本。
+# MoonBit 多阶段构建输入与修改影响分析
 
-## 任务与实现
-审阅多阶段Dockerfile时，定位COPY/ADD/bind使用的本地文件、ignore排除原因，以及修改传到目标的引用路径。
-MoonBit实现限定语法、ARG/ENV未知状态传播、清单匹配、阶段图和修改前后双图分析；Node提供受限只读扫描和CLI。
-0.10.0公开compare_build_sources接收两份完整源码，自动选取覆盖全部差异的保守行区间，避免漏填变更坐标。
-删除依赖时保留旧图路径；无法稳定对齐阶段时保守报告所有目标。多处修改可能多报，不返回安全跳过构建的证明。
-复用@balena/dockerignore1.0.2，未核实模式明确拒绝；同一MoonBit核心供JS/Wasm-GC消费，宿主文件操作不称为原生I/O。
+项目仓库：https://github.com/tanglong2001/moonbit-dockerlint。模块 `tanglong2001/dockerlint@0.10.0`；MIT AND BSD-3-Clause，第三方许可见仓库说明。本次以输入和阶段分析回应原规则检查工具的价值异议。
 
-## 现有工作与独立贡献
-Docker/BuildKit已有完整求解，Hadolint已有规则检查，mizchi/syntree已有Dockerfile分词，MoonBit亦有Git ignore库。
-旧linter规则不再是申报主贡献；保留价值是可嵌入MoonBit的目录输入、变更路径及显式不确定性接口。
-BuildKit同样可离线转换，不能把无daemon、协议算法或简单规则列表称为独有能力；未声称生态空白。
+## 具体问题与输出
 
-## 可运行证据
-按README安装固定工具链，运行node examples/run-context.mjs；完整快照文件入口见SOURCE-COMPARISON.md。
-BuildKit v0.25.1的Dockerfile2LLB参考覆盖固定教材及修改副本的21组目标闭包、147项可达判断、2组双图比较。
-参考采用空ONBUILD的假Linux/amd64镜像配置，dev阶段需补入已选target；不证明真实镜像闭包或缓存失效。
-0.10.0自动快照入口新增JS/Wasm-GC各4组API检查和7项CLI检查；旧参考与新接口结果分别保存，没有混成新全量实测。
-docker/getting-started固定提交、Apache-2.0及原始散列见examples/buildkit-closures；公开教材不是本项目客户。
+审阅多阶段 Dockerfile 的一次修改时，需要追问：哪些本地文件进入构建，哪些被 ignore 排除，变化经哪条阶段引用传到最终目标，哪些输入无法静态确定。项目接收目录清单及修改前后的完整 Dockerfile，输出可追溯的输入匹配、阶段依赖与影响报告，供代码审查或 MoonBit 构建工具进一步处理。
 
-## 边界与交付
-外部镜像元数据、命名context、链接及部分模式未求解；未知项显式返回，affected=false不能直接用于跳过构建。
-没有实际镜像构建、生产用户或性能优越性证据。交付核心API、CLI、例子、来源和分层回执，详见CONTEXT、TESTING及REVIEW-RESPONSE。
-后续由申报人同步同版本公开源码、完整仓库URL和申报表；当前本地成果不代表远端CI或复审通过。
+## MoonBit 实现与扩展
 
-**验收复现与交付状态（2026-09-28 本地）**：以 moonc 0.10.14+7d59c7ec9 通过 `--deny-warn` 检查、JS/Wasm-GC 测试和构建、最小样例和离线 `moon package`；同一代码在 Ubuntu-D 26.04 WSL2 全新解包后通过格式、接口生成、严格双后端检查及 Node 24.21.0 最小宿主入口；截至 2026-09-29，公开 Git HEAD 为本地提交祖先；Mooncakes 最新版号 `0.10.0` 与本地版号相同；本次文档、包内容与远端 CI 尚需核对。命令与能力边界见 [README](README.md)，自动检查见 [CI](.github/workflows/ci.yml)；本地通过不代表赛事审核通过。
+限定 Dockerfile 语法、ARG/ENV 未知状态、文件清单匹配、阶段图及双图影响传播由 MoonBit 实现；Node 负责受限只读扫描和 CLI。`compare_build_sources` 自动从两份源码选取覆盖所有变化的保守行区间，减少手填坐标漏报。依赖被删除时仍保留旧图路径；阶段无法稳定对齐时扩大报告范围。已知 ignore 子域复用 `@balena/dockerignore@1.0.2`，不支持的模式显式拒绝。
+
+## 与现有工具的关系
+
+[BuildKit](https://github.com/moby/buildkit) 已有构建求解与离线转换，[Hadolint](https://github.com/hadolint/hadolint) 已有规则检查，MoonBit 的 `mizchi/syntree` 已有 Dockerfile 分词。新增交付限于可嵌入 MoonBit 的输入清单、前后图解释与不确定性接口；旧规则列表不计作独立创新。AI 可以生成 Dockerfile，审阅其输入和引用变化仍需要确定、可定位的结果；这说明工具用途，不证明本项目优于已有工具。
+
+## 可运行任务与独立核对
+
+按 README 构建后运行 `node examples/run-context.mjs`；两份文件的比较入口见 [SOURCE-COMPARISON](SOURCE-COMPARISON.md)。固定 docker/getting-started 教材及修改副本与 BuildKit v0.25.1 对照 21 组目标闭包、147 项可达判断和两组双图比较；自动快照 API 与 CLI 另有针对性检查。原始版本、许可和假设均保存在证据目录。
+
+参考只采用空 ONBUILD 的模拟 Linux/amd64 镜像配置，未实际构建镜像。外部镜像、命名 context、链接及部分模式不求解；`affected=false` 不能作为安全跳过构建的凭证。当前没有确认使用方或独特需求，公开教材也不代表生产采用；是否足以构成独立参赛价值仍需复审判断。交付核心 API、CLI、可运行例子、来源与检查回执。
+
+**公开状态（2026-09-29 核对）**：GitHub [公开仓库](https://github.com/tanglong2001/moonbit-dockerlint)、[Mooncakes 0.10.0](https://mooncakes.io/docs/tanglong2001/dockerlint@0.10.0) 已可访问；[CI 成功记录](https://github.com/tanglong2001/moonbit-dockerlint/actions/runs/36435905692) 对应 `765378e4cf77`。本次材料更新尚未推送；该远端 CI 对应所列公开提交。报名表一致性及赛事审核结果尚未核实。
