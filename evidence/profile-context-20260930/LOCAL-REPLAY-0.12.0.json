@@ -1,0 +1,447 @@
+{
+  "format": "moonbit-profile-context-replay/1",
+  "generated_at_utc": "2026-09-29T17:31:22.726Z",
+  "local_version": "0.12.0",
+  "pushed_or_published": false,
+  "platform": "linux/amd64",
+  "image_profiles": {
+    "format": "moonbit-image-profile-verification/1",
+    "platform": "linux/amd64",
+    "set_sha256": "sha256:b4dc34d8f608c4f919e107fc71e1cafbca7fe493a20f6cdd6a0101f6414dd159",
+    "metadata": [
+      {
+        "reference": "alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+        "platform": "linux/amd64",
+        "index_digest": "sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+        "manifest_digest": "sha256:79ff19e9084a00eece421b2523fb93e22d730e2c0e525905de047e848e56d95f",
+        "config_digest": "sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+        "onbuild": []
+      },
+      {
+        "reference": "gcr.io/distroless/static-debian12:debug@sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+        "platform": "linux/amd64",
+        "index_digest": "sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+        "manifest_digest": "sha256:48becfa076a92115d44c0b8a97b7074433359ed9deabd68c31ec10c64d26ef74",
+        "config_digest": "sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+        "onbuild": []
+      },
+      {
+        "reference": "gcr.io/distroless/static-debian12@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+        "platform": "linux/amd64",
+        "index_digest": "sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+        "manifest_digest": "sha256:7d14daf425206f9e79b463e57226c1d6500a6b42f4923d5f0a9a413657f5774f",
+        "config_digest": "sha256:c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401",
+        "onbuild": []
+      },
+      {
+        "reference": "gcr.io/distroless/static-debian12:debug@sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+        "platform": "linux/amd64",
+        "index_digest": "sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+        "manifest_digest": "sha256:b15bab290e94e1907bfaaa2100cd2409ffb88cc8b40aac8292561a4291784047",
+        "config_digest": "sha256:c6ba1059005bf329a166320ef451beb891a2ebe1907e8b5466c3e0aecb1dba66",
+        "onbuild": []
+      },
+      {
+        "reference": "gcr.io/distroless/static-debian12@sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+        "platform": "linux/amd64",
+        "index_digest": "sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+        "manifest_digest": "sha256:597c2b4bc7f353100af9b8b06bb4f126c4a45f9d8175e25d4f01f965d5d94396",
+        "config_digest": "sha256:52912250d9cb16fad8fa255f821a514a621a49c1ab71b4a7480f61d82c9bb0f9",
+        "onbuild": []
+      }
+    ],
+    "records": [
+      {
+        "reference": "alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+        "status": "verified",
+        "reason": "empty OnBuild verified from raw config",
+        "index_digest": "sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+        "manifest_digest": "sha256:79ff19e9084a00eece421b2523fb93e22d730e2c0e525905de047e848e56d95f",
+        "config_digest": "sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+        "onbuild_count": 0
+      },
+      {
+        "reference": "gcr.io/distroless/static-debian12:debug@sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+        "status": "verified",
+        "reason": "empty OnBuild verified from raw config",
+        "index_digest": "sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+        "manifest_digest": "sha256:48becfa076a92115d44c0b8a97b7074433359ed9deabd68c31ec10c64d26ef74",
+        "config_digest": "sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+        "onbuild_count": 0
+      },
+      {
+        "reference": "gcr.io/distroless/static-debian12@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+        "status": "verified",
+        "reason": "empty OnBuild verified from raw config",
+        "index_digest": "sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+        "manifest_digest": "sha256:7d14daf425206f9e79b463e57226c1d6500a6b42f4923d5f0a9a413657f5774f",
+        "config_digest": "sha256:c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401",
+        "onbuild_count": 0
+      },
+      {
+        "reference": "gcr.io/distroless/static-debian12:debug@sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+        "status": "verified",
+        "reason": "empty OnBuild verified from raw config",
+        "index_digest": "sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+        "manifest_digest": "sha256:b15bab290e94e1907bfaaa2100cd2409ffb88cc8b40aac8292561a4291784047",
+        "config_digest": "sha256:c6ba1059005bf329a166320ef451beb891a2ebe1907e8b5466c3e0aecb1dba66",
+        "onbuild_count": 0
+      },
+      {
+        "reference": "gcr.io/distroless/static-debian12@sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+        "status": "verified",
+        "reason": "empty OnBuild verified from raw config",
+        "index_digest": "sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+        "manifest_digest": "sha256:597c2b4bc7f353100af9b8b06bb4f126c4a45f9d8175e25d4f01f965d5d94396",
+        "config_digest": "sha256:52912250d9cb16fad8fa255f821a514a621a49c1ab71b4a7480f61d82c9bb0f9",
+        "onbuild_count": 0
+      }
+    ]
+  },
+  "case": {
+    "repository": "https://github.com/grafana/tempo",
+    "commit": "3f54f1c040a5c014a7f3acde22376060807178c6",
+    "parent": "55924f126cd2f532a448fe4af4bd00e2d11638be",
+    "license": "AGPL-3.0",
+    "source_tree_sha256": "7571356da3b7b2767fd0a5ae7de012c7d1bdcba9ce4145c7959e6b9ad9899186",
+    "source_entries": 18501,
+    "modeled_entries": 18504,
+    "change": "bin/linux/tempo-amd64",
+    "binary_built": false
+  },
+  "cases": [
+    {
+      "snapshot": "before",
+      "source_sha256": "cdd1928b8fd76be06251d2ee2a00163cd04c99e86ace1090648d6e45e7ffdd9e",
+      "fixed_buildkit_receipt_sha256": "07d0a6a65faa950ad38a2b2f9e0aef97656ef364185233d76bf08132e29ff736",
+      "buildkit_observed_copy_targets": [
+        false,
+        false,
+        true
+      ],
+      "unprofiled_impact": {
+        "path": "bin/linux/tempo-amd64",
+        "excluded": false,
+        "source_lines": [
+          14
+        ],
+        "conservative": true,
+        "targets": [
+          {
+            "target": 0,
+            "affected": true,
+            "path": [
+              0
+            ]
+          },
+          {
+            "target": 1,
+            "affected": true,
+            "path": [
+              1
+            ]
+          },
+          {
+            "target": 2,
+            "affected": true,
+            "path": [
+              2
+            ]
+          }
+        ]
+      },
+      "profiled_impact": {
+        "path": "bin/linux/tempo-amd64",
+        "excluded": false,
+        "source_lines": [
+          14
+        ],
+        "conservative": false,
+        "targets": [
+          {
+            "target": 0,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 1,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 2,
+            "affected": true,
+            "path": [
+              2
+            ]
+          }
+        ]
+      },
+      "metadata_decisions": [
+        {
+          "stage": 0,
+          "line": 1,
+          "reference": "alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+          "platform": "linux/amd64",
+          "status": "used-empty-onbuild",
+          "reason": "host-verified OCI config matches the pinned FROM and platform; ONBUILD is empty",
+          "index_digest": "sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+          "manifest_digest": "sha256:79ff19e9084a00eece421b2523fb93e22d730e2c0e525905de047e848e56d95f",
+          "config_digest": "sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b"
+        },
+        {
+          "stage": 1,
+          "line": 5,
+          "reference": "gcr.io/distroless/static-debian12:debug@sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+          "platform": "linux/amd64",
+          "status": "used-empty-onbuild",
+          "reason": "host-verified OCI config matches the pinned FROM and platform; ONBUILD is empty",
+          "index_digest": "sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+          "manifest_digest": "sha256:48becfa076a92115d44c0b8a97b7074433359ed9deabd68c31ec10c64d26ef74",
+          "config_digest": "sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd"
+        },
+        {
+          "stage": 2,
+          "line": 11,
+          "reference": "gcr.io/distroless/static-debian12@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+          "platform": "linux/amd64",
+          "status": "used-empty-onbuild",
+          "reason": "host-verified OCI config matches the pinned FROM and platform; ONBUILD is empty",
+          "index_digest": "sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+          "manifest_digest": "sha256:7d14daf425206f9e79b463e57226c1d6500a6b42f4923d5f0a9a413657f5774f",
+          "config_digest": "sha256:c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401"
+        }
+      ],
+      "missing_alpine_profile_impact": {
+        "path": "bin/linux/tempo-amd64",
+        "excluded": false,
+        "source_lines": [
+          14
+        ],
+        "conservative": true,
+        "targets": [
+          {
+            "target": 0,
+            "affected": true,
+            "path": [
+              0
+            ]
+          },
+          {
+            "target": 1,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 2,
+            "affected": true,
+            "path": [
+              2
+            ]
+          }
+        ]
+      },
+      "wrong_platform_impact": {
+        "path": "bin/linux/tempo-amd64",
+        "excluded": false,
+        "source_lines": [
+          14
+        ],
+        "conservative": true,
+        "targets": [
+          {
+            "target": 0,
+            "affected": true,
+            "path": [
+              0
+            ]
+          },
+          {
+            "target": 1,
+            "affected": true,
+            "path": [
+              1
+            ]
+          },
+          {
+            "target": 2,
+            "affected": true,
+            "path": [
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "snapshot": "after",
+      "source_sha256": "72693daf717c08c0752e9d97d7a7bf60a21fef554110c0560c03b6f97c9e4379",
+      "fixed_buildkit_receipt_sha256": "077923fb3a31688bc6a469380e26682b2f537b1d5c5420dd403fa0af68b6d454",
+      "buildkit_observed_copy_targets": [
+        false,
+        false,
+        true
+      ],
+      "unprofiled_impact": {
+        "path": "bin/linux/tempo-amd64",
+        "excluded": false,
+        "source_lines": [
+          14
+        ],
+        "conservative": true,
+        "targets": [
+          {
+            "target": 0,
+            "affected": true,
+            "path": [
+              0
+            ]
+          },
+          {
+            "target": 1,
+            "affected": true,
+            "path": [
+              1
+            ]
+          },
+          {
+            "target": 2,
+            "affected": true,
+            "path": [
+              2
+            ]
+          }
+        ]
+      },
+      "profiled_impact": {
+        "path": "bin/linux/tempo-amd64",
+        "excluded": false,
+        "source_lines": [
+          14
+        ],
+        "conservative": false,
+        "targets": [
+          {
+            "target": 0,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 1,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 2,
+            "affected": true,
+            "path": [
+              2
+            ]
+          }
+        ]
+      },
+      "metadata_decisions": [
+        {
+          "stage": 0,
+          "line": 1,
+          "reference": "alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+          "platform": "linux/amd64",
+          "status": "used-empty-onbuild",
+          "reason": "host-verified OCI config matches the pinned FROM and platform; ONBUILD is empty",
+          "index_digest": "sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+          "manifest_digest": "sha256:79ff19e9084a00eece421b2523fb93e22d730e2c0e525905de047e848e56d95f",
+          "config_digest": "sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b"
+        },
+        {
+          "stage": 1,
+          "line": 5,
+          "reference": "gcr.io/distroless/static-debian12:debug@sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+          "platform": "linux/amd64",
+          "status": "used-empty-onbuild",
+          "reason": "host-verified OCI config matches the pinned FROM and platform; ONBUILD is empty",
+          "index_digest": "sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+          "manifest_digest": "sha256:b15bab290e94e1907bfaaa2100cd2409ffb88cc8b40aac8292561a4291784047",
+          "config_digest": "sha256:c6ba1059005bf329a166320ef451beb891a2ebe1907e8b5466c3e0aecb1dba66"
+        },
+        {
+          "stage": 2,
+          "line": 11,
+          "reference": "gcr.io/distroless/static-debian12@sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+          "platform": "linux/amd64",
+          "status": "used-empty-onbuild",
+          "reason": "host-verified OCI config matches the pinned FROM and platform; ONBUILD is empty",
+          "index_digest": "sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+          "manifest_digest": "sha256:597c2b4bc7f353100af9b8b06bb4f126c4a45f9d8175e25d4f01f965d5d94396",
+          "config_digest": "sha256:52912250d9cb16fad8fa255f821a514a621a49c1ab71b4a7480f61d82c9bb0f9"
+        }
+      ],
+      "missing_alpine_profile_impact": {
+        "path": "bin/linux/tempo-amd64",
+        "excluded": false,
+        "source_lines": [
+          14
+        ],
+        "conservative": true,
+        "targets": [
+          {
+            "target": 0,
+            "affected": true,
+            "path": [
+              0
+            ]
+          },
+          {
+            "target": 1,
+            "affected": false,
+            "path": []
+          },
+          {
+            "target": 2,
+            "affected": true,
+            "path": [
+              2
+            ]
+          }
+        ]
+      },
+      "wrong_platform_impact": {
+        "path": "bin/linux/tempo-amd64",
+        "excluded": false,
+        "source_lines": [
+          14
+        ],
+        "conservative": true,
+        "targets": [
+          {
+            "target": 0,
+            "affected": true,
+            "path": [
+              0
+            ]
+          },
+          {
+            "target": 1,
+            "affected": true,
+            "path": [
+              1
+            ]
+          },
+          {
+            "target": 2,
+            "affected": true,
+            "path": [
+              2
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Fresh MoonBit execution compared with previously saved BuildKit v0.25.1 conversion outputs; BuildKit was not rerun by this script.",
+    "The generated binary path is a post-Make inventory assumption, not an actual Tempo binary or actual changed file contents.",
+    "No Docker build, image layer verification, cache-key comparison, benchmark, safe-build-skip proof, deployment or adoption evidence.",
+    "Only literal index-digest-pinned FROM with exact Linux platform and empty OnBuild can refine the unknown seed; no generic trigger interpreter or base ENV resolution.",
+    "Core metadata is a host-verified contract; the Node loader verifies raw blobs, whereas direct MoonBit callers must perform the same verification."
+  ]
+}

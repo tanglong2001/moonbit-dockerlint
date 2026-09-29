@@ -1,0 +1,40 @@
+{
+  "comparisons": [
+    {
+      "id": "copy-test-to-app-base",
+      "beforeLines": [
+        22
+      ],
+      "afterLines": [
+        22
+      ],
+      "targets": [
+        "app-zip-creator",
+        "#6"
+      ]
+    },
+    {
+      "id": "copy-appzip-to-app-base",
+      "beforeLines": [
+        40
+      ],
+      "afterLines": [
+        40
+      ],
+      "targets": [
+        "#6"
+      ]
+    }
+  ],
+  "cliChecks": [
+    "deletion",
+    "output-no-overwrite",
+    "uncertainty-exit-3",
+    "invalid-utf8",
+    "size-limit",
+    "missing-argument",
+    "duplicate-argument"
+  ],
+  "artifacts": "D:\\CodexLocal\\ban\\work\\portfolio-review-20260929\\dockerlint-source-comparison-d3nnLx",
+  "skipBuildCertified": false
+}

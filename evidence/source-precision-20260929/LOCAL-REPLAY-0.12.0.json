@@ -1,0 +1,213 @@
+{
+  "format": "moonbit-dockerlint-local-source-precision-review/1",
+  "generated_at_utc": "2026-09-29T17:31:21.131Z",
+  "project_version": {
+    "published_last_observed": "0.10.0",
+    "local": "0.12.0",
+    "source_precision_introduced": "0.11.0",
+    "published_or_pushed": false,
+    "prior_0_10_1_receipt_preserved": true
+  },
+  "prior_tempo_receipt_sha256": "030f84e5986a5474b5202cf49a287c99149bf3c58407784e868dedecc150608e",
+  "case": {
+    "repository": "https://github.com/grafana/tempo",
+    "license": "AGPL-3.0",
+    "commit": "3f54f1c040a5c014a7f3acde22376060807178c6",
+    "parent": "55924f126cd2f532a448fe4af4bd00e2d11638be",
+    "message": "chore(deps): update docker (#7588)",
+    "source_sha256": {
+      "before_dockerfile": "cdd1928b8fd76be06251d2ee2a00163cd04c99e86ace1090648d6e45e7ffdd9e",
+      "after_dockerfile": "72693daf717c08c0752e9d97d7a7bf60a21fef554110c0560c03b6f97c9e4379",
+      "dockerignore": "5a55c351e9651776d20123c4daa380e5865bb14645beb9aae03aff67dbf4c01e",
+      "makefile": "5ffb57757dd5ecdc29915c0611eb993ba0f888de9f20752c2fc4746226b4ae5a",
+      "license": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "profile_set": "b4dc34d8f608c4f919e107fc71e1cafbca7fe493a20f6cdd6a0101f6414dd159"
+    },
+    "make_target_evidence": [
+      "docker-tempo",
+      "docker-component",
+      "exe",
+      "tempo"
+    ],
+    "ignore": {
+      "root_file_used": ".dockerignore",
+      "dockerfile_specific_file_present": false,
+      "excluded_directories_checked": [
+        "docs",
+        "opentelemetry-proto"
+      ]
+    }
+  },
+  "tempo_base_digest_review": {
+    "oracle": "BuildKit Dockerfile2LLB to LLB; fixed image configs from pinned OCI digests; no daemon or build",
+    "profiles": [
+      {
+        "name": "alpine-latest",
+        "pinned_index_digest": "sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+        "platform": "linux/amd64",
+        "config_digest": "sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+        "onbuild_count": 0
+      },
+      {
+        "name": "distroless-debug-before",
+        "pinned_index_digest": "sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+        "platform": "linux/amd64",
+        "config_digest": "sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+        "onbuild_count": 0
+      },
+      {
+        "name": "distroless-runtime-before",
+        "pinned_index_digest": "sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+        "platform": "linux/amd64",
+        "config_digest": "sha256:c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401",
+        "onbuild_count": 0
+      },
+      {
+        "name": "distroless-debug-after",
+        "pinned_index_digest": "sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+        "platform": "linux/amd64",
+        "config_digest": "sha256:c6ba1059005bf329a166320ef451beb891a2ebe1907e8b5466c3e0aecb1dba66",
+        "onbuild_count": 0
+      },
+      {
+        "name": "distroless-runtime-after",
+        "pinned_index_digest": "sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+        "platform": "linux/amd64",
+        "config_digest": "sha256:52912250d9cb16fad8fa255f821a514a621a49c1ab71b4a7480f61d82c9bb0f9",
+        "onbuild_count": 0
+      }
+    ],
+    "changed_base_stages": [
+      "tempo-setup",
+      "stage-2"
+    ],
+    "default_target_closure": [
+      "ca-certificates",
+      "tempo-setup",
+      "stage-2"
+    ],
+    "default_target_vertices_before_after": [
+      14,
+      14
+    ],
+    "unchanged_ca_certificates_stage": {
+      "ca-certificates": [
+        "[ca-certificates 1/2] FROM docker.io/library/alpine:latest@sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+        "[ca-certificates 2/2] RUN apk add --update --no-cache ca-certificates"
+      ]
+    },
+    "moonbit_source_compare": {
+      "before_lines": [
+        5,
+        11
+      ],
+      "after_lines": [
+        5,
+        11
+      ],
+      "diff_exact": true,
+      "diff_reason": "bounded line diff retained separate edit hunks",
+      "changed_stages_before": [
+        1,
+        2
+      ],
+      "changed_stages_after": [
+        1,
+        2
+      ],
+      "affected_targets": [
+        "tempo-setup",
+        "#2"
+      ],
+      "conservative": false,
+      "reason": "union of before/after literal dependency paths for the supplied line sets"
+    }
+  },
+  "local_artifact_change_review": {
+    "change": "bin/linux/tempo-amd64",
+    "source_snapshot_contains_artifact": false,
+    "inventory_assumption": "post-Makefile-output path inserted as a synthetic zero-byte file entry; no artifact bytes were created",
+    "input": {
+      "line": 14,
+      "source": "bin/linux/tempo-amd64",
+      "status": "resolved",
+      "selected_paths": [
+        "bin/linux/tempo-amd64"
+      ]
+    },
+    "source_lines": [
+      14
+    ],
+    "affected_targets": [
+      0,
+      1,
+      2
+    ],
+    "conservative": true,
+    "unresolved_metadata": [
+      {
+        "line": 1,
+        "reason": "external base image ONBUILD metadata is unavailable"
+      },
+      {
+        "line": 5,
+        "reason": "external base image ONBUILD metadata is unavailable"
+      },
+      {
+        "line": 11,
+        "reason": "external base image ONBUILD metadata is unavailable"
+      }
+    ]
+  },
+  "build_arg_reference": {
+    "oracle": "BuildKit v0.25.1 conversion with synthetic linux/amd64 image config; no image pull or build",
+    "base_config_sha256": "236663b0109b1fff5e8a7e9a03e98a9434b858fa453746e4132218c30a8e5568",
+    "base_env": "TARGETARCH=other",
+    "explicit_arg_copy": {
+      "build_args": {
+        "TARGETARCH": "amd64"
+      },
+      "file_copies": [
+        {
+          "source": "/bin/linux/tempo-amd64",
+          "destination": "/tempo"
+        }
+      ],
+      "raw_custom_names": [
+        "[1/2] FROM registry.invalid/moonbit-dockerlint-buildarg@sha256:236663b0109b1fff5e8a7e9a03e98a9434b858fa453746e4132218c30a8e5568",
+        "[2/2] COPY bin/linux/tempo-amd64 /tempo",
+        "[internal] load build context"
+      ]
+    },
+    "env_after_arg_copy": {
+      "build_args": {
+        "TARGETARCH": "amd64"
+      },
+      "file_copies": [
+        {
+          "source": "/bin/linux/tempo-arm64",
+          "destination": "/tempo"
+        }
+      ],
+      "raw_custom_names": [
+        "[1/2] FROM registry.invalid/moonbit-dockerlint-buildarg@sha256:236663b0109b1fff5e8a7e9a03e98a9434b858fa453746e4132218c30a8e5568",
+        "[2/2] COPY bin/linux/tempo-arm64 /tempo",
+        "[internal] load build context"
+      ]
+    },
+    "precedence_verified": [
+      "explicit ARG replaces same-name base image ENV",
+      "later Dockerfile ENV replaces ARG for subsequent COPY"
+    ]
+  },
+  "limitations": [
+    "No Docker build, daemon, runtime test, cache-key comparison, benchmark, production adoption, security-skip claim, or deployment was performed.",
+    "BuildKit LLB reference resolves graph operations; 14 vertices do not measure build cost or cache reuse.",
+    "The new bounded source diff reports the two Tempo FROM lines separately and agrees with BuildKit target impact for this case; source-diff precision does not establish cache reuse or safe build skipping.",
+    "Ambiguous repeated-line alignment and comparisons over the 1,000,000-cell LCS budget explicitly fall back to the full differing span and mark the result conservative.",
+    "This replay intentionally calls the original context_plan without image profiles. It resolves TARGETARCH but retains external ONBUILD uncertainty. Use run-profile-context.mjs for the new opt-in verified-profile path.",
+    "The Tempo binary is generated by Make and was not built. Its post-Make path was modeled only to verify COPY resolution.",
+    "Without profile input, local context-file impact remains conservative across external-base stages.",
+    "The last observed public CI result covers the published 0.10.0 commit only; it did not execute the current local changes or this acceptance runner."
+  ]
+}

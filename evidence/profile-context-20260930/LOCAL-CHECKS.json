@@ -1,0 +1,170 @@
+{
+  "status": "pass",
+  "checkedUtc": "2026-09-29T17:31:22.944215+00:00",
+  "localVersion": "0.12.0",
+  "pushed": false,
+  "published": false,
+  "steps": [
+    {
+      "name": "toolchain",
+      "command": [
+        "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\moon\\bin\\moon.exe",
+        "version",
+        "--all"
+      ],
+      "exitCode": 0,
+      "log": "toolchain.log",
+      "sha256": "b4921588f121ea78809a2e6a1747fb7b1352bc8ac82c81bd43e208276592a86f"
+    },
+    {
+      "name": "format",
+      "command": [
+        "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\moon\\bin\\moon.exe",
+        "fmt",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "format.log",
+      "sha256": "a417d3c01772aac1a3bfd7369cd447227e0ba1ab4f133bb6c565de495685ddbe"
+    },
+    {
+      "name": "check",
+      "command": [
+        "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\moon\\bin\\moon.exe",
+        "check",
+        "--deny-warn"
+      ],
+      "exitCode": 0,
+      "log": "check.log",
+      "sha256": "30ec13dbdad8330682289e0f37415033da68d27500ec282757b7d943ce8227b5"
+    },
+    {
+      "name": "test-js",
+      "command": [
+        "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\moon\\bin\\moon.exe",
+        "test",
+        "--target",
+        "js",
+        "--deny-warn"
+      ],
+      "exitCode": 0,
+      "log": "test-js.log",
+      "sha256": "bf75bd68905745e071270445ea0688f24d4f170d84515e17d309d7cd0b6d54f8"
+    },
+    {
+      "name": "test-wasm",
+      "command": [
+        "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\moon\\bin\\moon.exe",
+        "test",
+        "--target",
+        "wasm-gc",
+        "--deny-warn"
+      ],
+      "exitCode": 0,
+      "log": "test-wasm.log",
+      "sha256": "bf75bd68905745e071270445ea0688f24d4f170d84515e17d309d7cd0b6d54f8"
+    },
+    {
+      "name": "build",
+      "command": [
+        "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\moon\\bin\\moon.exe",
+        "build",
+        "--target",
+        "js",
+        "--deny-warn"
+      ],
+      "exitCode": 0,
+      "log": "build.log",
+      "sha256": "2987817259f1ba9f98be0bacda42c847ea21b7cab3f3d161a9b9b2bad4ccb787"
+    },
+    {
+      "name": "api",
+      "command": [
+        "D:\\CodexLocal\\ban\\work\\acceptance-20260928\\moon\\bin\\moon.exe",
+        "info"
+      ],
+      "exitCode": 0,
+      "log": "api.log",
+      "sha256": "c79826b968ab80e4632fd7628b7c2b6b8300755d69c7d7c480e13ee010cac331"
+    },
+    {
+      "name": "host-context",
+      "command": [
+        "node",
+        "--test",
+        "tools/test-context.mjs",
+        "tools/test-context-expansion.mjs",
+        "tools/test-image-profiles.mjs"
+      ],
+      "exitCode": 0,
+      "log": "host-context.log",
+      "sha256": "ca2b0c0b1b6416ef4dec886bfb61a4a298c4ed254c9918b8f4942d5bf0751612"
+    },
+    {
+      "name": "context-example",
+      "command": [
+        "node",
+        "examples/run-context.mjs"
+      ],
+      "exitCode": 0,
+      "log": "context-example.log",
+      "sha256": "976c624659c03780261c671deb22b41c1b9efba41148b074aad535841eafa275"
+    },
+    {
+      "name": "source-comparison",
+      "command": [
+        "node",
+        "tools/test-source-comparison.mjs"
+      ],
+      "exitCode": 0,
+      "log": "source-comparison.log",
+      "sha256": "89ae4956e086c81bdd3b48f42ad7e15a02b3dd13cc24b39a9c7557db51e920ff"
+    },
+    {
+      "name": "source-replay",
+      "command": [
+        "node",
+        "tools/run-tempo-impact.mjs",
+        "--out",
+        "evidence/source-precision-20260929/LOCAL-REPLAY-0.12.0.json"
+      ],
+      "exitCode": 0,
+      "log": "source-replay.log",
+      "sha256": "ff08a17210667c5cb4879f465cfedcb1cabd5962d09ff2d26da7a6b5b0242a63"
+    },
+    {
+      "name": "profile-replay",
+      "command": [
+        "node",
+        "tools/run-profile-context.mjs",
+        "--out",
+        "evidence/profile-context-20260930/LOCAL-REPLAY-0.12.0.json"
+      ],
+      "exitCode": 0,
+      "log": "profile-replay.log",
+      "sha256": "a1c5a3cc956288a0e35f407579d1a616df697f7c7671147ec3a678b880616ded"
+    },
+    {
+      "name": "web-demo",
+      "command": [
+        "node",
+        "tools/test-demo.mjs"
+      ],
+      "exitCode": 0,
+      "log": "web-demo.log",
+      "sha256": "23e548254c7bbb6a7d5164efd8bea15d6aca9ed43d688f6f9cdf2a027bf96b0e"
+    }
+  ],
+  "scope": "Changed MoonBit core and Node profile/CLI paths, fixed BuildKit-output replays; no Docker build or fresh BuildKit run",
+  "workflowStaticCheck": {
+    "tool": "actionlint 1.7.12",
+    "exitCode": 0,
+    "scope": "workflow syntax; no remote execution"
+  },
+  "packageCheck": {
+    "receipt": "PACKAGE-CHECK.json",
+    "status": "pass",
+    "testedArchiveSha256": "d10cb56bb234070c93e004295dcfec94291ff2567512e023d029f3223abadb15"
+  },
+  "finalizedUtc": "2026-09-29T17:37:15.332677+00:00"
+}

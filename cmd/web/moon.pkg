@@ -20,6 +20,7 @@ options(
         "compare_impact",
         "compare_sources",
         "context_plan",
+        "context_plan_with_metadata",
         "source_matches",
       ],
       "format": "esm",

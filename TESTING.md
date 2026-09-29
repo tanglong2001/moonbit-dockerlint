@@ -1,3 +1,17 @@
+# 0.12.0 本地镜像配置接入验证（2026-09-30）
+
+当前回执为 [LOCAL-CHECKS.json](evidence/profile-context-20260930/LOCAL-CHECKS.json)，每一步有原始输出及 SHA-256；以下旧章节保留原日期，不代表本次全部重跑。
+
+固定 `moonc 0.10.14+7d59c7ec9`：格式、严格检查、JS 构建和接口生成通过；JS/WasmGC 核心各 **50/50**。新增六组核心合同用例覆盖精确传播、身份/平台/摘要拒绝、重复与非空触发器、字面与动态平台、自定义 ONBUILD、ENV 未知和可变 FROM。三组 Node 宿主套件合计 **22/22**，其中新 profile 套件 **7/7**；验证原始字节篡改、错误平台/重复身份/路径、伪造空摘要、JSON 大小写和重复 decoded-key、CLI 退出码与保守回退。重复 JSON 对象可能被 Go 合并、被 JS 覆盖的差异已用完整重算摘要链的反例覆盖。
+
+原上下文示例、浏览器核心入口、源码比较的七项 CLI 检查及两个固定用例均通过。新 [Tempo 配置回放](evidence/profile-context-20260930/LOCAL-REPLAY-0.12.0.json) 验证五份原始 OCI 配置，并在前后两份 Dockerfile 得到：无配置 `[true,true,true]`；全部正确配置 `[false,false,true]`；缺 Alpine 配置 `[true,false,true]`；错误目标平台 `[true,true,true]`。只有全部正确资料的本地二进制路径影响为非保守、最终阶段，源码定位第 14 行。
+
+源码变化独立重放仍保留第 5、11 行及 setup/最终两目标，见 [0.12.0 源回执](evidence/source-precision-20260929/LOCAL-REPLAY-0.12.0.json)。新流程复用固定 BuildKit v0.25.1 输出，未重新运行 BuildKit。二进制路径是 post-Make 清单模型，未构建 Tempo，也没有 Docker build、缓存、部署或采用结果。
+
+复现：按 README 更新 JS 引擎后，运行 `node --test tools/test-context.mjs tools/test-context-expansion.mjs tools/test-image-profiles.mjs` 和 `node tools/run-profile-context.mjs --out evidence/profile-context-20260930/REPLAY.json`（新路径）。[CI 配置](.github/workflows/ci.yml) 新增 profile 套件及回放，但尚无本地候选提交的远端运行结果。离线包额外执行相同回放，防止源码目录成功而缺少发布文件。
+
+离线包通过 14 份必需文档/夹具字节检查、解包上下文样例和两份 Tempo profile 回放；[包内执行回执](evidence/profile-context-20260930/PACKAGE-CHECK.json)。工作流通过 actionlint 1.7.12 静态检查。该包回执保留实际受测归档的 SHA-256；最后加入回执和调整文档后的交付归档散列记录在总交付清单中，代码载荷另作逐字节一致性核对。
+
 # 0.8.0 展开与未知状态修复验证
 
 本轮具体命令、退出码、核心与参考引擎 SHA256 在 evidence/expansion-20260923/VALIDATION.json。JS/WasmGC 各 30 项；context 宿主 7 组，展开 8 组；BuildKit 已知展开 98 一致、4 个未知策略差异明确单列，复现说明见 EXPANSION.md。Go/Moby COPY 与 ignore 对照、Docker 官方教程静态分析及原有 CLI/图/报告/引擎回归在当前引擎重新执行。

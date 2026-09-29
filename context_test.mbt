@@ -1,4 +1,294 @@
 ///|
+fn context_test_digest(c : Char) -> String {
+  let digest = StringBuilder()
+  digest.write_string("sha256:")
+  for _ in 0..<64 {
+    digest.write_char(c)
+  }
+  digest.to_string()
+}
+
+///|
+fn context_test_image_metadata(
+  reference : String,
+  platform : String,
+  index_digest : String,
+  manifest_digest : String,
+  config_digest : String,
+  onbuild : Array[String],
+) -> @dockerlint.ImageContextMetadata {
+  {
+    reference,
+    platform,
+    index_digest,
+    manifest_digest,
+    config_digest,
+    onbuild,
+  }
+}
+
+///|
+test "verified empty ONBUILD metadata refines only the matched external stage" {
+  let index = context_test_digest('a')
+  let reference = "example.invalid/base@" + index
+  let profile = context_test_image_metadata(
+    reference,
+    "linux/amd64",
+    index,
+    context_test_digest('b'),
+    context_test_digest('c'),
+    [],
+  )
+  let source = "FROM " +
+    reference +
+    " AS build\nCOPY app /app\nFROM build AS release\nFROM scratch AS unrelated"
+  let entries : Array[@dockerlint.ContextEntry] = [
+    { path: "app", kind: "file", excluded: false, },
+  ]
+  let plan = @dockerlint.analyze_context(
+    source,
+    entries,
+    platform="linux/amd64",
+    image_metadata=[profile],
+    changes=[
+      { path: "app", excluded: false, },
+      { path: "other", excluded: false, },
+    ],
+  )
+  assert_eq(plan.changes[0].targets.map(t => t.affected), [true, true, false])
+  assert_eq(plan.changes[0].targets[1].path, [1, 0])
+  assert_eq(plan.changes[1].targets.map(t => t.affected), [false, false, false])
+  assert_false(plan.changes[0].conservative)
+  assert_eq(plan.uncertainties, [])
+  assert_eq(plan.image_metadata[0].status, "used-empty-onbuild")
+  assert_eq(plan.image_metadata[0].config_digest, context_test_digest('c'))
+}
+
+///|
+test "image identity platform and malformed digest cannot remove unknown ONBUILD" {
+  let index = context_test_digest('a')
+  let reference = "example.invalid/base@" + index
+  let manifest = context_test_digest('b')
+  let config = context_test_digest('c')
+  for
+    profile in [
+      context_test_image_metadata(
+        "other@" + index,
+        "linux/amd64",
+        index,
+        manifest,
+        config,
+        [],
+      ),
+      context_test_image_metadata(
+        reference,
+        "linux/arm64",
+        index,
+        manifest,
+        config,
+        [],
+      ),
+      context_test_image_metadata(
+        reference,
+        "linux/amd64",
+        context_test_digest('d'),
+        manifest,
+        config,
+        [],
+      ),
+      context_test_image_metadata(
+        reference,
+        "linux/amd64",
+        index,
+        "sha256:bad",
+        config,
+        [],
+      ),
+      context_test_image_metadata(
+        reference,
+        "linux/amd64",
+        index,
+        manifest,
+        "sha256:bad",
+        [],
+      ),
+      context_test_image_metadata(
+        reference,
+        "linux/amd64",
+        index,
+        index,
+        config,
+        [],
+      ),
+    ] {
+    let plan = @dockerlint.analyze_context(
+      "FROM " + reference,
+      [],
+      platform="linux/amd64",
+      image_metadata=[profile],
+      changes=[{ path: "other", excluded: false, }],
+    )
+    assert_true(plan.changes[0].conservative)
+    assert_true(plan.changes[0].targets[0].affected)
+    assert_true(plan.image_metadata[0].status != "used-empty-onbuild")
+  }
+}
+
+///|
+test "duplicate profiles and nonempty triggers stay conservative" {
+  let index = context_test_digest('a')
+  let reference = "example.invalid/base@" + index
+  let empty = context_test_image_metadata(
+    reference,
+    "linux/amd64",
+    index,
+    context_test_digest('b'),
+    context_test_digest('c'),
+    [],
+  )
+  for
+    profiles in [
+      [empty, empty],
+      [
+        context_test_image_metadata(
+          reference,
+          "linux/amd64",
+          index,
+          context_test_digest('b'),
+          context_test_digest('c'),
+          ["COPY --from=downstream /data /app"],
+        ),
+      ],
+      [
+        context_test_image_metadata(
+          reference,
+          "linux/amd64",
+          index,
+          context_test_digest('b'),
+          context_test_digest('c'),
+          ["RUN --mount=from=named,target=/src true"],
+        ),
+      ],
+    ] {
+    let plan = @dockerlint.analyze_context(
+      "FROM " + reference,
+      [],
+      platform="linux/amd64",
+      image_metadata=profiles,
+      changes=[{ path: "other", excluded: false, }],
+    )
+    assert_true(plan.changes[0].conservative)
+    assert_true(plan.changes[0].targets[0].affected)
+  }
+}
+
+///|
+test "literal FROM platform overrides target but dynamic or non-Linux platforms do not refine" {
+  let index = context_test_digest('a')
+  let reference = "example.invalid/base@" + index
+  let profile = context_test_image_metadata(
+    reference,
+    "linux/amd64",
+    index,
+    context_test_digest('b'),
+    context_test_digest('c'),
+    [],
+  )
+  let good = @dockerlint.analyze_context(
+    "FROM --platform=linux/amd64 " + reference,
+    [],
+    platform="linux/arm64",
+    image_metadata=[profile],
+    changes=[{ path: "other", excluded: false, }],
+  )
+  assert_false(good.changes[0].conservative)
+  assert_false(good.changes[0].targets[0].affected)
+  for
+    option in [
+      "--platform=$TARGETPLATFORM ", "--platform=windows/amd64 ", "--platform=linux/amd64 --platform=linux/amd64 ",
+    ] {
+    let bad = @dockerlint.analyze_context(
+      "FROM " + option + reference,
+      [],
+      platform="linux/amd64",
+      image_metadata=[profile],
+      changes=[{ path: "other", excluded: false, }],
+    )
+    assert_true(bad.changes[0].conservative)
+    assert_true(bad.changes[0].targets[0].affected)
+  }
+}
+
+///|
+test "Dockerfile ONBUILD and base ENV remain uncertain despite empty profile" {
+  let index = context_test_digest('a')
+  let reference = "example.invalid/base@" + index
+  let profile = context_test_image_metadata(
+    reference,
+    "linux/amd64",
+    index,
+    context_test_digest('b'),
+    context_test_digest('c'),
+    [],
+  )
+  let onbuild = @dockerlint.analyze_context(
+    "FROM " +
+    reference +
+    " AS base\nONBUILD COPY hidden /out\nFROM base AS child",
+    [],
+    platform="linux/amd64",
+    image_metadata=[profile],
+    changes=[{ path: "other", excluded: false, }],
+  )
+  assert_true(onbuild.changes[0].conservative)
+  assert_true(onbuild.changes[0].targets.iter().all(t => t.affected))
+  let env = @dockerlint.analyze_context(
+    "FROM " + reference + "\nARG NAME=app\nCOPY $NAME /app",
+    [{ path: "app", kind: "file", excluded: false, }],
+    platform="linux/amd64",
+    image_metadata=[profile],
+  )
+  assert_eq(env.inputs[0].status, "unknown")
+  let explicit = @dockerlint.analyze_context(
+    "FROM " +
+    reference +
+    "\nARG NAME\nCOPY $NAME /app\nENV NAME=other\nCOPY $NAME /other",
+    [
+      { path: "app", kind: "file", excluded: false, },
+      { path: "other", kind: "file", excluded: false, },
+    ],
+    build_args=Map([("NAME", "app")]),
+    platform="linux/amd64",
+    image_metadata=[profile],
+  )
+  assert_eq(explicit.inputs.map(i => i.source), ["app", "other"])
+  assert_eq(explicit.inputs.map(i => i.status), ["resolved", "resolved"])
+}
+
+///|
+test "mutable and dynamic FROM references cannot consume empty metadata" {
+  for reference in ["example.invalid/base:latest", "$BASE"] {
+    let profile = context_test_image_metadata(
+      reference,
+      "linux/amd64",
+      context_test_digest('a'),
+      context_test_digest('b'),
+      context_test_digest('c'),
+      [],
+    )
+    let plan = @dockerlint.analyze_context(
+      "ARG BASE=example.invalid/base\nFROM " + reference,
+      [],
+      platform="linux/amd64",
+      image_metadata=[profile],
+      changes=[{ path: "other", excluded: false, }],
+    )
+    assert_true(plan.changes[0].conservative)
+    assert_true(plan.changes[0].targets[0].affected)
+  }
+}
+
+///|
 test "context preserves quote syntax and uncertainty through inherited assignments" {
   let plan = @dockerlint.analyze_context(
     "FROM scratch AS base\nARG NAME=actual\nARG UNKNOWN=$MISSING\nENV INDIRECT=$UNKNOWN\nFROM base\nCOPY '$NAME' /out\nCOPY $NAME /out\nCOPY $INDIRECT /out",

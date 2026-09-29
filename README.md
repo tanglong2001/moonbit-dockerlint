@@ -1,107 +1,67 @@
-# MoonBit 构建输入与阶段影响分析
+# MoonBit 多阶段构建修改审阅
 
 本项目仓库：**https://github.com/tanglong2001/moonbit-dockerlint**
 
-模块 `tanglong2001/dockerlint`，公开版 `0.10.0`、本地未发布候选 `0.11.0`，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。当前主任务是审阅多阶段 Dockerfile 的实际构建修改：解释上下文文件输入、stage 引用和影响范围，不以旧规则检查作为独立价值主张。本地候选版未推送或发布；0.10.1 的本地交付与回执保留为历史记录。
+模块 `tanglong2001/dockerlint`，本地候选 `0.12.0`，许可证 `MIT AND BSD-3-Clause`。给定 Dockerfile、目录清单和文件变化，解释哪些输入、源码行和构建目标有关联；给定前后两份 Dockerfile，报告两侧变化及依赖路径。输出包含未知原因，适合 MoonBit 审阅工具或代码生成后的检查流程调用。
 
-## 0.10.1 历史回执：真实 Dockerfile 修改复核
+## 解决的具体问题
 
-固定 Grafana Tempo 提交 `3f54f1c040a5c014a7f3acde22376060807178c6`（AGPL-3.0）更新了 `cmd/tempo/Dockerfile` 的 Distroless debug 与 runtime digest。Makefile 的 `docker-tempo -> docker-component -> exe -> tempo` 目标链确认该文件用于项目构建；使用的根 `.dockerignore` 有四条路径规则，没有 Dockerfile 专属 ignore。所取五个固定 Linux/amd64 OCI config（含两版 Distroless）均按 digest 校验，`OnBuild` 为空。[BuildKit v0.25.1 LLB 回执](evidence/tempo-docker-update-20260716/buildkit-after.json)显示最终目标 14 个 vertex，闭包包括 ca-certificates、tempo-setup 和最终阶段；前后比较识别两个变动的 base stage，ca-certificates 操作保持不变。
+多阶段构建中，一份文件可能只进入最终镜像，也可能经 `COPY --from` 或 bind mount 影响多个目标。只看文本差异或规则警告无法说明这种传播。此库把源码、ignore 后的清单与阶段依赖连起来，并把完整性不足的输入显式标成保守结果，便于审阅人追查依据。
 
-0.10.1 的源码比较把两处分散的 base digest 改动扩成第 5–11 行，`changed_stages` 只点出 setup 阶段但随后保守标记全部目标；BuildKit 证实其中 ca-certificates 未变，暴露了精度损失。该版本的目录分析可将 Makefile 生成的 `bin/linux/tempo-amd64` 解析到最终 COPY，但证据清单仅在 post-Make 模型里合成该路径，未构建二进制。无 profile 输入时，MoonBit 仍把外部镜像 `ONBUILD` 标记为未知并保守影响所有外部 base 阶段；虽然本例镜像 config 已核实为空，该 profile 尚未接入核心接口。另有离线小型 BuildKit 对照验证 `ARG TARGETARCH=amd64` 会覆盖同名 base ENV，而后续 Dockerfile `ENV TARGETARCH=arm64` 会覆盖 ARG。
+固定的 Grafana Tempo 实例提供两类检查：其真实提交更新了第 5、11 行的两个 Distroless 镜像；源码比较只标记 `tempo-setup` 和最终阶段，不扩大到未改的 `ca-certificates`。对 Makefile 声明生成的 `bin/linux/tempo-amd64` 路径，未提供镜像配置时三个外部阶段均保持保守；0.12.0 接入已验证的空 ONBUILD 配置后，可将路径变化限制到最终阶段。原始配置、源码、许可和固定 BuildKit 对照均随仓库保留。
 
-0.10.1 当时新增回归覆盖上述 ARG 解析与未知 `ONBUILD` 的保守路径，JS/WasmGC 各 39 项；完整命令、SHA256、原始输出和限制见 [0.10.1 本地检查记录](TESTING.md#0101-local-tempo-build-change-review) 及 `evidence/tempo-docker-update-20260716/LOCAL-CHECKS.json`。当时没有 Docker build、缓存测量、部署、性能或采用结论；旧公开 CI 只覆盖 0.10.0。
+这是对上游实际 Dockerfile 的分析案例。二进制路径由 post-Make 清单模型补入，没有构建 Tempo 二进制，也没有执行 Docker build。完整结果与边界见 [镜像配置接口](IMAGE-PROFILES.md)、[来源比较](SOURCE-COMPARISON.md) 和 [验证记录](TESTING.md)。
 
-## 0.11.0 本地候选：精确报告分离修改
+## 安装与运行
 
-0.10.1 回执暴露真实 Tempo 更新中的明确精度损失：两处 FROM digest 改动（第 5、11 行）被扩成第 5–11 行，因中间有 FROM 而影响全部目标。0.11.0 以有界 LCS 选取各自快照里的改动行，真实样例现在分别报告 `[5,11]`；仅为拓扑、别名、参数与引用均可对齐的外部镜像 FROM token 替换播种对应阶段，再合并前后依赖图。结果只影响 `tempo-setup` 与最终阶段 `#2`，不再扩大到未变的 `ca-certificates`，并与已保存的 BuildKit LLB 目标影响相符。[新回执](evidence/source-precision-20260929/LOCAL-REPLAY-0.11.0.json)保留原始 0.10.1 回执哈希；这是离线重放固定 BuildKit 输出，不是本次重新运行 BuildKit。
-
-重复行匹配不唯一或 LCS 超过 1,000,000 个单元时会回退到完整差异跨度，`diff_exact=false` 与原因可见；阶段插删/改名/重排、内部或动态 FROM 引用及其他未知变更仍保守处理。外部镜像 `ONBUILD` profile 尚未接入上下文分析器。JS/WasmGC 与完整源对照、可移植重放命令和资源边界见 [来源比较说明](SOURCE-COMPARISON.md) 与 [本地验收记录](TESTING.md#0110-local-source-precision-review)。版本 `0.11.0` 只在本地，旧公开 CI 仅覆盖 `0.10.0`。
-
-## 0.10.0：直接比较两份文件
-
-新增纯 MoonBit `compare_build_sources(before, after)` 及文件入口：
+使用 [固定 MoonBit 工具链](TOOLCHAIN.md)（moonc 0.10.14）和 Node.js 24；仓库根目录执行：
 
 ```sh
-node tools/compare-sources-cli.mjs --before examples/buildkit-closures/original.Dockerfile --after examples/buildkit-closures/copy-test-to-app-base.Dockerfile
-```
-
-先按下节重建引擎。无需手工填写改动行号；完整前后文本自动选择覆盖全部差异的行区间，再合并旧图和新图。相距较远的修改之间，未变化的行也可能被保守纳入，输出不是最小diff。[算法、输入限制、退出码及复现](SOURCE-COMPARISON.md)。这补上了调用方漏填改动行可能漏报影响的接入缺口，仍不能证明可以跳过构建。
-
-## 一次可复现的任务
-
-安装 MoonBit、Node.js 24，在仓库根目录执行：
-
-```sh
+moon update
 npm ci --ignore-scripts
-moon build --target js
+moon build --target js --deny-warn
 node -e "require('node:fs').copyFileSync('_build/js/debug/build/cmd/web/web.js','web/engine.mjs')"
 node examples/run-context.mjs
 ```
 
-脚本在新临时目录完成两次分析并断言结果：修改应用文件只传播到 compile/release，文档修改传播到 docs；随后模拟 `.dockerignore` 误排除配置目录，指出第 3 行 bind 输入被排除。保留 JSON 报告和 stderr，打印输出目录。样例是原创，未运行 Docker build。
-
-分析自己的固定目录快照：
+样例会核对应用/文档两个目标的传播，以及 ignore 误排除配置目录的情况，保存独立报告。读取自己的固定目录快照：
 
 ```sh
 node tools/context-cli.mjs --context ./examples/context --target release --changed-file src/app.txt
 ```
 
-输出包含源路径、包含/排除的清单索引、指令行号、依赖路径和未知原因。`--changed-file` 可重复，支持已删除但仍被源码表达式引用的路径；`--build-arg KEY=VALUE` 提供参数；`--file` 选择上下文内部 Dockerfile；`--out` 仅写入不存在的文件。详见 [CONTEXT.md](CONTEXT.md)。
+`--changed-file` 和 `--build-arg KEY=VALUE` 可重复。`--file` 选择上下文内的 Dockerfile；`--out` 写入一个新文件。输入来源、清单索引、源码行和影响路径见 JSON 报告；[退出码与限制](CONTEXT.md) 区分缺失、排除和未知。
 
-## 实现与已有项目
+已保存原始镜像资料时，可增加 `--platform linux/amd64 --image-profiles /path/to/profiles.json`。宿主核对 index→manifest→config 的原始字节摘要、长度和平台；核心只对字面摘要引用、空 ONBUILD、无自定义触发器的阶段缩小未知影响。配置缺失、重复、损坏或平台不符时继续保守，拒绝原因随报告返回。手填 `onbuild: []` 不会覆盖原始 config。
 
-MoonBit 核心负责指令/变量语义、COPY 通配符、目录输入映射、FROM/COPY/RUN mount 图、环检查及文件到阶段的影响路径。`analyze_context` 接收宿主提供的清单，可在 JS 或 WasmGC 后端使用；不依赖 Node 才能调用纯核心。
+从同一入口离线复核 Tempo 前后快照，输出路径须未存在：
 
-Node 宿主负责目录清单、文件读取和 CLI，复用固定版本 `@balena/dockerignore` 1.0.2 的匹配器；不是新写一个 ignore 库。该旧库在部分模式上不等同现代 Moby，适配器对未支持范围明确报错。[现有 MoonBit ignore 库与其他实现对照](DUPLICATION.md)、[来源与许可](THIRD-PARTY.md)。Docker/BuildKit 已有更完整的求解器，本项目不主张构建图、通配符或规则首创。
+```sh
+node tools/run-profile-context.mjs --out evidence/profile-context-20260930/REPLAY.json
+```
 
-这一轮提交的可评估贡献是无需启动 Docker daemon 的可复用 MoonBit 输入解释接口，以及可直接用于代码审阅的本地分析流程。没有已确认使用方；样例与公开仓库分析不代表用户部署。
+## MoonBit 接口与已有实现的关系
 
-## 验证与适用范围
+核心负责变量和指令语义、COPY 路径匹配、输入映射、FROM/COPY/RUN mount 图、变更传播及有界源码比较。`analyze_context` 可在 JS/WasmGC 使用；调用者提供清单及可选的宿主已验证镜像元数据。核心不执行文件读取或摘要链验证，直接调用方必须履行同样的宿主合同。Node 入口已实现这些检查，并复用 `@balena/dockerignore` 1.0.2。API 与边界见 [CONTEXT](CONTEXT.md) 和 [IMAGE-PROFILES](IMAGE-PROFILES.md)。
 
-0.9.0 历史检查为 JS/WasmGC 核心各 30 项；7 组宿主流程验证实际目录、独立 ignore 文件、退出码、链接边界与输出不覆盖。Go1.27.1 `filepath.Match` 的 3,318 组独立对照和 Moby v0.6.0 的 1,069 组受支持 ignore 输入一致；另记录 7 个明确拒绝的规则/路径情况，未把拒绝当作匹配成功。
+BuildKit 已提供更完整的构建求解和 LLB；Buildx 有 check/outline/targets，dockerfilegraph 可画阶段图，Depot 已有浏览器 LLB 探索，Cadre/DodeX 研究依赖与定向修复。这里提供可嵌入 MoonBit 的输入/变更解释组件，复用现有参考来约束结果；不声称图算法、规则、浏览器运行或 Dockerfile 解析首创。[逐项对照](DUPLICATION.md) 与 [来源许可](THIRD-PARTY.md)。
 
-Docker 官方 `docker/getting-started` 固定提交的未修改源码归档上，目标闭包及两组文件影响集合均通过断言。完整命令、哈希及证据见 [TESTING.md](TESTING.md)，0.8.0历史证据在 `evidence/expansion-20260923/`，0.9.0历史证据在 `evidence/closures-20260927/LOCAL-CHECKS.json`，0.7.0 原始记录保留。本轮0.10.0检查为新增来源比较测试每后端4组、7项CLI检查；[当前回执](evidence/source-comparison-20260927/LOCAL-CHECKS.json)明确记录未重跑BuildKit/Docker。
+对于 AI 生成的 Dockerfile 或修改建议，调用方可以重放同一输入并检查具体行、路径和保守原因；这为审阅提供可复核依据。它不生成修复，不判断业务意图，也不保证构建成功或允许跳过构建。没有已确认使用方，公开上游案例不等于采用。
 
-分析采用 Linux 路径、当前 Dockerfile 和当前 ignore 规则；不读取外部镜像元数据、不执行 RUN、不解析命名 context 覆盖/链接内容或 COPY --exclude。未知输入显式返回 unknown。宿主拒绝 ignore 字符类、反斜线转义等未核实语法，以及 `?` 与非 BMP 文件名的组合。上限与所有限制见 CONTEXT。报告不能作为“安全跳过构建”的凭证，也不计算 Docker 缓存命中率或镜像体积。
-
-0.9.0 修复 COPY 引号丢失及 ARG/ENV 未知状态丢失：字面 `$NAME` 不再误作变量，未知来源跨赋值和继承传播，外部镜像 ENV 未读取时不假定为空。新增 8 组回归与 BuildKit v0.25.1 的 98 项展开一致对照；4 项未知变量策略差异单列。详见 [展开边界与复现](EXPANSION.md)。
-
-## 复审交接
-
-针对“规则罗列”意见，0.9.0 的主任务已改为构建目录与阶段的解释分析；旧 linter 不再是申报主贡献。针对链接问题，报名表应完整填写上述仓库 URL。
-
-2026-09-23 只读拉取公开 `main`：`91b348323871bc3ed32f3d5686280774d56a9fdf`，内容与本地 0.6.0 基线一致。该历史记录只证明 0.6.0 基线；之后核实的公开版本为 0.10.0，本地 0.11.0 候选尚未发布。[申报草稿](PROPOSAL.md)、[逐条答复](REVIEW-RESPONSE.md)。是否达到赛事价值要求由组委会判断。
-
-旧入口和历史验证分别保存在 [0.6.0 说明](README-BEFORE-CONTEXT.md) 与 [更早完整用法](README-BEFORE-VALUE-REWORK.md)，不得作为本轮版本状态引用。
-
-CI固定的编译器与标准库版本见 [TOOLCHAIN.md](TOOLCHAIN.md)；升级时需同时核对生成产物。
-
-## 0.9.0：修改前后双快照影响（2026-09-27）
-
-`compare_build_impact(before, after, changed_before=[...], changed_after=[...])` 以各自快照的1起始行号接收完整变更集合，并合并旧图与新图的影响。删除COPY依赖时仍保留旧路径；阶段插入、删除、改名或重排不能稳定对齐时保守报告所有快照目标。`changed_before`/`changed_after` 必须由调用者正确提供；该接口不解析git diff，也不能检验调用者遗漏了哪些变更。
-
-`node tools/test-buildkit-closures.mjs` 在固定 docker/getting-started Dockerfile及两个明确标注的修改副本上复核21组目标闭包、147项变更阶段可达判断和2组双快照比较。参考不是另写一遍图算法，而是 BuildKit v0.25.1 的 `Dockerfile2LLB` 实际输出；[原始回执](examples/buildkit-closures/oracle.json)和[Go调用器](tools/closure-reference/main.go)可查。调用器用空ONBUILD的假Linux/amd64镜像配置，无daemon、registry取镜像或build，因此只证明Dockerfile显式依赖子集；不能推导真实镜像闭包、缓存失效或安全跳过构建。
-
-来源：[docker/getting-started固定提交](https://github.com/docker/getting-started/tree/94d4031393bf8ebfd38aae640910f9435579d76b)，Apache-2.0；原文件和两个单行修改副本均保留许可与SHA256。该公开教材不是本项目用户。已有 BuildKit 同样能离线转换，不能把“无daemon”说成对它的独占优势；这里的可评估价值是可嵌入MoonBit的有界解释接口、变更路径和目录分析，是否足够作为参赛扩展由组委会判断。
-
-参考观察边界：LLB操作标签不包含只有CMD元数据的dev阶段。对照保留原始标签列表，并显式加入所选target；21组中3组dev因此是“可观察操作阶段 + 所选target”。没有把该探针宣称为任意Dockerfile全部逻辑阶段的通用oracle。
-
-## 本地验收与公开交付（2026-09-28）
-
-核心实现使用 MoonBit；[固定编译器](.moonbit-version)为 `moonc 0.10.14+7d59c7ec9`。先按本文安装宿主依赖、运行 `moon update`，再从仓库根目录执行以下与 [CI](.github/workflows/ci.yml) 对齐的检查；可运行任务和适用边界见本文前面的示例与说明。
+## 验证、交付与范围
 
 ```sh
 moon check --deny-warn
 moon test --target wasm-gc --deny-warn
 moon test --target js --deny-warn
-moon build --target js --deny-warn
-moon package
+node --test tools/test-image-profiles.mjs
+python tools/check-package.py
 ```
 
-跨平台复核（2026-09-28，本地 Ubuntu-D 26.04 WSL2）：从当时的源码归档全新解包，固定 `moonc 0.10.14+7d59c7ec9` 下通过 `moon update`、`moon fmt --check`、`moon info`、严格检查、JS/Wasm-GC 测试及 JS release 构建；Node 24.21.0 跑通本仓一条宿主入口。本次补记仅修改文档，代码与 CI 未变；复核日志在本地交接包中，公开提交后的 GitHub Actions 仍须单独核对。
+[CI](.github/workflows/ci.yml) 包含检查、两种后端测试、构建、宿主检查、固定参考重放及解包示例。[TESTING](TESTING.md) 区分本轮执行、固定参考与历史检查；[本地配置回执](evidence/profile-context-20260930/LOCAL-REPLAY-0.12.0.json) 记录两个快照与五份配置。
 
-本地核验：JS/Wasm-GC 测试、构建上下文示例和宿主检查通过。 `moon package` 已完成离线打包预检，它不等于已发布到 Mooncakes。
+采用 Linux 路径和当前 ignore 规则；不解释非空 ONBUILD、基础镜像 ENV、命名 context 覆盖、链接内容、COPY --exclude、RUN 执行结果或缓存。源码比较遇到重复行歧义、超出 1,000,000 个 LCS 单元或结构不明时明确回退。目录须保持不变；清单摘要不是文件内容摘要。旧规则检查保留兼容入口，非当前申报主贡献。
 
+最后成功核对的公开版为 [Mooncakes 0.10.0](https://mooncakes.io/docs/tanglong2001/dockerlint@0.10.0)，对应 [公开 CI](https://github.com/tanglong2001/moonbit-dockerlint/actions/runs/36435905692)（2026-09-29 17:18 UTC 核对）。0.12.0 仅本地修改，尚未推送、发布或提交赛事材料；交接应同步版本后再核对公开 CI。报名表与审核结果未核实。
 
-**公开状态（2026-09-29 核对）**：GitHub [公开仓库](https://github.com/tanglong2001/moonbit-dockerlint)、[Mooncakes 0.10.0](https://mooncakes.io/docs/tanglong2001/dockerlint@0.10.0) 已可访问；[CI 成功记录](https://github.com/tanglong2001/moonbit-dockerlint/actions/runs/36435905692) 对应 `765378e4cf77`。本次材料更新尚未推送；该远端 CI 对应所列公开提交。报名表一致性及赛事审核结果尚未核实。
+[申报书](PROPOSAL.md) · [复审答复](REVIEW-RESPONSE.md) · [可运行任务](USE-CASE.md) · [0.11.0 及更早历史说明](README-BEFORE-PROFILES.md)

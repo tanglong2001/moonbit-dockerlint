@@ -1,0 +1,57 @@
+{
+  "status": "pass",
+  "archiveSha256": "d10cb56bb234070c93e004295dcfec94291ff2567512e023d029f3223abadb15",
+  "requiredFiles": [
+    "README.md",
+    "PROPOSAL.md",
+    "REVIEW-RESPONSE.md",
+    "SOURCE-COMPARISON.md",
+    "TESTING.md",
+    "DUPLICATION.md",
+    "IMAGE-PROFILES.md",
+    "SUBMISSION.json",
+    ".moonbit-version",
+    ".moonignore",
+    "examples/context/.dockerignore",
+    "evidence/tempo-docker-update-20260716/source/.dockerignore",
+    "evidence/source-precision-20260929/LOCAL-REPLAY-0.11.0.json",
+    "evidence/profile-context-20260930/LOCAL-REPLAY-0.12.0.json"
+  ],
+  "contextExample": {
+    "status": "pass",
+    "input": "original synthetic example, not an executed Docker build",
+    "checks": [
+      "release graph requires stages [0,2] while docs input belongs to stage 1",
+      "unknown external ONBUILD explains exit 3 and conservative cross-stage widening",
+      "excluded directory with re-included child",
+      "ignored bind input exits 2"
+    ],
+    "onbuild_uncertainty": [
+      {
+        "line": 1,
+        "reason": "external base image ONBUILD metadata is unavailable"
+      }
+    ],
+    "normal_summary": {
+      "entries": 11,
+      "files": 7,
+      "total_file_bytes": "422",
+      "included_file_bytes": "397",
+      "selected_known_file_bytes": "77",
+      "missing_sources": 0,
+      "uncertainties": 1
+    },
+    "excluded_summary": {
+      "entries": 11,
+      "files": 7,
+      "total_file_bytes": "430",
+      "included_file_bytes": "386",
+      "selected_known_file_bytes": "58",
+      "missing_sources": 1,
+      "uncertainties": 1
+    }
+  },
+  "profileReplay": "both Tempo snapshots: five verified profiles, precise final-stage impact and missing/wrong-platform conservative fallback",
+  "node": "v24.11.0",
+  "scope": "Local MoonBit package extraction and context example; no Docker build or registry publication"
+}

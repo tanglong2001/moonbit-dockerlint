@@ -31,6 +31,7 @@ jobs:
       - run: node tools/test-impact.mjs
       - run: node --test tools/test-context.mjs
       - run: node --test tools/test-context-expansion.mjs
+      - run: node --test tools/test-image-profiles.mjs
       - run: node examples/run-context.mjs
       - run: node tools/robustness.mjs
       - run: node tools/benchmark.mjs
@@ -41,6 +42,11 @@ jobs:
           report="evidence/source-precision-20260929/ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
           trap 'rm -f "$report"' EXIT
           node tools/run-tempo-impact.mjs --out "$report"
+      - name: Replay fixed Tempo context with verified image profiles
+        run: |
+          report="evidence/profile-context-20260930/ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+          trap 'rm -f "$report"' EXIT
+          node tools/run-profile-context.mjs --out "$report"
       - name: Check the distributable package and context example
         timeout-minutes: 5
         run: python3 tools/check-package.py --receipt evidence/package-check.json

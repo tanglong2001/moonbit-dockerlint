@@ -1,0 +1,30 @@
+✔ COPY keeps single double and concatenated quote meaning through expansion (14.1805ms)
+✔ uncertainty survives ARG ENV and inherited named stages (2.9318ms)
+✔ literal dollar data is known and explicit assignments clear uncertainty (2.35ms)
+✔ global ARG uncertainty survives redeclaration but an explicit build argument clears it (2.0981ms)
+✔ unfetched image ENV may shadow an ARG or change a fallback (1.9475ms)
+✔ an uncertain ADD expression cannot masquerade as a definitely remote input (0.9664ms)
+✔ nondefault expansion escapes and empty expanded FROM fail with structured errors (1.7268ms)
+✔ quoted shell whitespace is not mistaken for Docker COPY JSON syntax (0.5935ms)
+✔ a complete inventory explains release inputs and an independent docs target (112.6644ms)
+✔ Dockerfile-specific ignore overrides the root file and Linux matching is case sensitive (96.4979ms)
+✔ CLI distinguishes excluded, missing, unknown and successful sources (1014.5659ms)
+✔ CLI preserves literal COPY names and reports uncertainty through assignments (901.3745ms)
+✔ reports are reproducible and cannot overwrite an existing output (874.9201ms)
+✔ directory links are listed without traversing and never counted as resolved content (140.8992ms)
+✔ invalid options, paths and source encoding fail through worker boundary (441.7186ms)
+✔ five fixed upstream image chains are verified from original bytes, not summary assertions (64.0549ms)
+✔ tampering at every raw-byte link and descriptor size mismatch cannot refine analysis (46.0762ms)
+✔ wrong platform, duplicate identities, mutable tags and path traversal are rejected (26.8853ms)
+✔ raw nonempty OnBuild overrides forged empty summary and remains conservative through worker (268.1181ms)
+✔ ambiguous config casing, invalid triggers and incompatible config platform are rejected (65.2159ms)
+✔ duplicate decoded JSON keys cannot hide triggers via Go struct merge semantics (79.2323ms)
+✔ CLI uses verified profiles; corrupt profile retains unknown impact and reports its reason (588.0563ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3891.1047

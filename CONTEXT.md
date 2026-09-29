@@ -1,6 +1,6 @@
-# 构建目录分析接口 0.8.0
+# 构建目录分析接口 0.12.0
 
-`analyze_context(source, entries, target?, changes?, build_args?, control_files?)` 是纯 MoonBit API；结构定义见 pkg.generated.mbti。清单项包含规范相对 `/` 路径、file/directory/symlink 类型及宿主计算的 excluded 标记。核心不会自行读取文件或推断 ignore 规则。
+`analyze_context(source, entries, target?, changes?, build_args?, control_files?, platform?, image_metadata?)` 是纯 MoonBit API；结构定义见 pkg.generated.mbti。清单项包含规范相对 `/` 路径、file/directory/symlink 类型及宿主计算的 excluded 标记。核心不会自行读取文件或推断 ignore 规则。
 
 `context_plan` 是 JS JSON 桥接；Node `inspectBuildContext(options)` 在独立 worker 中枚举固定目录，并返回 `moonbit-build-context/1` 报告。CLI 参数见 `node tools/context-cli.mjs --help`。
 
@@ -23,9 +23,9 @@ CLI 退出码：0 所选已知输入存在；2 所选输入缺失/排除；3 存
 
 链接不跟随、不计算目标内容；指定控制文件不得经目录链接逃出上下文。目录在扫描期间应保持不变，这不是原子文件系统快照。Windows 宿主仍解释 Linux 路径，不能代表 Windows 容器语义。
 
-只处理本地 context。外部 ADD 保留 external 状态；远程镜像、远程 Git、命名 context、外部 ONBUILD 元数据、RUN 运行结果、缓存均未求解。COPY/ADD --exclude、未知变量、带引号或重复 mount 选项等返回 unknown。没有计算“旧版本与新版本”两套构建图，不能自动决定跳过构建。
+只处理本地 context。外部 ADD 保留 external 状态；不拉取远程镜像或 Git；命名 context、非空 ONBUILD、RUN 运行结果、缓存均未求解。可选离线配置只用于确认空 ONBUILD，详见 [IMAGE-PROFILES](IMAGE-PROFILES.md)。COPY/ADD --exclude、未知变量、带引号或重复 mount 选项等返回 unknown。没有计算“旧版本与新版本”两套构建图，不能自动决定跳过构建。
 
-外部基础镜像的 `ONBUILD` 未知时，未排除的文件变化会保守传播到所有外部 base 阶段及其下游；已排除的普通文件不会触发该传播。即使单独核验过某个镜像 digest 的配置，当前核心也没有接收/校验该 profile 的接口，因此仍按未知处理。调用方明确提供且 Dockerfile 在该阶段声明的 build arg 可解析对应 COPY 路径，即使 base ENV 未读取；后续 Dockerfile `ENV` 仍优先。未提供值且可能受 base ENV 影响的 ARG 仍返回 unknown。
+外部基础镜像的 `ONBUILD` 未知时，未排除的文件变化会保守传播到所有外部 base 阶段及其下游；已排除的普通文件不会触发该传播。0.12.0 可以接收宿主已验证的镜像元数据；Node 入口核验原始摘要链，核心只在精确匹配且空 ONBUILD 时移除此项未知，保留其他不确定性。调用方明确提供且 Dockerfile 在该阶段声明的 build arg 可解析对应 COPY 路径，即使 base ENV 未读取；后续 Dockerfile `ENV` 仍优先。未提供值且可能受 base ENV 影响的 ARG 仍返回 unknown。
 
 ## 资源限制
 

@@ -44,6 +44,7 @@ pub struct ContextPlan {
   missing_lines : Array[Int]
   uncertainties : Array[BuildUncertainty]
   changes : Array[ContextFileImpact]
+  image_metadata : Array[ImageContextMetadataEvidence]
 } derive(Debug, Eq, ToJson)
 
 ///|
@@ -86,6 +87,8 @@ pub fn analyze_context(
   changes? : Array[ContextChange] = [],
   build_args? : Map[String, String] = Map([]),
   control_files? : Array[String] = ["Dockerfile", ".dockerignore"],
+  platform? : String = "",
+  image_metadata? : Array[ImageContextMetadata] = [],
 ) -> ContextPlan raise ParseError {
   // The inventory contract uses Linux paths and the default Dockerfile escape.
   // Parsing a backtick continuation is not enough to model backtick expansion.
@@ -107,6 +110,17 @@ pub fn analyze_context(
   }
   if entries.length() > 20000 || changes.length() > 256 {
     raise Invalid("context inventory or change count limit")
+  }
+  if image_metadata.length() > 128 || platform.length() > 128 {
+    raise Invalid("image metadata count or platform length limit")
+  }
+  for item in image_metadata {
+    if item.reference.length() > 2048 ||
+      item.platform.length() > 128 ||
+      item.onbuild.length() > 256 ||
+      item.onbuild.iter().any(trigger => trigger.length() > 16384) {
+      raise Invalid("image metadata field limit")
+    }
   }
   let seen : Map[String, String] = Map([])
   for entry in entries {
@@ -149,12 +163,37 @@ pub fn analyze_context(
   let mut input_environment : Map[String, String] = Map([])
   let mut input_unknown_base = false
   let uncertainties = graph.uncertainties.copy()
+  let mut source_onbuild = false
+  for instruction in instructions {
+    if instruction.name == "ONBUILD" {
+      source_onbuild = true
+      uncertainties.push({
+        line: instruction.line,
+        reason: "Dockerfile-defined ONBUILD dependencies are not modeled",
+      })
+    }
+  }
+  let image_metadata_evidence : Array[ImageContextMetadataEvidence] = []
+  let safe_empty_onbuild : Map[Int, Bool] = Map([])
   for stage in graph.stages {
     if context_onbuild_metadata_unknown(stage, graph) {
-      uncertainties.push({
-        line: stage.line,
-        reason: "external base image ONBUILD metadata is unavailable",
-      })
+      let mut from_instruction : Instruction? = None
+      for instruction in instructions {
+        if instruction.name == "FROM" && instruction.line == stage.line {
+          from_instruction = Some(instruction)
+        }
+      }
+      let decision = image_context_metadata_decision(
+        stage, from_instruction, platform, image_metadata, source_onbuild,
+      )
+      safe_empty_onbuild[stage.index] = decision.safe_empty_onbuild
+      image_metadata_evidence.push(decision.evidence)
+      if !decision.safe_empty_onbuild {
+        uncertainties.push({
+          line: stage.line,
+          reason: decision.evidence.reason,
+        })
+      }
     }
   }
   let mut stage = -1
@@ -450,8 +489,17 @@ pub fn analyze_context(
     let mut conservative = graph.conservative || control_changed
     let mut unknown_external_metadata = false
     if !change.excluded || control_changed {
+      if source_onbuild {
+        for stage in graph.stages {
+          if !seeds.contains(stage.index) {
+            seeds.push(stage.index)
+          }
+        }
+        conservative = true
+      }
       for stage in graph.stages {
-        if context_onbuild_metadata_unknown(stage, graph) {
+        if context_onbuild_metadata_unknown(stage, graph) &&
+          safe_empty_onbuild.get(stage.index) != Some(true) {
           if !seeds.contains(stage.index) {
             seeds.push(stage.index)
           }
@@ -505,5 +553,6 @@ pub fn analyze_context(
     missing_lines,
     uncertainties,
     changes: impacts,
+    image_metadata: image_metadata_evidence,
   }
 }

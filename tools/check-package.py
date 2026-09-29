@@ -53,12 +53,14 @@ def main():
         'SOURCE-COMPARISON.md',
         'TESTING.md',
         'DUPLICATION.md',
+        'IMAGE-PROFILES.md',
         'SUBMISSION.json',
         '.moonbit-version',
         '.moonignore',
         'examples/context/.dockerignore',
         'evidence/tempo-docker-update-20260716/source/.dockerignore',
         'evidence/source-precision-20260929/LOCAL-REPLAY-0.11.0.json',
+        'evidence/profile-context-20260930/LOCAL-REPLAY-0.12.0.json',
     ]
     with tempfile.TemporaryDirectory(prefix='dockerlint-package-check-') as temporary:
         extracted = Path(temporary).resolve()
@@ -80,6 +82,8 @@ def main():
             package.extractall(extracted)
         run([npm, 'ci', '--ignore-scripts', '--registry=https://registry.npmjs.org'], extracted)
         output = run([node, 'examples/run-context.mjs'], extracted)
+        run([node, 'tools/run-profile-context.mjs', '--out',
+             'evidence/profile-context-20260930/PACKAGE-REPLAY.json'], extracted)
         report_path = Path(output.strip().splitlines()[-1]).resolve()
         # The example owns its own temp output; read its semantic check receipt.
         report = json.loads((report_path / 'report.json').read_text(encoding='utf-8'))
@@ -90,12 +94,13 @@ def main():
         'archiveSha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
         'requiredFiles': required,
         'contextExample': report,
+        'profileReplay': 'both Tempo snapshots: five verified profiles, precise final-stage impact and missing/wrong-platform conservative fallback',
         'node': run([node, '--version'], root).strip(),
         'scope': 'Local MoonBit package extraction and context example; no Docker build or registry publication',
     }
     if args.receipt:
         args.receipt.parent.mkdir(parents=True, exist_ok=True)
-        args.receipt.write_text(json.dumps(receipt, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+        args.receipt.write_text(json.dumps(receipt, ensure_ascii=False, indent=2)+'\n', encoding='utf-8', newline='\n')
     print(json.dumps(receipt, ensure_ascii=False, indent=2))
 
 

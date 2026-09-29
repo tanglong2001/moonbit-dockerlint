@@ -7,7 +7,7 @@ import {
 }
 
 // Values
-pub fn analyze_context(String, Array[ContextEntry], target? : String, changes? : Array[ContextChange], build_args? : Map[String, String], control_files? : Array[String]) -> ContextPlan raise ParseError
+pub fn analyze_context(String, Array[ContextEntry], target? : String, changes? : Array[ContextChange], build_args? : Map[String, String], control_files? : Array[String], platform? : String, image_metadata? : Array[ImageContextMetadata]) -> ContextPlan raise ParseError
 
 pub fn analyze_stages(Array[Instruction]) -> Array[Stage] raise ParseError
 
@@ -158,6 +158,7 @@ pub struct ContextPlan {
   missing_lines : Array[Int]
   uncertainties : Array[BuildUncertainty]
   changes : Array[ContextFileImpact]
+  image_metadata : Array[ImageContextMetadataEvidence]
 } derive(Eq, ToJson, @debug.Debug)
 pub fn ContextPlan::equal(Self, Self) -> Bool
 pub fn ContextPlan::not_equal(Self, Self) -> Bool
@@ -194,6 +195,36 @@ pub fn HereDoc::equal(Self, Self) -> Bool
 pub fn HereDoc::not_equal(Self, Self) -> Bool
 pub fn HereDoc::to_json(Self) -> Json
 pub fn HereDoc::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ImageContextMetadata {
+  reference : String
+  platform : String
+  index_digest : String
+  manifest_digest : String
+  config_digest : String
+  onbuild : Array[String]
+} derive(Eq, ToJson, @debug.Debug, @json.FromJson)
+pub fn ImageContextMetadata::equal(Self, Self) -> Bool
+pub fn ImageContextMetadata::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
+pub fn ImageContextMetadata::not_equal(Self, Self) -> Bool
+pub fn ImageContextMetadata::to_json(Self) -> Json
+pub fn ImageContextMetadata::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ImageContextMetadataEvidence {
+  stage : Int
+  line : Int
+  reference : String
+  platform : String
+  status : String
+  reason : String
+  index_digest : String
+  manifest_digest : String
+  config_digest : String
+} derive(Eq, ToJson, @debug.Debug)
+pub fn ImageContextMetadataEvidence::equal(Self, Self) -> Bool
+pub fn ImageContextMetadataEvidence::not_equal(Self, Self) -> Bool
+pub fn ImageContextMetadataEvidence::to_json(Self) -> Json
+pub fn ImageContextMetadataEvidence::to_repr(Self) -> @debug.Repr
 
 pub struct Instruction {
   line : Int

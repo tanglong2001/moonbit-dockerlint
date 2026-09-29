@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "report": "evidence\\profile-context-20260930\\LOCAL-REPLAY-0.12.0.json",
+  "profiles": 5,
+  "cases": [
+    {
+      "snapshot": "before",
+      "without_metadata": [
+        true,
+        true,
+        true
+      ],
+      "with_metadata": [
+        false,
+        false,
+        true
+      ],
+      "conservative": false
+    },
+    {
+      "snapshot": "after",
+      "without_metadata": [
+        true,
+        true,
+        true
+      ],
+      "with_metadata": [
+        false,
+        false,
+        true
+      ],
+      "conservative": false
+    }
+  ]
+}

@@ -3,7 +3,8 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {parentPort,workerData} from 'node:worker_threads';
 import {makeDockerIgnore} from './docker-ignore-adapter.mjs';
-import {context_plan} from '../web/engine.mjs';
+import {context_plan_with_metadata} from '../web/engine.mjs';
+import {loadImageProfiles} from './image-profiles.mjs';
 
 const hash=text=>createHash('sha256').update(text).digest('hex');
 function read(file,limit){
@@ -18,10 +19,11 @@ function read(file,limit){
   }finally{fs.closeSync(fd)}
 }
 const inside=(root,file)=>file===root||file.startsWith(root+path.sep);
-export function inspectContext({context,dockerfile='Dockerfile',target='',changedFiles=[],buildArgs={}}){
+export function inspectContext({context,dockerfile='Dockerfile',target='',changedFiles=[],buildArgs={},platform='',imageProfiles=''} ){
   if(typeof context!=='string'||!context||typeof dockerfile!=='string'||!dockerfile||typeof target!=='string'||
     !Array.isArray(changedFiles)||changedFiles.length>256||changedFiles.some(p=>typeof p!=='string')||
-    !buildArgs||typeof buildArgs!=='object'||Array.isArray(buildArgs)||Object.keys(buildArgs).length>256||Object.entries(buildArgs).some(([k,v])=>!/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(k)||typeof v!=='string'||v.length>2048))throw Error('Invalid context options');
+    !buildArgs||typeof buildArgs!=='object'||Array.isArray(buildArgs)||Object.keys(buildArgs).length>256||Object.entries(buildArgs).some(([k,v])=>!/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(k)||typeof v!=='string'||v.length>2048)||
+    typeof platform!=='string'||platform.length>128||typeof imageProfiles!=='string'||imageProfiles.length>4096)throw Error('Invalid context options');
   const root=fs.realpathSync(context),file=path.resolve(root,dockerfile);
   if(!fs.statSync(root).isDirectory()||!inside(root,file)||file===root)throw Error('Dockerfile must be inside the context directory');
   const relative=path.relative(root,file).split(path.sep).join('/');
@@ -56,7 +58,8 @@ export function inspectContext({context,dockerfile='Dockerfile',target='',change
   });
   const controls=[relative,relative+'.dockerignore'];
   if(ignorePath!==specific)controls.push('.dockerignore');
-  const raw=context_plan(source,JSON.stringify(entries),target,JSON.stringify(changes),JSON.stringify(buildArgs),JSON.stringify([...new Set(controls)]));
+  const profiles=loadImageProfiles(imageProfiles,platform);
+  const raw=context_plan_with_metadata(source,JSON.stringify(entries),target,JSON.stringify(changes),JSON.stringify(buildArgs),JSON.stringify([...new Set(controls)]),platform,JSON.stringify(profiles.metadata));
   if(raw.startsWith('ERROR:'))throw Error(raw);
   const plan=JSON.parse(raw);
   const selectedBytes=plan.selected_entries.reduce((sum,i)=>sum+BigInt(sizes[i]),0n);
@@ -64,7 +67,7 @@ export function inspectContext({context,dockerfile='Dockerfile',target='',change
     dockerfile:relative,ignore_file:ignorePath?path.relative(root,ignorePath).split(path.sep).join('/'):null,
     source_sha256:hash(source),ignore_sha256:hash(ignoreText),inventory_sha256:hash(JSON.stringify(entries.map((e,i)=>({...e,bytes:sizes[i]})))),
     summary:{entries:entries.length,files:entries.filter(e=>e.kind==='file').length,total_file_bytes:totalBytes.toString(),included_file_bytes:includedBytes.toString(),selected_known_file_bytes:selectedBytes.toString(),missing_sources:plan.missing_lines.length,uncertainties:plan.uncertainties.length},
-    sizes,plan};
+    image_profiles:profiles,sizes,plan};
 }
 if(parentPort){
   try{parentPort.postMessage({ok:true,report:inspectContext(workerData)})}

@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "report": "evidence\\source-precision-20260929\\LOCAL-REPLAY-0.12.0.json",
+  "prior_receipt_sha256": "030f84e5986a5474b5202cf49a287c99149bf3c58407784e868dedecc150608e",
+  "source_entries": 18501,
+  "modeled_entries": 18504,
+  "image_profiles": 5,
+  "changed_lines": [
+    5,
+    11
+  ],
+  "changed_stages": [
+    1,
+    2
+  ],
+  "affected_targets": [
+    "tempo-setup",
+    "#2"
+  ],
+  "conservative": false,
+  "buildkit_explicit_arg": true,
+  "buildkit_env_after_arg": true
+}
