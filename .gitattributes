@@ -5,3 +5,6 @@
 
 examples/buildkit-closures/*.Dockerfile -text
 examples/buildkit-closures/LICENSE -text
+
+# Keep fixed third-party build evidence byte-identical in Git archives.
+/evidence/tempo-docker-update-20260716/** -text !eol

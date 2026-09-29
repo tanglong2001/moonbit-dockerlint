@@ -1,0 +1,197 @@
+{
+  "buildkit": "moby/buildkit v0.25.1",
+  "source_sha256": "cdd1928b8fd76be06251d2ee2a00163cd04c99e86ace1090648d6e45e7ffdd9e",
+  "resolver": "exact linux/amd64 image config blobs from pinned OCI manifests; no daemon/build",
+  "profile_set_sha256": "b4dc34d8f608c4f919e107fc71e1cafbca7fe493a20f6cdd6a0101f6414dd159",
+  "image_profiles": [
+    {
+      "name": "alpine-latest",
+      "reference": "alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+      "pinned_index_digest": "sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+      "platform": "linux/amd64",
+      "config_digest": "sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+      "onbuild_count": 0
+    },
+    {
+      "name": "distroless-debug-before",
+      "reference": "gcr.io/distroless/static-debian12:debug@sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+      "pinned_index_digest": "sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+      "platform": "linux/amd64",
+      "config_digest": "sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+      "onbuild_count": 0
+    },
+    {
+      "name": "distroless-runtime-before",
+      "reference": "gcr.io/distroless/static-debian12@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+      "pinned_index_digest": "sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+      "platform": "linux/amd64",
+      "config_digest": "sha256:c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401",
+      "onbuild_count": 0
+    },
+    {
+      "name": "distroless-debug-after",
+      "reference": "gcr.io/distroless/static-debian12:debug@sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+      "pinned_index_digest": "sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+      "platform": "linux/amd64",
+      "config_digest": "sha256:c6ba1059005bf329a166320ef451beb891a2ebe1907e8b5466c3e0aecb1dba66",
+      "onbuild_count": 0
+    },
+    {
+      "name": "distroless-runtime-after",
+      "reference": "gcr.io/distroless/static-debian12@sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+      "pinned_index_digest": "sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+      "platform": "linux/amd64",
+      "config_digest": "sha256:52912250d9cb16fad8fa255f821a514a621a49c1ab71b4a7480f61d82c9bb0f9",
+      "onbuild_count": 0
+    }
+  ],
+  "stage_targets": [
+    {
+      "index": 0,
+      "name": "ca-certificates",
+      "base": "alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+      "default": false,
+      "config_target": "ca-certificates"
+    },
+    {
+      "index": 1,
+      "name": "tempo-setup",
+      "base": "gcr.io/distroless/static-debian12:debug@sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+      "default": false,
+      "config_target": "tempo-setup"
+    },
+    {
+      "index": 2,
+      "name": "stage-2",
+      "base": "gcr.io/distroless/static-debian12@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+      "default": true,
+      "config_target": ""
+    }
+  ],
+  "targets": [
+    {
+      "target": {
+        "index": 0,
+        "name": "ca-certificates",
+        "base": "alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+        "default": false,
+        "config_target": "ca-certificates"
+      },
+      "llb_vertices": 3,
+      "stage_closure": [
+        "ca-certificates"
+      ],
+      "stage_operations": {
+        "ca-certificates": [
+          "[ca-certificates 1/2] FROM docker.io/library/alpine:latest@sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+          "[ca-certificates 2/2] RUN apk add --update --no-cache ca-certificates"
+        ]
+      },
+      "raw_custom_names": [
+        "[ca-certificates 1/2] FROM docker.io/library/alpine:latest@sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+        "[ca-certificates 2/2] RUN apk add --update --no-cache ca-certificates"
+      ],
+      "file_copies": []
+    },
+    {
+      "target": {
+        "index": 1,
+        "name": "tempo-setup",
+        "base": "gcr.io/distroless/static-debian12:debug@sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+        "default": false,
+        "config_target": "tempo-setup"
+      },
+      "llb_vertices": 5,
+      "stage_closure": [
+        "tempo-setup"
+      ],
+      "stage_operations": {
+        "tempo-setup": [
+          "[tempo-setup 1/4] FROM gcr.io/distroless/static-debian12:debug@sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+          "[tempo-setup 2/4] RUN [\"/busybox/addgroup\", \"-g\", \"10001\", \"-S\", \"tempo\"]",
+          "[tempo-setup 3/4] RUN [\"/busybox/adduser\", \"-u\", \"10001\", \"-S\", \"tempo\", \"-G\", \"tempo\"]",
+          "[tempo-setup 4/4] RUN [\"/busybox/mkdir\", \"-p\", \"/var/tempo\"]"
+        ]
+      },
+      "raw_custom_names": [
+        "[tempo-setup 1/4] FROM gcr.io/distroless/static-debian12:debug@sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+        "[tempo-setup 2/4] RUN [\"/busybox/addgroup\", \"-g\", \"10001\", \"-S\", \"tempo\"]",
+        "[tempo-setup 3/4] RUN [\"/busybox/adduser\", \"-u\", \"10001\", \"-S\", \"tempo\", \"-G\", \"tempo\"]",
+        "[tempo-setup 4/4] RUN [\"/busybox/mkdir\", \"-p\", \"/var/tempo\"]"
+      ],
+      "file_copies": []
+    },
+    {
+      "target": {
+        "index": 2,
+        "name": "stage-2",
+        "base": "gcr.io/distroless/static-debian12@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+        "default": true,
+        "config_target": ""
+      },
+      "llb_vertices": 14,
+      "stage_closure": [
+        "ca-certificates",
+        "tempo-setup",
+        "stage-2"
+      ],
+      "stage_operations": {
+        "ca-certificates": [
+          "[ca-certificates 1/2] FROM docker.io/library/alpine:latest@sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+          "[ca-certificates 2/2] RUN apk add --update --no-cache ca-certificates"
+        ],
+        "stage-2": [
+          "[stage-2 1/6] FROM gcr.io/distroless/static-debian12@sha256:c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401",
+          "[stage-2 2/6] COPY bin/linux/tempo-amd64 /tempo",
+          "[stage-2 3/6] COPY --from=ca-certificates /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/",
+          "[stage-2 4/6] COPY --from=tempo-setup /etc/passwd /etc/passwd",
+          "[stage-2 5/6] COPY --from=tempo-setup /etc/group /etc/group",
+          "[stage-2 6/6] COPY --from=tempo-setup --chown=10001:10001 --chmod=0700 /var/tempo /var/tempo"
+        ],
+        "tempo-setup": [
+          "[tempo-setup 1/4] FROM gcr.io/distroless/static-debian12:debug@sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+          "[tempo-setup 2/4] RUN [\"/busybox/addgroup\", \"-g\", \"10001\", \"-S\", \"tempo\"]",
+          "[tempo-setup 3/4] RUN [\"/busybox/adduser\", \"-u\", \"10001\", \"-S\", \"tempo\", \"-G\", \"tempo\"]",
+          "[tempo-setup 4/4] RUN [\"/busybox/mkdir\", \"-p\", \"/var/tempo\"]"
+        ]
+      },
+      "raw_custom_names": [
+        "[ca-certificates 1/2] FROM docker.io/library/alpine:latest@sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+        "[ca-certificates 2/2] RUN apk add --update --no-cache ca-certificates",
+        "[internal] load build context",
+        "[stage-2 1/6] FROM gcr.io/distroless/static-debian12@sha256:c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401",
+        "[stage-2 2/6] COPY bin/linux/tempo-amd64 /tempo",
+        "[stage-2 3/6] COPY --from=ca-certificates /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/",
+        "[stage-2 4/6] COPY --from=tempo-setup /etc/passwd /etc/passwd",
+        "[stage-2 5/6] COPY --from=tempo-setup /etc/group /etc/group",
+        "[stage-2 6/6] COPY --from=tempo-setup --chown=10001:10001 --chmod=0700 /var/tempo /var/tempo",
+        "[tempo-setup 1/4] FROM gcr.io/distroless/static-debian12:debug@sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+        "[tempo-setup 2/4] RUN [\"/busybox/addgroup\", \"-g\", \"10001\", \"-S\", \"tempo\"]",
+        "[tempo-setup 3/4] RUN [\"/busybox/adduser\", \"-u\", \"10001\", \"-S\", \"tempo\", \"-G\", \"tempo\"]",
+        "[tempo-setup 4/4] RUN [\"/busybox/mkdir\", \"-p\", \"/var/tempo\"]"
+      ],
+      "file_copies": [
+        {
+          "source": "/bin/linux/tempo-amd64",
+          "destination": "/tempo"
+        },
+        {
+          "source": "/etc/ssl/certs/ca-certificates.crt",
+          "destination": "/etc/ssl/certs/"
+        },
+        {
+          "source": "/etc/passwd",
+          "destination": "/etc/passwd"
+        },
+        {
+          "source": "/etc/group",
+          "destination": "/etc/group"
+        },
+        {
+          "source": "/var/tempo",
+          "destination": "/var/tempo"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "buildkit": "moby/buildkit v0.25.1",
+  "source_sha256": "bb6a54472c473203d5cb78b265663a1a6f5a9580b76437a294443d3275275416",
+  "resolver": "exact linux/amd64 image config blobs from pinned OCI manifests; no daemon/build",
+  "profile_set_sha256": "c2af2d0e321f3b3c076ede1aff8bbb8c4938ac3285bd246770ca64ea0b0154af",
+  "build_args": {
+    "TARGETARCH": "amd64"
+  },
+  "image_profiles": [
+    {
+      "name": "synthetic-buildarg-env",
+      "reference": "registry.invalid/moonbit-dockerlint-buildarg@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pinned_index_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "platform": "linux/amd64",
+      "config_digest": "sha256:236663b0109b1fff5e8a7e9a03e98a9434b858fa453746e4132218c30a8e5568",
+      "onbuild_count": 0
+    }
+  ],
+  "stage_targets": [
+    {
+      "index": 0,
+      "name": "app",
+      "base": "registry.invalid/moonbit-dockerlint-buildarg@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "default": true,
+      "config_target": "app"
+    }
+  ],
+  "targets": [
+    {
+      "target": {
+        "index": 0,
+        "name": "app",
+        "base": "registry.invalid/moonbit-dockerlint-buildarg@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "default": true,
+        "config_target": "app"
+      },
+      "llb_vertices": 4,
+      "stage_closure": [],
+      "stage_operations": {},
+      "raw_custom_names": [
+        "[1/2] FROM registry.invalid/moonbit-dockerlint-buildarg@sha256:236663b0109b1fff5e8a7e9a03e98a9434b858fa453746e4132218c30a8e5568",
+        "[2/2] COPY bin/linux/tempo-amd64 /tempo",
+        "[internal] load build context"
+      ],
+      "file_copies": [
+        {
+          "source": "/bin/linux/tempo-amd64",
+          "destination": "/tempo"
+        }
+      ]
+    }
+  ]
+}

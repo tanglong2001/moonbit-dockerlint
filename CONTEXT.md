@@ -25,6 +25,8 @@ CLI 退出码：0 所选已知输入存在；2 所选输入缺失/排除；3 存
 
 只处理本地 context。外部 ADD 保留 external 状态；远程镜像、远程 Git、命名 context、外部 ONBUILD 元数据、RUN 运行结果、缓存均未求解。COPY/ADD --exclude、未知变量、带引号或重复 mount 选项等返回 unknown。没有计算“旧版本与新版本”两套构建图，不能自动决定跳过构建。
 
+外部基础镜像的 `ONBUILD` 未知时，未排除的文件变化会保守传播到所有外部 base 阶段及其下游；已排除的普通文件不会触发该传播。即使单独核验过某个镜像 digest 的配置，当前核心也没有接收/校验该 profile 的接口，因此仍按未知处理。调用方明确提供且 Dockerfile 在该阶段声明的 build arg 可解析对应 COPY 路径，即使 base ENV 未读取；后续 Dockerfile `ENV` 仍优先。未提供值且可能受 base ENV 影响的 ARG 仍返回 unknown。
+
 ## 资源限制
 
 Dockerfile 1 MiB、ignore 64 KiB/2048 行/每行 2048 字符；清单 20,000 项、深度 64、相对路径 2048 字符；2048 个本地输入、256 个变化路径/宿主 build args；核心模式匹配估算预算 50M；宿主 worker 30 秒及 256 MiB old-generation 限制。超过限额报错。宿主不执行源码中的命令、不拉取镜像，报告新文件禁止覆盖。

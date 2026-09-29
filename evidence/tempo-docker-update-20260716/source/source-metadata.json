@@ -1,0 +1,52 @@
+{
+  "message": "chore(deps): update docker (#7588)",
+  "commit": "3f54f1c040a5c014a7f3acde22376060807178c6",
+  "changedFiles": [
+    {
+      "additions": 1,
+      "path": "cmd/tempo-cli/Dockerfile",
+      "deletions": 1,
+      "status": "modified"
+    },
+    {
+      "additions": 1,
+      "path": "cmd/tempo-query/Dockerfile",
+      "deletions": 1,
+      "status": "modified"
+    },
+    {
+      "additions": 2,
+      "path": "cmd/tempo-vulture/Dockerfile",
+      "deletions": 2,
+      "status": "modified"
+    },
+    {
+      "additions": 2,
+      "path": "cmd/tempo/Dockerfile",
+      "deletions": 2,
+      "status": "modified"
+    },
+    {
+      "additions": 1,
+      "path": "cmd/tempo/Dockerfile_debug",
+      "deletions": 1,
+      "status": "modified"
+    },
+    {
+      "additions": 1,
+      "path": "tools/Dockerfile",
+      "deletions": 1,
+      "status": "modified"
+    }
+  ],
+  "parent": "55924f126cd2f532a448fe4af4bd00e2d11638be",
+  "dockerfileSpecificIgnorePresent": false,
+  "repository": "https://github.com/grafana/tempo",
+  "treeTruncated": false,
+  "tree": "3f54f1c040a5c014a7f3acde22376060807178c6",
+  "commitResponseSha256": "3fd297d1e33bc6c709806ba38f04b54bd285db9f6eaaca17ae3a4faa52422cfa",
+  "licenseSpdx": "AGPL-3.0",
+  "treeEntries": 18501,
+  "commitDate": "2026-07-16T21:25:34Z",
+  "treeResponseSha256": "7571356da3b7b2767fd0a5ae7de012c7d1bdcba9ce4145c7959e6b9ad9899186"
+}

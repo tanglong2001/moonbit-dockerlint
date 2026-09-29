@@ -66,6 +66,16 @@ fn context_covers(pattern : ContextPattern, path : String) -> Bool {
 }
 
 ///|
+/// External image configs can add ONBUILD triggers that read the local context.
+/// Scratch and stage-to-stage FROM references have no external image metadata.
+fn context_onbuild_metadata_unknown(stage : Stage, graph : BuildImpact) -> Bool {
+  stage.base.to_lower() != "scratch" &&
+  !graph.edges
+  .iter()
+  .any(edge => edge.consumer == stage.index && edge.kind == "FROM")
+}
+
+///|
 /// Explain local build inputs and how explicit file changes flow to targets.
 /// This is not a Docker build/cache prediction: image metadata, named contexts,
 /// shell execution, COPY --exclude and filesystem links may be unknown.
@@ -139,6 +149,14 @@ pub fn analyze_context(
   let mut input_environment : Map[String, String] = Map([])
   let mut input_unknown_base = false
   let uncertainties = graph.uncertainties.copy()
+  for stage in graph.stages {
+    if context_onbuild_metadata_unknown(stage, graph) {
+      uncertainties.push({
+        line: stage.line,
+        reason: "external base image ONBUILD metadata is unavailable",
+      })
+    }
+  }
   let mut stage = -1
   let mut work = 0L
   fn charge(pattern : ContextPattern, path : String) -> Unit raise ParseError {
@@ -287,7 +305,16 @@ pub fn analyze_context(
     for name in scopes[i].uncertain_environment {
       input_uncertain[name] = true
     }
-    input_environment = scopes[i].environment
+    input_environment = scopes[i].environment.copy()
+    // Explicit build arguments declared in this stage are known overrides of
+    // the unavailable base image environment. Keep defaulted/unprovided ARGs
+    // uncertain because the base config may still supply their values.
+    for name, _ in build_args {
+      if scopes[i].arguments.contains(name) &&
+        !scopes[i].environment.contains(name) {
+        input_environment[name] = scopes[i].arguments[name]
+      }
+    }
     input_unknown_base = scopes[i].unknown_base_environment
     if instruction.name == "COPY" || instruction.name == "ADD" {
       let args = instruction.split_arguments()
@@ -421,7 +448,16 @@ pub fn analyze_context(
     let lines = []
     let control_changed = control_files.contains(change.path)
     let mut conservative = graph.conservative || control_changed
+    let mut unknown_external_metadata = false
     if !change.excluded || control_changed {
+      for stage in graph.stages {
+        if context_onbuild_metadata_unknown(stage, graph) {
+          if !seeds.contains(stage.index) {
+            seeds.push(stage.index)
+          }
+          unknown_external_metadata = true
+        }
+      }
       for i in 0..<inputs.length() {
         let input = inputs[i]
         if input.status == "external" {
@@ -451,7 +487,8 @@ pub fn analyze_context(
       path: change.path,
       excluded: change.excluded,
       source_lines: lines,
-      conservative: conservative && (!change.excluded || control_changed),
+      conservative: (conservative || unknown_external_metadata) &&
+      (!change.excluded || control_changed),
       targets: stage_impacts(
         graph.stages,
         seeds,

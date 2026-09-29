@@ -24,6 +24,67 @@ test "context cannot assume an external image ENV is empty" {
 }
 
 ///|
+test "external image ONBUILD metadata cannot certify unrelated context files unaffected" {
+  let plan = @dockerlint.analyze_context(
+    "FROM alpine AS base\nFROM base AS app\nFROM scratch AS independent",
+    [{ path: "changed.txt", kind: "file", excluded: false, }],
+    changes=[{ path: "changed.txt", excluded: false, }],
+  )
+  assert_true(
+    plan.uncertainties
+    .iter()
+    .any(u => u.reason == "external base image ONBUILD metadata is unavailable"),
+  )
+  assert_true(plan.changes[0].conservative)
+  assert_eq(plan.changes[0].targets.map(t => t.affected), [true, true, false])
+  assert_eq(plan.changes[0].targets[1].path, [1, 0])
+}
+
+///|
+test "external image ONBUILD uncertainty respects excluded paths and known scratch" {
+  let plan = @dockerlint.analyze_context(
+    "FROM scratch AS empty\nFROM alpine AS image",
+    [{ path: "ignored.txt", kind: "file", excluded: true, }],
+    changes=[{ path: "ignored.txt", excluded: true, }],
+  )
+  assert_true(!plan.changes[0].conservative)
+  assert_eq(plan.changes[0].targets.map(t => t.affected), [false, false])
+}
+
+///|
+test "an explicit declared build arg resolves a context COPY over unknown base env" {
+  let plan = @dockerlint.analyze_context(
+    "FROM alpine AS build\nARG TARGETARCH\nCOPY bin/linux/tempo-${TARGETARCH} /tempo",
+    [
+      { path: "bin", kind: "directory", excluded: false, },
+      { path: "bin/linux", kind: "directory", excluded: false, },
+      { path: "bin/linux/tempo-amd64", kind: "file", excluded: false, },
+    ],
+    changes=[{ path: "bin/linux/tempo-amd64", excluded: false, }],
+    build_args=Map([("TARGETARCH", "amd64")]),
+  )
+  assert_eq(plan.inputs[0].source, "bin/linux/tempo-amd64")
+  assert_eq(plan.inputs[0].status, "resolved")
+  assert_eq(plan.inputs[0].included, [2])
+  assert_eq(plan.changes[0].source_lines, [3])
+  assert_true(plan.changes[0].conservative)
+
+  let env_override = @dockerlint.analyze_context(
+    "FROM alpine AS build\nARG TARGETARCH\nENV TARGETARCH=arm64\nCOPY bin/linux/tempo-${TARGETARCH} /tempo",
+    [
+      { path: "bin", kind: "directory", excluded: false, },
+      { path: "bin/linux", kind: "directory", excluded: false, },
+      { path: "bin/linux/tempo-amd64", kind: "file", excluded: false, },
+      { path: "bin/linux/tempo-arm64", kind: "file", excluded: false, },
+    ],
+    build_args=Map([("TARGETARCH", "amd64")]),
+  )
+  assert_eq(env_override.inputs[0].source, "bin/linux/tempo-arm64")
+  assert_eq(env_override.inputs[0].status, "resolved")
+  assert_eq(env_override.inputs[0].included, [3])
+}
+
+///|
 test "context files flow through COPY and repeated bind mounts into selected targets" {
   let source = "FROM scratch AS docs\nCOPY docs /docs\nFROM scratch AS compile\nARG DIR=src\nCOPY [\"$DIR/*.mbt\", \"/src/\"]\nRUN --mount=type=bind,source=config,target=/cfg --mount=source=assets,target=/assets build\nFROM scratch AS release\nCOPY --from=compile /app /app"
   let entries : Array[@dockerlint.ContextEntry] = [

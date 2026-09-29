@@ -1,0 +1,16 @@
+{
+  "format": "dockerlint-image-profile/1",
+  "platform": "linux/amd64",
+  "images": [
+    {
+      "name": "synthetic-buildarg-env",
+      "reference": "registry.invalid/moonbit-dockerlint-buildarg@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "platform": "linux/amd64",
+      "pinnedIndexDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "configDigest": "sha256:236663b0109b1fff5e8a7e9a03e98a9434b858fa453746e4132218c30a8e5568",
+      "configFile": "base.config.json",
+      "configSha256": "236663b0109b1fff5e8a7e9a03e98a9434b858fa453746e4132218c30a8e5568",
+      "onbuild": []
+    }
+  ]
+}

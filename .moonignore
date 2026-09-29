@@ -16,3 +16,6 @@ evidence/validation-console.txt
 
 # Required by examples/run-context.mjs; omitting it changes the example semantics.
 !/examples/context/.dockerignore
+
+# The fixed Tempo replay snapshot includes its actual Docker context ignore file.
+!/evidence/tempo-docker-update-20260716/source/.dockerignore

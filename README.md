@@ -2,7 +2,15 @@
 
 本项目仓库：**https://github.com/tanglong2001/moonbit-dockerlint**
 
-模块 `tanglong2001/dockerlint`，0.10.0，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。本轮新增本地构建目录分析：解释 COPY/ADD/bind 实际读取哪些输入、哪些被忽略、某个文件变化通过哪些引用影响目标阶段。旧规则检查与行号影响接口继续可用。
+模块 `tanglong2001/dockerlint`，公开版 `0.10.0`、本地未发布候选 `0.10.1`，MIT AND BSD-3-Clause（Go 匹配顺序适配及宿主依赖另见 THIRD-PARTY）。当前主任务是审阅多阶段 Dockerfile 的实际构建修改：解释上下文文件输入、stage 引用和影响范围，不以旧规则检查作为独立价值主张。本地候选版未推送或发布。
+
+## 0.10.1 本地候选：真实 Dockerfile 修改复核
+
+固定 Grafana Tempo 提交 `3f54f1c040a5c014a7f3acde22376060807178c6`（AGPL-3.0）更新了 `cmd/tempo/Dockerfile` 的 Distroless debug 与 runtime digest。Makefile 的 `docker-tempo -> docker-component -> exe -> tempo` 目标链确认该文件用于项目构建；使用的根 `.dockerignore` 有四条路径规则，没有 Dockerfile 专属 ignore。所取五个固定 Linux/amd64 OCI config（含两版 Distroless）均按 digest 校验，`OnBuild` 为空。[BuildKit v0.25.1 LLB 回执](evidence/tempo-docker-update-20260716/buildkit-after.json)显示最终目标 14 个 vertex，闭包包括 ca-certificates、tempo-setup 和最终阶段；前后比较识别两个变动的 base stage，ca-certificates 操作保持不变。
+
+MoonBit 完整源码比较目前把两处分散的 base digest 改动扩成第 5–11 行，`changed_stages` 只点出 setup 阶段但随后保守标记全部目标；BuildKit 证实其中 ca-certificates 未变，说明当前会多报。目录分析可以将 Makefile 生成的 `bin/linux/tempo-amd64` 解析到最终 COPY，但证据清单仅在 post-Make 模型里合成该路径，未构建二进制。无 profile 输入时，MoonBit 仍把外部镜像 `ONBUILD` 标记为未知并保守影响所有外部 base 阶段；虽然本例镜像 config 已核实为空，该 profile 尚未接入核心接口。另有离线小型 BuildKit 对照验证 `ARG TARGETARCH=amd64` 会覆盖同名 base ENV，而后续 Dockerfile `ENV TARGETARCH=arm64` 会覆盖 ARG。
+
+这次新增回归覆盖上述 ARG 解析与未知 `ONBUILD` 的保守路径，JS/WasmGC 各 39 项；完整命令、SHA256、原始输出和限制见 [0.10.1 本地检查记录](TESTING.md#0101-local-tempo-build-change-review) 及 `evidence/tempo-docker-update-20260716/LOCAL-CHECKS.json`。本次没有 Docker build、缓存测量、部署、性能或采用结论；旧公开 CI 只覆盖 0.10.0，不覆盖本地改动。
 
 ## 0.10.0：直接比较两份文件
 

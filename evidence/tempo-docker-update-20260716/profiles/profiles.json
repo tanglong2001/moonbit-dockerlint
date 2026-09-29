@@ -1,0 +1,158 @@
+{
+  "format": "dockerlint-image-profile/1",
+  "platform": "linux/amd64",
+  "taskParent": "55924f126cd2f532a448fe4af4bd00e2d11638be",
+  "selection": "The Dockerfile is used with an amd64 build artifact by the recorded make docker-tempo target.",
+  "sourceCommit": "3f54f1c040a5c014a7f3acde22376060807178c6",
+  "images": [
+    {
+      "onbuild": [],
+      "name": "alpine-latest",
+      "platform": "linux/amd64",
+      "repository": "library/alpine",
+      "registry": "registry-1.docker.io",
+      "platformManifestDigest": "sha256:79ff19e9084a00eece421b2523fb93e22d730e2c0e525905de047e848e56d95f",
+      "cmd": [
+        "/bin/sh"
+      ],
+      "configFile": "alpine-latest.config.json",
+      "user": null,
+      "platformManifestFile": "alpine-latest.manifest.json",
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "indexFile": "alpine-latest.index.json",
+      "platformManifestSha256": "79ff19e9084a00eece421b2523fb93e22d730e2c0e525905de047e848e56d95f",
+      "indexSha256": "28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+      "pinnedIndexDigest": "sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+      "workingDir": "/",
+      "configSha256": "d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+      "configDigest": "sha256:d529dd0c6e5597ac7e4a3e2dea65c3fcc6173f4cae713c409265c1dd9914a11b",
+      "reference": "alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b",
+      "entrypoint": [
+        null
+      ],
+      "env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      ]
+    },
+    {
+      "onbuild": [],
+      "name": "distroless-debug-before",
+      "platform": "linux/amd64",
+      "repository": "distroless/static-debian12",
+      "registry": "gcr.io",
+      "platformManifestDigest": "sha256:48becfa076a92115d44c0b8a97b7074433359ed9deabd68c31ec10c64d26ef74",
+      "cmd": [
+        null
+      ],
+      "configFile": "distroless-debug-before.config.json",
+      "user": "0",
+      "platformManifestFile": "distroless-debug-before.manifest.json",
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "indexFile": "distroless-debug-before.index.json",
+      "platformManifestSha256": "48becfa076a92115d44c0b8a97b7074433359ed9deabd68c31ec10c64d26ef74",
+      "indexSha256": "46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+      "pinnedIndexDigest": "sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+      "workingDir": "/",
+      "configSha256": "9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+      "configDigest": "sha256:9ceb754782c93588f10f29d3ffdcc7d339f509a14b63fde2d182ee6027169edd",
+      "reference": "gcr.io/distroless/static-debian12:debug@sha256:46fcf1fa44d251b0944ba4b98ef4bbd266e33034e46489dbf92f680ca4917451",
+      "entrypoint": [
+        "/busybox/sh"
+      ],
+      "env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/busybox",
+        "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+      ]
+    },
+    {
+      "onbuild": [],
+      "name": "distroless-runtime-before",
+      "platform": "linux/amd64",
+      "repository": "distroless/static-debian12",
+      "registry": "gcr.io",
+      "platformManifestDigest": "sha256:7d14daf425206f9e79b463e57226c1d6500a6b42f4923d5f0a9a413657f5774f",
+      "cmd": [
+        null
+      ],
+      "configFile": "distroless-runtime-before.config.json",
+      "user": "0",
+      "platformManifestFile": "distroless-runtime-before.manifest.json",
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "indexFile": "distroless-runtime-before.index.json",
+      "platformManifestSha256": "7d14daf425206f9e79b463e57226c1d6500a6b42f4923d5f0a9a413657f5774f",
+      "indexSha256": "9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+      "pinnedIndexDigest": "sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+      "workingDir": "/",
+      "configSha256": "c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401",
+      "configDigest": "sha256:c2c0843e0e204e0d912e3d89abec57b7180e3bd0691b0b71e6b90345e9f49401",
+      "reference": "gcr.io/distroless/static-debian12@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160",
+      "entrypoint": [
+        null
+      ],
+      "env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+      ]
+    },
+    {
+      "onbuild": [],
+      "name": "distroless-debug-after",
+      "platform": "linux/amd64",
+      "repository": "distroless/static-debian12",
+      "registry": "gcr.io",
+      "platformManifestDigest": "sha256:b15bab290e94e1907bfaaa2100cd2409ffb88cc8b40aac8292561a4291784047",
+      "cmd": [
+        null
+      ],
+      "configFile": "distroless-debug-after.config.json",
+      "user": "0",
+      "platformManifestFile": "distroless-debug-after.manifest.json",
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "indexFile": "distroless-debug-after.index.json",
+      "platformManifestSha256": "b15bab290e94e1907bfaaa2100cd2409ffb88cc8b40aac8292561a4291784047",
+      "indexSha256": "ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+      "pinnedIndexDigest": "sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+      "workingDir": "/",
+      "configSha256": "c6ba1059005bf329a166320ef451beb891a2ebe1907e8b5466c3e0aecb1dba66",
+      "configDigest": "sha256:c6ba1059005bf329a166320ef451beb891a2ebe1907e8b5466c3e0aecb1dba66",
+      "reference": "gcr.io/distroless/static-debian12:debug@sha256:ecbc4ac563b95a132fd370065553857dcc38943066cb0662d09999011f3d3597",
+      "entrypoint": [
+        "/busybox/sh"
+      ],
+      "env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/busybox",
+        "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+      ]
+    },
+    {
+      "onbuild": [],
+      "name": "distroless-runtime-after",
+      "platform": "linux/amd64",
+      "repository": "distroless/static-debian12",
+      "registry": "gcr.io",
+      "platformManifestDigest": "sha256:597c2b4bc7f353100af9b8b06bb4f126c4a45f9d8175e25d4f01f965d5d94396",
+      "cmd": [
+        null
+      ],
+      "configFile": "distroless-runtime-after.config.json",
+      "user": "0",
+      "platformManifestFile": "distroless-runtime-after.manifest.json",
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "indexFile": "distroless-runtime-after.index.json",
+      "platformManifestSha256": "597c2b4bc7f353100af9b8b06bb4f126c4a45f9d8175e25d4f01f965d5d94396",
+      "indexSha256": "61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+      "pinnedIndexDigest": "sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+      "workingDir": "/",
+      "configSha256": "52912250d9cb16fad8fa255f821a514a621a49c1ab71b4a7480f61d82c9bb0f9",
+      "configDigest": "sha256:52912250d9cb16fad8fa255f821a514a621a49c1ab71b4a7480f61d82c9bb0f9",
+      "reference": "gcr.io/distroless/static-debian12@sha256:61b7ccecebc7c474a531717de80a94709d20547cdcdaf740c25876f2a8e38b44",
+      "entrypoint": [
+        null
+      ],
+      "env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+      ]
+    }
+  ]
+}
